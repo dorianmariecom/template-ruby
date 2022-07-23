@@ -5,7 +5,9 @@ class Template
       rule(:null_keyword) { str("null") }
       rule(:nil_keyword) { str("nil") }
 
-      rule(:nothing) { (nothing_keyword | null_keyword | nil_keyword).as(:nothing) }
+      rule(:nothing) do
+        (nothing_keyword | null_keyword | nil_keyword).as(:nothing)
+      end
 
       root(:nothing)
     end

@@ -6,7 +6,7 @@ RSpec.describe Template::Parser::Nothing do
   [
     ["nothing", { nothing: "nothing" }],
     ["null", { nothing: "null" }],
-    ["nil", { nothing: "nil" }],
+    ["nil", { nothing: "nil" }]
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
@@ -17,13 +17,7 @@ RSpec.describe Template::Parser::Nothing do
     end
   end
 
-  [
-    "Nothing",
-    "NULL",
-    "Nil",
-    "true",
-    "false",
-  ].each do |input|
+  %w[Nothing NULL Nil true false].each do |input|
     context input.inspect do
       let(:input) { input }
 
