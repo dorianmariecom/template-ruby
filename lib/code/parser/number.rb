@@ -1,4 +1,4 @@
-class Template
+class Code
   class Parser
     class Number < Parslet::Parser
       rule(:dot) { str(".") }

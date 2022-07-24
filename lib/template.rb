@@ -1,3 +1,3 @@
 require "parslet"
 
-require_relative "template/parser"
+require_relative "code/parser"

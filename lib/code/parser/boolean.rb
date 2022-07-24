@@ -1,4 +1,4 @@
-class Template
+class Code
   class Parser
     class Boolean < Parslet::Parser
       rule(:true_keyword) { str("true") }

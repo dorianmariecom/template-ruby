@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Template::Parser::Number do
+RSpec.describe Code::Parser::Number do
   subject { described_class.new.parse(input) }
 
   [

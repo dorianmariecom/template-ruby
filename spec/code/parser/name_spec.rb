@@ -1,23 +1,29 @@
 require "spec_helper"
 
-RSpec.describe Template::Parser::Nothing do
+RSpec.describe Code::Parser::Name do
   subject { described_class.new.parse(input) }
 
-  [
-    ["nothing", { nothing: "nothing" }],
-    ["null", { nothing: "null" }],
-    ["nil", { nothing: "nil" }]
+  %w[
+    user
+    dorian
+    User
+    RSpec
+    describe?
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
 
       it "succeeds" do
-        expect(subject).to eq(expected)
+        expect(subject).to eq({ name: input })
       end
     end
   end
 
-  %w[Nothing NULL Nil true false].each do |input|
+  [
+    "a b",
+    "a[b",
+    "a{b"
+  ].each do |input|
     context input.inspect do
       let(:input) { input }
 

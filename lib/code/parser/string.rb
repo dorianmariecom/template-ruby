@@ -1,4 +1,4 @@
-class Template
+class Code
   class Parser
     class String < Parslet::Parser
       rule(:single_quote) { str("'") }

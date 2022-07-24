@@ -1,4 +1,4 @@
-class Template
+class Code
   class Parser
     class Nothing < Parslet::Parser
       rule(:nothing_keyword) { str("nothing") }
