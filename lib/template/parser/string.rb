@@ -26,13 +26,13 @@ class Template
       rule(:t) { str("t") | str("T") }
       rule(:u) { str("u") | str("U") }
 
-      rule(:hex_digit) do
+      rule(:base_16_digit) do
         zero | one | two | three | four | five | six | seven | eight | nine |
           a | b | c | d | e | f
       end
 
       rule(:escaped_character) do
-        (backslash >> u >> hex_digit.repeat(4, 4)) |
+        (backslash >> u >> base_16_digit.repeat(4, 4)) |
           (backslash >> (b | f | n | r | t)) | (backslash.ignore >> any)
       end
 

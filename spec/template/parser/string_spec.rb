@@ -16,7 +16,7 @@ RSpec.describe Template::Parser::String do
     [
       "'\\u0123\\u4567\\u89aA\\ubBcC\\UdDeE\\ufFfF'",
       { string: "\\u0123\\u4567\\u89aA\\ubBcC\\UdDeE\\ufFfF" }
-    ],
+    ]
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
