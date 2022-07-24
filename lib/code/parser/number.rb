@@ -1,6 +1,8 @@
 class Code
   class Parser
     class Number < Parslet::Parser
+      rule(:boolean) { ::Code::Parser::Boolean.new }
+
       rule(:dot) { str(".") }
       rule(:plus) { str("+") }
       rule(:minus) { str("-") }
@@ -58,7 +60,7 @@ class Code
           base_10_exponent.as(:exponent).maybe
       end
 
-      rule(:base_10_decimal_decimal) { dot.ignore >> base_10_digit.repeat }
+      rule(:base_10_decimal_decimal) { dot.ignore >> base_10_digit.repeat(1) }
 
       rule(:base_10_decimal) do
         sign.as(:sign).maybe >> base_10_whole.as(:whole) >>
@@ -87,7 +89,7 @@ class Code
         (
           base_2_number.as(:base_2) | base_8_number.as(:base_8) |
             base_16_number.as(:base_16) | base_10_number.as(:base_10)
-        ).as(:number)
+        ).as(:number) | boolean
       end
 
       root(:number)

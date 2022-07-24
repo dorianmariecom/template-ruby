@@ -5,9 +5,36 @@ RSpec.describe Code::Parser::Number do
 
   [
     ["1", { number: { base_10: { integer: { whole: "1" } } } }],
+    ["3", { number: { base_10: { integer: { whole: "3" } } } }],
     ["1.0", { number: { base_10: { decimal: { whole: "1", decimal: "0" } } } }],
-    ["-1.0", { number: { base_10: { decimal: { sign: "-", whole: "1", decimal: "0" } } } }],
-    ["+1.0", { number: { base_10: { decimal: { sign: "+", whole: "1", decimal: "0" } } } }],
+    [
+      "-1.0",
+      {
+        number: {
+          base_10: {
+            decimal: {
+              sign: "-",
+              whole: "1",
+              decimal: "0"
+            }
+          }
+        }
+      }
+    ],
+    [
+      "+1.0",
+      {
+        number: {
+          base_10: {
+            decimal: {
+              sign: "+",
+              whole: "1",
+              decimal: "0"
+            }
+          }
+        }
+      }
+    ],
     ["0", { number: { base_10: { integer: { whole: "0" } } } }],
     ["+0", { number: { base_10: { integer: { sign: "+", whole: "0" } } } }],
     ["-0", { number: { base_10: { integer: { sign: "-", whole: "0" } } } }],
@@ -84,16 +111,6 @@ RSpec.describe Code::Parser::Number do
 
       it "succeeds" do
         expect(subject).to eq(expected)
-      end
-    end
-  end
-
-  %w['hello hello" True FALSE nothing e1 0C123 0b2 0o8 0xg].each do |input|
-    context input.inspect do
-      let(:input) { input }
-
-      it "fails" do
-        expect { subject }.to raise_error(Parslet::ParseFailed)
       end
     end
   end

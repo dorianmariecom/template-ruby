@@ -32,21 +32,11 @@ class Code
       end
 
       rule(:name_character) do
-        space.absent? >>
-          newline.absent? >>
-          comma.absent? >>
-          colon.absent? >>
-          dot.absent? >>
-          single_quote.absent? >>
-          double_quote.absent? >>
-          opening_curly_bracket.absent? >>
-          closing_curly_bracket.absent? >>
-          opening_square_bracket.absent? >>
-          closing_square_bracket.absent? >>
-          equal.absent? >>
-          left_caret.absent? >>
-          right_caret.absent? >>
-          any
+        space.absent? >> newline.absent? >> comma.absent? >> colon.absent? >>
+          dot.absent? >> single_quote.absent? >> double_quote.absent? >>
+          opening_curly_bracket.absent? >> closing_curly_bracket.absent? >>
+          opening_square_bracket.absent? >> closing_square_bracket.absent? >>
+          equal.absent? >> left_caret.absent? >> right_caret.absent? >> any
       end
 
       rule(:name) do

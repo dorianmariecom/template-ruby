@@ -16,14 +16,4 @@ RSpec.describe Code::Parser::Nothing do
       end
     end
   end
-
-  %w[Nothing NULL Nil true false].each do |input|
-    context input.inspect do
-      let(:input) { input }
-
-      it "fails" do
-        expect { subject }.to raise_error(Parslet::ParseFailed)
-      end
-    end
-  end
 end
