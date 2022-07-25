@@ -13,9 +13,9 @@ class Code
       end
 
       def evaluate(context)
-        @statements.reduce(context) do |context, statement|
+        @statements.map do |statement|
           statement.evaluate(context)
-        end
+        end.last
       end
     end
   end

@@ -19,6 +19,8 @@ RSpec.describe Code do
     ["1e1e1", "10000000000"],
     ["'hello'", "hello"],
     ['"hello"', "hello"],
+    ['user', ""],
+    ['user.first_name', ""],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
