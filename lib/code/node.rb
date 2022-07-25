@@ -1,4 +1,4 @@
 class Code
-  class Parser
+  class Node
   end
 end
