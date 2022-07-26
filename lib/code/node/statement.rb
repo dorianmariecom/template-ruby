@@ -14,6 +14,8 @@ class Code
           @statement = ::Code::Node::Call.new(statement[:call])
         elsif statement.key?(:name)
           @statement = ::Code::Node::Name.new(statement[:name])
+        elsif statement.key?(:list)
+          @statement = ::Code::Node::List.new(statement[:list])
         else
           raise NotImplementedError.new(statement.inspect)
         end

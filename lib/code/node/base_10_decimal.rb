@@ -13,7 +13,10 @@ class Code
 
       def evaluate(context)
         @exponent = @exponent.evaluate(context) if @exponent
-        ::Code::Object::Decimal.new("#{sign}#{whole}.#{decimal}", exponent: @exponent)
+        ::Code::Object::Decimal.new(
+          "#{sign}#{whole}.#{decimal}",
+          exponent: @exponent
+        )
       end
 
       private

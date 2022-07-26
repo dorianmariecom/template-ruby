@@ -7,7 +7,7 @@ class Code
 
       def initialize(decimal, exponent: nil)
         @raw = BigDecimal(decimal)
-        @raw = @raw * 10 ** exponent.raw if exponent
+        @raw = @raw * 10**exponent.raw if exponent
       end
 
       def to_s

@@ -5,7 +5,7 @@ class Code
 
       def initialize(whole, exponent: nil)
         @raw = whole.to_i
-        @raw = @raw * 10 ** exponent.raw if exponent
+        @raw = @raw * 10**exponent.raw if exponent
       end
 
       def to_s

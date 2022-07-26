@@ -19,7 +19,7 @@ RSpec.describe Code::Parser::Call do
                   whole: "3"
                 }
               }
-            },
+            }
           },
           right: {
             name: "times"
