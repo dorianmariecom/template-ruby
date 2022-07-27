@@ -3,7 +3,7 @@ class Code
     class Dictionnary < Parslet::Parser
       rule(:list) { ::Code::Parser::List.new }
       rule(:code) { ::Code::Parser::Code.new }
-      rule(:name) { ::Code::Parser::Name.new }
+      rule(:string) { ::Code::Parser::String.new }
 
       rule(:opening_curly_bracket) { str("{") }
       rule(:closing_curly_bracket) { str("}") }
@@ -18,7 +18,7 @@ class Code
       rule(:whitespace?) { whitespace.maybe }
 
       rule(:key_value) do
-        (name.as(:key) >> colon >> whitespace? >> code.as(:value)) |
+        (string.as(:key) >> colon >> whitespace? >> code.as(:value)) |
           (
             code.as(:key) >> whitespace? >> equal >> right_caret >>
               whitespace? >> code.as(:value)

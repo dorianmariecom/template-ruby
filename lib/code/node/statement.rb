@@ -16,6 +16,8 @@ class Code
           @statement = ::Code::Node::Name.new(statement[:name])
         elsif statement.key?(:list)
           @statement = ::Code::Node::List.new(statement[:list])
+        elsif statement.key?(:dictionnary)
+          @statement = ::Code::Node::Dictionnary.new(statement[:dictionnary])
         else
           raise NotImplementedError.new(statement.inspect)
         end

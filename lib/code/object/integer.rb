@@ -11,6 +11,10 @@ class Code
       def to_s
         raw.to_s
       end
+
+      def inspect
+        to_s
+      end
     end
   end
 end

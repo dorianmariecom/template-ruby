@@ -20,7 +20,9 @@ RSpec.describe Code do
     %w['hello' hello],
     %w["hello" hello],
     ["user", ""],
-    ["user.first_name", ""]
+    ["user.first_name", ""],
+    ["[true, 1, nothing]", "[true, 1, nothing]"],
+    ['{a: 1, "b": 2}', "{a: 1, b: 2}"]
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

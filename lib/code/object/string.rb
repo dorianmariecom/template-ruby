@@ -11,6 +11,10 @@ class Code
         raw
       end
 
+      def inspect
+        raw.inspect
+      end
+
       private
 
       attr_reader :raw

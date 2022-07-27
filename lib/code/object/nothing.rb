@@ -4,6 +4,10 @@ class Code
       def to_s
         ""
       end
+
+      def inspect
+        "nothing"
+      end
     end
   end
 end
