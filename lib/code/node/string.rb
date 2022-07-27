@@ -6,7 +6,7 @@ class Code
       end
 
       def evaluate(context)
-        ::Code::Object::String.new(string)
+        ::Code::Object::String.new(string.to_s)
       end
 
       private

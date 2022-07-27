@@ -6,7 +6,7 @@ class Code
       end
 
       def evaluate(context)
-        context.fetch(name)
+        context.fetch(::Code::Object::String.new(name.to_s))
       end
 
       private

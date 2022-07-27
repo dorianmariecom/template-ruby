@@ -1,28 +1,31 @@
 class Code
   class Object
     class Dictionnary < ::Code::Object
+      attr_reader :raw
+
       def initialize(raw = {})
         @raw = raw
       end
 
       def to_s
-        "{#{raw.map { |key, value| key_value_to_s(key, value) }.join(", ")}}"
+        "{#{raw.map { |key, value| "#{key.inspect} => #{value.inspect}" }.join(", ")}}"
       end
 
       def inspect
         to_s
       end
 
-      private
+      def fetch(key, default = ::Code::Object::Nothing.new)
+        raw.fetch(key, default)
+      end
 
-      attr_reader :raw
+      def ==(other)
+        raw == other.raw
+      end
+      alias_method :eql?, :==
 
-      def key_value_to_s(key, value)
-        if key.is_a?(::Code::Object::String)
-          "#{key.to_s}: #{value.inspect}"
-        else
-          "#{key.inspect} => #{value.inspect}"
-        end
+      def hash
+        [self.class, raw].hash
       end
     end
   end

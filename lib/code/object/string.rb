@@ -3,6 +3,8 @@ require "bigdecimal"
 class Code
   class Object
     class String < ::Code::Object
+      attr_reader :raw
+
       def initialize(string)
         @raw = string
       end
@@ -15,9 +17,14 @@ class Code
         raw.inspect
       end
 
-      private
+      def ==(other)
+        raw == other.raw
+      end
+      alias_method :eql?, :==
 
-      attr_reader :raw
+      def hash
+        [self.class, raw].hash
+      end
     end
   end
 end

@@ -15,6 +15,15 @@ class Code
       def inspect
         to_s
       end
+
+      def ==(other)
+        raw == other.raw
+      end
+      alias_method :eql?, :==
+
+      def hash
+        [self.class, raw].hash
+      end
     end
   end
 end

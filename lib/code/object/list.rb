@@ -1,6 +1,8 @@
 class Code
   class Object
     class List < ::Code::Object
+      attr_reader :raw
+
       def initialize(raw)
         @raw = raw
       end
@@ -13,9 +15,23 @@ class Code
         to_s
       end
 
-      private
+      def map(&block)
+        @raw = raw.map(&block)
+        self
+      end
 
-      attr_reader :raw
+      def join
+        raw.join
+      end
+
+      def ==(other)
+        raw == other.raw
+      end
+      alias_method :eql?, :==
+
+      def hash
+        [self.class, raw].hash
+      end
     end
   end
 end

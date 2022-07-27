@@ -28,7 +28,7 @@ class Code
       rule(:dictionnary) do
         (
           opening_curly_bracket.ignore >> whitespace?.ignore >>
-            key_value.maybe >>
+            key_value.repeat(0, 1) >>
             (whitespace? >> comma >> whitespace? >> key_value).repeat >>
             whitespace?.ignore >> comma.maybe.ignore >> whitespace?.ignore >>
             closing_curly_bracket.ignore

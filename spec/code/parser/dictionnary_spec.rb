@@ -5,6 +5,12 @@ RSpec.describe Code::Parser::Dictionnary do
 
   [
     [
+      '{name: "Dorian"}',
+      {
+        dictionnary: [{ key: { name: "name" }, value: [{ string: "Dorian" }] }]
+      }
+    ],
+    [
       '{a: true, "b": false}',
       {
         dictionnary: [
