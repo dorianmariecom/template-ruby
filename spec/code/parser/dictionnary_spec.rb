@@ -7,17 +7,17 @@ RSpec.describe Code::Parser::Dictionnary do
     [
       '{name: "Dorian"}',
       {
-        dictionnary: [{ key: { name: "name" }, value: [{ string: "Dorian" }] }]
-      }
+        dictionnary: [{ key: { name: "name" }, value: [{ string: "Dorian" }] }],
+      },
     ],
     [
       '{a: true, "b": false}',
       {
         dictionnary: [
           { key: { name: "a" }, value: [{ boolean: "true" }] },
-          { key: { string: "b" }, value: [{ boolean: "false" }] }
-        ]
-      }
+          { key: { string: "b" }, value: [{ boolean: "false" }] },
+        ],
+      },
     ],
     [
       "{ true => 1, false => 2}",
@@ -25,15 +25,15 @@ RSpec.describe Code::Parser::Dictionnary do
         dictionnary: [
           {
             key: [{ boolean: "true" }],
-            value: [{ number: { base_10: { integer: { whole: "1" } } } }]
+            value: [{ number: { base_10: { integer: { whole: "1" } } } }],
           },
           {
             key: [{ boolean: "false" }],
-            value: [{ number: { base_10: { integer: { whole: "2" } } } }]
-          }
-        ]
-      }
-    ]
+            value: [{ number: { base_10: { integer: { whole: "2" } } } }],
+          },
+        ],
+      },
+    ],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

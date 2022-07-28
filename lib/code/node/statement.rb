@@ -24,6 +24,9 @@ class Code
           @statement = ::Code::Node::Power.new(statement[:power])
         elsif statement.key?(:unary_minus)
           @statement = ::Code::Node::UnaryMinus.new(statement[:unary_minus])
+        elsif statement.key?(:multiplication)
+          @statement =
+            ::Code::Node::Multiplication.new(statement[:multiplication])
         else
           raise NotImplementedError.new(statement.inspect)
         end

@@ -10,9 +10,9 @@ RSpec.describe Template do
     [
       "Hello {user.first_name}",
       '{ user: { first_name: "Dorian" } }',
-      "Hello Dorian"
+      "Hello Dorian",
     ],
-    ["Hello {user.first_name}", "", "Hello "]
+    ["Hello {user.first_name}", "", "Hello "],
   ].each do |(input, input_context, expected)|
     context "#{input.inspect} #{input_context.inspect}" do
       let(:input) { input }

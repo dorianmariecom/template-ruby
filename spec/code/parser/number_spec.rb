@@ -15,11 +15,11 @@ RSpec.describe Code::Parser::Number do
             decimal: {
               sign: "-",
               whole: "1",
-              decimal: "0"
-            }
-          }
-        }
-      }
+              decimal: "0",
+            },
+          },
+        },
+      },
     ],
     [
       "+1.0",
@@ -29,11 +29,11 @@ RSpec.describe Code::Parser::Number do
             decimal: {
               sign: "+",
               whole: "1",
-              decimal: "0"
-            }
-          }
-        }
-      }
+              decimal: "0",
+            },
+          },
+        },
+      },
     ],
     ["0", { number: { base_10: { integer: { whole: "0" } } } }],
     ["+0", { number: { base_10: { integer: { sign: "+", whole: "0" } } } }],
@@ -42,7 +42,7 @@ RSpec.describe Code::Parser::Number do
     ["0o01234567", { number: { base_8: "01234567" } }],
     [
       "0x0123456789aAbBcCdDeEfF",
-      { number: { base_16: "0123456789aAbBcCdDeEfF" } }
+      { number: { base_16: "0123456789aAbBcCdDeEfF" } },
     ],
     [
       "10e20",
@@ -53,13 +53,13 @@ RSpec.describe Code::Parser::Number do
               whole: "10",
               exponent: {
                 integer: {
-                  whole: "20"
-                }
-              }
-            }
-          }
-        }
-      }
+                  whole: "20",
+                },
+              },
+            },
+          },
+        },
+      },
     ],
     [
       "10.34e23.45",
@@ -72,13 +72,13 @@ RSpec.describe Code::Parser::Number do
               exponent: {
                 decimal: {
                   whole: "23",
-                  decimal: "45"
-                }
-              }
-            }
-          }
-        }
-      }
+                  decimal: "45",
+                },
+              },
+            },
+          },
+        },
+      },
     ],
     [
       "+10e-20e1.0",
@@ -95,16 +95,16 @@ RSpec.describe Code::Parser::Number do
                   exponent: {
                     decimal: {
                       whole: "1",
-                      decimal: "0"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ]
+                      decimal: "0",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    ],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

@@ -6,11 +6,11 @@ class Code
 
       def initialize(negation)
         @operator = negation.fetch(:operator)
-        @code = ::Code::Node::Code.new(negation.fetch(:code))
+        @statement = ::Code::Node::Statement.new(negation.fetch(:statement))
       end
 
       def evaluate(context)
-        object = @code.evaluate(context)
+        object = @statement.evaluate(context)
 
         if exclamation_point?
           case object

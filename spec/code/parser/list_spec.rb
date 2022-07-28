@@ -9,14 +9,14 @@ RSpec.describe Code::Parser::List do
       {
         list: [
           { code: [{ boolean: "true" }] },
-          { code: [{ boolean: "false" }] }
-        ]
-      }
+          { code: [{ boolean: "false" }] },
+        ],
+      },
     ],
     [
       "[nothing, a]",
-      { list: [{ code: [{ nothing: "nothing" }] }, { code: [{ name: "a" }] }] }
-    ]
+      { list: [{ code: [{ nothing: "nothing" }] }, { code: [{ name: "a" }] }] },
+    ],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

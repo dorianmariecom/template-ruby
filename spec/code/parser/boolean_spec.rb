@@ -5,7 +5,7 @@ RSpec.describe Code::Parser::Boolean do
 
   [
     ["true", { boolean: "true" }],
-    ["false", { boolean: "false" }]
+    ["false", { boolean: "false" }],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

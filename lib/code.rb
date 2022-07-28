@@ -1,6 +1,3 @@
-require "active_support"
-require "active_support/core_ext/object/blank"
-
 class Code
   def initialize(input)
     @input = input

@@ -1,5 +1,3 @@
-require "bigdecimal"
-
 class Code
   class Object
     class Decimal < ::Code::Object::Number
@@ -7,12 +5,19 @@ class Code
 
       def initialize(decimal, exponent: nil)
         @raw = BigDecimal(decimal)
-        @raw = @raw * 10 ** exponent.raw if exponent && exponent.is_a?(::Code::Object::Number)
+        @raw = @raw * 10**exponent.raw if exponent &&
+          exponent.is_a?(::Code::Object::Number)
       end
 
       def fetch(key, *args, **kargs)
-        if key == :power
+        if key == :**
           power(args.first)
+        elsif key == :*
+          multiplication(args.first)
+        elsif key == :/
+          division(args.first)
+        elsif key == :%
+          modulo(args.first)
         else
           ::Code::Object::Nothing.new
         end
@@ -39,7 +44,31 @@ class Code
 
       def power(other)
         if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Decimal.new(raw ** other.raw)
+          ::Code::Object::Decimal.new(raw**other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def multiplication(other)
+        if other.is_a?(::Code::Object::Number)
+          ::Code::Object::Decimal.new(raw * other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def division(other)
+        if other.is_a?(::Code::Object::Number)
+          ::Code::Object::Decimal.new(raw / other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def modulo(other)
+        if other.is_a?(::Code::Object::Number)
+          ::Code::Object::Decimal.new(raw % other.raw)
         else
           ::Code::Object::Nothing.new
         end

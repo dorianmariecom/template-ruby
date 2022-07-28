@@ -3,13 +3,13 @@ class Code
     class Power
       def initialize(power)
         @left = ::Code::Node::Statement.new(power.fetch(:left))
-        @right = ::Code::Node::Code.new(power.fetch(:right))
+        @right = ::Code::Node::Statement.new(power.fetch(:right))
       end
 
       def evaluate(context)
         right = @right.evaluate(context)
         left = @left.evaluate(context)
-        left.fetch(:power, right)
+        left.fetch(:**, right)
       end
     end
   end

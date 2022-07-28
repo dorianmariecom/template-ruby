@@ -6,7 +6,7 @@ RSpec.describe Code::Parser::Nothing do
   [
     ["nothing", { nothing: "nothing" }],
     ["null", { nothing: "null" }],
-    ["nil", { nothing: "nil" }]
+    ["nil", { nothing: "nil" }],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

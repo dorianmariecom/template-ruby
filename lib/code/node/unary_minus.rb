@@ -2,11 +2,11 @@ class Code
   class Node
     class UnaryMinus
       def initialize(unary_minus)
-        @code = ::Code::Node::Code.new(unary_minus)
+        @statement = ::Code::Node::Statement.new(unary_minus)
       end
 
       def evaluate(context)
-        object = @code.evaluate(context)
+        object = @statement.evaluate(context)
 
         case object
         when ::Code::Object::Integer

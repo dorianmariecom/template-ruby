@@ -1,6 +1,3 @@
-require "active_support"
-require "active_support/core_ext/object/blank"
-
 class Code
   class Node
     class Dictionnary
@@ -17,7 +14,7 @@ class Code
 
       def evaluate(context)
         ::Code::Object::Dictionnary.new(
-          @key_values.map { |key_value| key_value.evaluate(context) }.to_h
+          @key_values.map { |key_value| key_value.evaluate(context) }.to_h,
         )
       end
     end

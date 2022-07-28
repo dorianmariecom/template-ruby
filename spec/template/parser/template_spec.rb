@@ -6,7 +6,7 @@ RSpec.describe Template::Parser::Template do
   [
     ["hello", [{ text: "hello" }]],
     ["hello {name}", [{ text: "hello " }, { code: [{ name: "name" }] }]],
-    ["{name", [{ code: [{ name: "name" }] }]]
+    ["{name", [{ code: [{ name: "name" }] }]],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

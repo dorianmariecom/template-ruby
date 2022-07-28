@@ -15,7 +15,7 @@ class Code
         @exponent = @exponent.evaluate(context) if @exponent
         ::Code::Object::Decimal.new(
           "#{sign}#{whole}.#{decimal}",
-          exponent: @exponent
+          exponent: @exponent,
         )
       end
 

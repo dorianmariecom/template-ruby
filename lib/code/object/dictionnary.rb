@@ -8,9 +8,7 @@ class Code
       end
 
       def fetch(key, *args, **kargs)
-        raw.fetch(key) do
-          ::Code::Object::Nothing.new
-        end
+        raw.fetch(key) { ::Code::Object::Nothing.new }
       end
 
       def ==(other)

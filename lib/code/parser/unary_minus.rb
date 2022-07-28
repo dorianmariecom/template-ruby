@@ -2,15 +2,10 @@ class Code
   class Parser
     class UnaryMinus < Parslet::Parser
       rule(:power) { ::Code::Parser::Power.new }
-      rule(:code) { ::Code::Parser::Code.new }
 
       rule(:minus) { str("-") }
 
-      rule(:unary_minus) do
-        (
-          minus >> code
-        ).as(:unary_minus) | power
-      end
+      rule(:unary_minus) { (minus >> unary_minus).as(:unary_minus) | power }
 
       root(:unary_minus)
     end
