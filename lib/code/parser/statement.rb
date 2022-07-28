@@ -1,9 +1,9 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:call) { ::Code::Parser::Call.new }
+      rule(:unary) { ::Code::Parser::Unary.new }
 
-      rule(:statement) { call }
+      rule(:statement) { unary }
 
       root(:statement)
     end

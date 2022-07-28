@@ -25,6 +25,10 @@ class Code
       def hash
         [self.class, raw].hash
       end
+
+      def fetch(key, default = ::Code::Object::Nothing.new, *args, **kargs)
+        default
+      end
     end
   end
 end

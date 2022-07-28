@@ -15,7 +15,7 @@ class Code
         to_s
       end
 
-      def fetch(key, default = ::Code::Object::Nothing.new)
+      def fetch(key, default = ::Code::Object::Nothing.new, *args, **kargs)
         raw.fetch(key, default)
       end
 

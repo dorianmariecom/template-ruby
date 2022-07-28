@@ -1,11 +1,18 @@
+require "active_support"
+require "active_support/core_ext/object/blank"
+
 class Code
   class Node
     class Dictionnary
       def initialize(key_values)
-        @key_values =
-          key_values.map do |key_value|
-            ::Code::Node::DictionnaryKeyValue.new(key_value)
-          end
+        if key_values.blank?
+          @key_values = []
+        else
+          @key_values =
+            key_values.map do |key_value|
+              ::Code::Node::DictionnaryKeyValue.new(key_value)
+            end
+        end
       end
 
       def evaluate(context)

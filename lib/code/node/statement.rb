@@ -18,6 +18,8 @@ class Code
           @statement = ::Code::Node::List.new(statement[:list])
         elsif statement.key?(:dictionnary)
           @statement = ::Code::Node::Dictionnary.new(statement[:dictionnary])
+        elsif statement.key?(:unary)
+          @statement = ::Code::Node::Unary.new(statement[:unary])
         else
           raise NotImplementedError.new(statement.inspect)
         end

@@ -22,7 +22,15 @@ RSpec.describe Code do
     ["user", ""],
     ["user.first_name", ""],
     ["[true, 1, nothing]", "[true, 1, nothing]"],
-    ['{a: 1, "b": 2}', '{"a" => 1, "b" => 2}']
+    ['{a: 1, "b": 2}', '{"a" => 1, "b" => 2}'],
+    ['!true', 'false'],
+    ['!!true', 'true'],
+    ['!!nothing', 'false'],
+    ['!!1', 'true'],
+    ['+1', '1'],
+    ['++++1', '1'],
+    ['++++nothing', ''],
+    ['+{}', '{}'],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
