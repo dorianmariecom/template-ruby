@@ -1,3 +1,11 @@
+PATH
+  remote: .
+  specs:
+    template-ruby (0.1.0)
+      activesupport (~> 7)
+      parslet (~> 2)
+      zeitwerk (~> 2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -54,11 +62,9 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
-  activesupport
-  parslet
-  prettier
-  rspec
-  zeitwerk
+  prettier (~> 3)
+  rspec (~> 3)
+  template-ruby!
 
 BUNDLED WITH
    2.3.18
