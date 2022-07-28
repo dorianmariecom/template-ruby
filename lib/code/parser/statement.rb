@@ -1,9 +1,9 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:power) { ::Code::Parser::Power.new }
+      rule(:unary_minus) { ::Code::Parser::UnaryMinus.new }
 
-      rule(:statement) { power }
+      rule(:statement) { unary_minus }
 
       root(:statement)
     end

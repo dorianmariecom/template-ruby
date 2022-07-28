@@ -33,6 +33,8 @@ RSpec.describe Code do
     %w[+{} {}],
     ["2 ** 2", "4"],
     ["2 ** 2 ** 3", "256"],
+    ["-2", "-2"],
+    ["--2", "2"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
