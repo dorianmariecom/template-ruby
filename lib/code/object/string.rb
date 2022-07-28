@@ -9,12 +9,8 @@ class Code
         @raw = string
       end
 
-      def to_s
-        raw
-      end
-
-      def inspect
-        raw.inspect
+      def fetch(key, *args, **kargs)
+        ::Code::Object::Nothing.new
       end
 
       def ==(other)
@@ -26,8 +22,12 @@ class Code
         [self.class, raw].hash
       end
 
-      def fetch(key, default = ::Code::Object::Nothing.new, *args, **kargs)
-        default
+      def to_s
+        raw
+      end
+
+      def inspect
+        raw.inspect
       end
     end
   end

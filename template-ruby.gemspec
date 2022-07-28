@@ -2,7 +2,8 @@ Gem::Specification.new do |s|
   s.name = "template-ruby"
   s.version = "0.1.0"
   s.summary = "A templating programming language"
-  s.description = 'Like "Hello {name}" with {name: "Dorian"} gives "Hello Dorian"'
+  s.description =
+    'Like "Hello {name}" with {name: "Dorian"} gives "Hello Dorian"'
   s.authors = ["Dorian Marié"]
   s.email = "dorian@dorianmarie.fr"
   s.files = `git ls-files`.split($/)

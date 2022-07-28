@@ -1,7 +1,7 @@
 class Code
   class Object
-    def fetch(_key, default = ::Code::Object::Nothing.new)
-      default
+    def fetch(_key)
+      ::Code::Object::Nothing.new
     end
 
     def to_s

@@ -7,16 +7,10 @@ class Code
         @raw = raw
       end
 
-      def to_s
-        "{#{raw.map { |key, value| "#{key.inspect} => #{value.inspect}" }.join(", ")}}"
-      end
-
-      def inspect
-        to_s
-      end
-
-      def fetch(key, default = ::Code::Object::Nothing.new, *args, **kargs)
-        raw.fetch(key, default)
+      def fetch(key, *args, **kargs)
+        raw.fetch(key) do
+          ::Code::Object::Nothing.new
+        end
       end
 
       def ==(other)
@@ -26,6 +20,14 @@ class Code
 
       def hash
         [self.class, raw].hash
+      end
+
+      def to_s
+        "{#{raw.map { |key, value| "#{key.inspect} => #{value.inspect}" }.join(", ")}}"
+      end
+
+      def inspect
+        to_s
       end
     end
   end

@@ -7,12 +7,8 @@ class Code
         @raw = raw
       end
 
-      def to_s
-        "[#{raw.map(&:inspect).join(", ")}]"
-      end
-
-      def inspect
-        to_s
+      def fetch(key, *args, **kargs)
+        ::Code::Object::Nothing.new
       end
 
       def map(&block)
@@ -33,8 +29,12 @@ class Code
         [self.class, raw].hash
       end
 
-      def fetch(key, default = ::Code::Object::Nothing.new, *args, **kargs)
-        default
+      def to_s
+        "[#{raw.map(&:inspect).join(", ")}]"
+      end
+
+      def inspect
+        to_s
       end
     end
   end

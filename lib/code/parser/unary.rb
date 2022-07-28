@@ -8,7 +8,9 @@ class Code
 
       rule(:operator) { exclamation_point | plus }
 
-      rule(:unary) { (operator.as(:operator) >> unary.as(:expression)).as(:unary) | call }
+      rule(:unary) do
+        (operator.as(:operator) >> unary.as(:expression)).as(:unary) | call
+      end
 
       root(:unary)
     end
