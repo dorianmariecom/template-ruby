@@ -1,16 +1,16 @@
 class Code
   class Node
-    class Unary
+    class Negation
       EXCLAMATION_POINT = "!"
       PLUS = "+"
 
-      def initialize(unary)
-        @operator = unary.fetch(:operator)
-        @expression = ::Code::Node::Statement.new(unary.fetch(:expression))
+      def initialize(negation)
+        @operator = negation.fetch(:operator)
+        @code = ::Code::Node::Code.new(negation.fetch(:code))
       end
 
       def evaluate(context)
-        object = @expression.evaluate(context)
+        object = @code.evaluate(context)
 
         if exclamation_point?
           case object

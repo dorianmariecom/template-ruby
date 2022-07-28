@@ -1,7 +1,7 @@
 class Code
   class Parser
     class Power < Parslet::Parser
-      rule(:unary) { ::Code::Parser::Unary.new }
+      rule(:negation) { ::Code::Parser::Negation.new }
       rule(:code) { ::Code::Parser::Code.new }
 
       rule(:asterisk) { str("*") }
@@ -15,9 +15,9 @@ class Code
 
       rule(:power) do
         (
-          unary.as(:left) >> whitespace? >> operator >> whitespace? >>
+          negation.as(:left) >> whitespace? >> operator >> whitespace? >>
             code.as(:right)
-        ).as(:power) | unary
+        ).as(:power) | negation
       end
 
       root(:power)
