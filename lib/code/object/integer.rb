@@ -22,6 +22,10 @@ class Code
           addition(args.first)
         elsif key == :-
           substraction(args.first)
+        elsif key == :<<
+          left_shift(args.first)
+        elsif key == :>>
+          right_shift(args.first)
         else
           ::Code::Object::Nothing.new
         end
@@ -99,6 +103,22 @@ class Code
           ::Code::Object::Integer.new(raw - other.raw)
         elsif other.is_a?(::Code::Object::Decimal)
           ::Code::Object::Decimal.new(raw - other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def left_shift(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw << other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def right_shift(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw >> other.raw)
         else
           ::Code::Object::Nothing.new
         end

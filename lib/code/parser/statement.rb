@@ -1,9 +1,9 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:addition) { ::Code::Parser::Addition.new }
+      rule(:shift) { ::Code::Parser::Shift.new }
 
-      rule(:statement) { addition }
+      rule(:statement) { shift }
 
       root(:statement)
     end

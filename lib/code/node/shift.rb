@@ -1,13 +1,13 @@
 class Code
   class Node
-    class Addition
-      PLUS = "+"
-      MINUS = "-"
+    class Shift
+      LEFT_SHIFT = "<<"
+      RIGHT_SHIFT = ">>"
 
-      def initialize(addition)
-        @first = ::Code::Node::Statement.new(addition.fetch(:first))
+      def initialize(shift)
+        @first = ::Code::Node::Statement.new(shift.fetch(:first))
         @rest =
-          addition
+          shift
             .fetch(:rest)
             .map do |operator_and_statement|
               {
@@ -27,10 +27,10 @@ class Code
           operator = operator_and_statement.fetch(:operator)
           other = operator_and_statement.fetch(:statement).evaluate(context)
 
-          if operator == PLUS
-            object = object.fetch(:+, other)
-          elsif operator == MINUS
-            object = object.fetch(:-, other)
+          if operator == LEFT_SHIFT
+            object = object.fetch(:<<, other)
+          elsif operator == RIGHT_SHIFT
+            object = object.fetch(:>>, other)
           else
             raise NotImplementedError.new(operator)
           end

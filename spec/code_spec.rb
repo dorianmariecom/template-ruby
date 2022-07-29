@@ -43,6 +43,8 @@ RSpec.describe Code do
     ["1 + 2 * 3 + 4", "11"],
     ["1e1.1 * 2", "25.1785082358833442084790822"],
     ["1 / 3 * 3", "0.999999999999999999999999999999999999"],
+    ["1 << 2", "4"],
+    ["4 >> 2", "1"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
