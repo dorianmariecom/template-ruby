@@ -27,6 +27,8 @@ class Code
         elsif statement.key?(:multiplication)
           @statement =
             ::Code::Node::Multiplication.new(statement[:multiplication])
+        elsif statement.key?(:addition)
+          @statement = ::Code::Node::Addition.new(statement[:addition])
         else
           raise NotImplementedError.new(statement.inspect)
         end

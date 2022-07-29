@@ -11,8 +11,16 @@ class Code
       end
 
       def evaluate(context)
-        @exponent = @exponent.evaluate(context) if @exponent
-        ::Code::Object::Integer.new("#{sign}#{whole}", exponent: @exponent)
+        if @exponent
+          @exponent = @exponent.evaluate(context)
+          if @exponent.is_a?(::Code::Object::Decimal)
+            ::Code::Object::Decimal.new("#{sign}#{whole}", exponent: @exponent)
+          else
+            ::Code::Object::Integer.new("#{sign}#{whole}", exponent: @exponent)
+          end
+        else
+          ::Code::Object::Integer.new("#{sign}#{whole}")
+        end
       end
 
       private

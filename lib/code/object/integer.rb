@@ -18,6 +18,10 @@ class Code
           division(args.first)
         elsif key == :%
           modulo(args.first)
+        elsif key == :+
+          addition(args.first)
+        elsif key == :-
+          substraction(args.first)
         else
           ::Code::Object::Nothing.new
         end
@@ -75,6 +79,26 @@ class Code
           ::Code::Object::Integer.new(raw % other.raw)
         elsif other.is_a?(::Code::Object::Decimal)
           ::Code::Object::Decimal.new(raw % other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def addition(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw + other.raw)
+        elsif other.is_a?(::Code::Object::Decimal)
+          ::Code::Object::Decimal.new(raw + other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def substraction(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw - other.raw)
+        elsif other.is_a?(::Code::Object::Decimal)
+          ::Code::Object::Decimal.new(raw - other.raw)
         else
           ::Code::Object::Nothing.new
         end

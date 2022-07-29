@@ -1,6 +1,7 @@
 class Code
   class Object
     class Decimal < ::Code::Object::Number
+      ROUND_N = 35
       attr_reader :raw
 
       def initialize(decimal, exponent: nil)
