@@ -1,9 +1,9 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:shift) { ::Code::Parser::Shift.new }
+      rule(:bitwise_or) { ::Code::Parser::BitwiseOr.new }
 
-      rule(:statement) { shift }
+      rule(:statement) { bitwise_or }
 
       root(:statement)
     end

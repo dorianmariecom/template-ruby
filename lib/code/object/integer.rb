@@ -26,6 +26,12 @@ class Code
           left_shift(args.first)
         elsif key == :>>
           right_shift(args.first)
+        elsif key == :&
+          bitwise_and(args.first)
+        elsif key == :|
+          bitwise_or(args.first)
+        elsif key == :^
+          bitwise_xor(args.first)
         else
           ::Code::Object::Nothing.new
         end
@@ -119,6 +125,30 @@ class Code
       def right_shift(other)
         if other.is_a?(::Code::Object::Integer)
           ::Code::Object::Integer.new(raw >> other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def bitwise_and(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw & other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def bitwise_or(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw | other.raw)
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def bitwise_xor(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw ^ other.raw)
         else
           ::Code::Object::Nothing.new
         end

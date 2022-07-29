@@ -45,6 +45,9 @@ RSpec.describe Code do
     ["1 / 3 * 3", "0.999999999999999999999999999999999999"],
     ["1 << 2", "4"],
     ["4 >> 2", "1"],
+    ["2 & 1", "0"],
+    ["2 | 1", "3"],
+    ["5 ^ 6", "3"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

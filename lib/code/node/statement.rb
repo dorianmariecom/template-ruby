@@ -31,6 +31,10 @@ class Code
           @statement = ::Code::Node::Addition.new(statement[:addition])
         elsif statement.key?(:shift)
           @statement = ::Code::Node::Shift.new(statement[:shift])
+        elsif statement.key?(:bitwise_and)
+          @statement = ::Code::Node::BitwiseAnd.new(statement[:bitwise_and])
+        elsif statement.key?(:bitwise_or)
+          @statement = ::Code::Node::BitwiseOr.new(statement[:bitwise_or])
         else
           raise NotImplementedError.new(statement.inspect)
         end
