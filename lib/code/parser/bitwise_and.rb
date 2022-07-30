@@ -14,8 +14,8 @@ class Code
 
       rule(:bitwise_and) do
         (
-          shift.repeat(1, 1) >>
-            (whitespace? >> operator >> whitespace? >> shift).repeat(1)
+          shift.as(:first) >>
+          (whitespace? >> operator.as(:operator) >> whitespace? >> shift.as(:statement)).repeat(1).as(:rest)
         ).as(:bitwise_and) | shift
       end
 

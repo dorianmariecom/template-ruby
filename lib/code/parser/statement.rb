@@ -1,9 +1,9 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:bitwise_or) { ::Code::Parser::BitwiseOr.new }
+      rule(:equality) { ::Code::Parser::Equality.new }
 
-      rule(:statement) { bitwise_or }
+      rule(:statement) { equality }
 
       root(:statement)
     end

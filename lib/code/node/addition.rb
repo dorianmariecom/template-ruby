@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Addition
+    class Addition < Operator
       PLUS = "+"
       MINUS = "-"
 
