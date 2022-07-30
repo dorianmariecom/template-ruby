@@ -10,28 +10,16 @@ class Code
       end
 
       def fetch(key, *args, **kargs)
-        if key == :**
-          power(args.first)
-        elsif key == :*
-          multiplication(args.first)
-        elsif key == :/
+        if key == :/
           division(args.first)
-        elsif key == :%
-          modulo(args.first)
-        elsif key == :+
-          addition(args.first)
-        elsif key == :-
-          substraction(args.first)
-        elsif key == :<<
-          left_shift(args.first)
-        elsif key == :>>
-          right_shift(args.first)
-        elsif key == :&
-          bitwise_and(args.first)
-        elsif key == :|
-          bitwise_or(args.first)
-        elsif key == :^
-          bitwise_xor(args.first)
+        elsif [:**, :*, :%, :+, :-].include?(key)
+          integer_or_decimal_operation(key, args.first)
+        elsif [:<<, :>>, :&, :|, :^].include?(key)
+          integer_operation(key, args.first)
+        elsif [:>, :>=, :<, :<=].include?(key)
+          integer_or_decimal_comparaison(key, args.first)
+        elsif [:<=>, :==, :===, :!=].include?(key)
+          comparaison(key, args.first)
         else
           ::Code::Object::Nothing.new
         end
@@ -56,101 +44,47 @@ class Code
 
       private
 
-      def power(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw**other.raw)
-        elsif other.is_a?(::Code::Object::Decimal)
-          ::Code::Object::Decimal.new(raw**other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def multiplication(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw * other.raw)
-        elsif other.is_a?(::Code::Object::Decimal)
-          ::Code::Object::Decimal.new(raw * other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
       def division(other)
         if other.is_a?(::Code::Object::Number)
           ::Code::Object::Decimal.new(BigDecimal(raw) / other.raw)
         else
-          ::Code::Object::Nothing.new
+          ::Code::Object::Nothing
         end
       end
 
-      def modulo(other)
+      def integer_or_decimal_operation(operator, other)
         if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw % other.raw)
+          ::Code::Object::Integer.new(raw.public_send(operator, other.raw))
         elsif other.is_a?(::Code::Object::Decimal)
-          ::Code::Object::Decimal.new(raw % other.raw)
+          ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
         else
           ::Code::Object::Nothing.new
         end
       end
 
-      def addition(other)
+      def integer_operation(operator, other)
         if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw + other.raw)
+          ::Code::Object::Integer.new(raw.public_send(operator, other.raw))
+        else
+          ::Code::Object::Nothing.new
+        end
+      end
+
+      def integer_or_decimal_comparaison(operator, other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
         elsif other.is_a?(::Code::Object::Decimal)
-          ::Code::Object::Decimal.new(raw + other.raw)
+          ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
         else
           ::Code::Object::Nothing.new
         end
       end
 
-      def substraction(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw - other.raw)
-        elsif other.is_a?(::Code::Object::Decimal)
-          ::Code::Object::Decimal.new(raw - other.raw)
+      def comparaison(key, other)
+        if other
+          ::Code::Object::Boolean.new(raw.public_send(key, args.first&.raw))
         else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def left_shift(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw << other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def right_shift(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw >> other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def bitwise_and(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw & other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def bitwise_or(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw | other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def bitwise_xor(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw ^ other.raw)
-        else
-          ::Code::Object::Nothing.new
+          ::Code::Object::Boolean.new(false)
         end
       end
     end
