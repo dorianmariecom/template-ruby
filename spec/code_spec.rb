@@ -55,6 +55,8 @@ RSpec.describe Code do
     ["true && false", "false"],
     ["true || false", "true"],
     ["1..3", "1..3"],
+    ['1 > 3 ? "Impossible" : "Sounds about right"', "Sounds about right"],
+    ['1 < 3 ? "OK"', "OK"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

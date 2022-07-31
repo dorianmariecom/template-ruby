@@ -44,6 +44,8 @@ class Code
           @statement = ::Code::Node::Operation.new(statement[:or_operator])
         elsif statement.key?(:range)
           @statement = ::Code::Node::Range.new(statement[:range])
+        elsif statement.key?(:ternary)
+          @statement = ::Code::Node::Ternary.new(statement[:ternary])
         else
           raise NotImplementedError.new(statement.inspect)
         end

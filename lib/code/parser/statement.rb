@@ -1,10 +1,7 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:range) { ::Code::Parser::Range.new }
-
-      rule(:statement) { range }
-
+      rule(:statement) { ::Code::Parser::Ternary.new }
       root(:statement)
     end
   end
