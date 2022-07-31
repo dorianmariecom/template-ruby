@@ -25,8 +25,7 @@ class Code
         elsif statement.key?(:unary_minus)
           @statement = ::Code::Node::UnaryMinus.new(statement[:unary_minus])
         elsif statement.key?(:multiplication)
-          @statement =
-            ::Code::Node::Operation.new(statement[:multiplication])
+          @statement = ::Code::Node::Operation.new(statement[:multiplication])
         elsif statement.key?(:addition)
           @statement = ::Code::Node::Operation.new(statement[:addition])
         elsif statement.key?(:shift)
@@ -39,6 +38,12 @@ class Code
           @statement = ::Code::Node::Operation.new(statement[:greater_than])
         elsif statement.key?(:equality)
           @statement = ::Code::Node::Operation.new(statement[:equality])
+        elsif statement.key?(:and_operator)
+          @statement = ::Code::Node::Operation.new(statement[:and_operator])
+        elsif statement.key?(:or_operator)
+          @statement = ::Code::Node::Operation.new(statement[:or_operator])
+        elsif statement.key?(:range)
+          @statement = ::Code::Node::Range.new(statement[:range])
         else
           raise NotImplementedError.new(statement.inspect)
         end

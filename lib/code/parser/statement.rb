@@ -1,9 +1,9 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:equality) { ::Code::Parser::Equality.new }
+      rule(:range) { ::Code::Parser::Range.new }
 
-      rule(:statement) { equality }
+      rule(:statement) { range }
 
       root(:statement)
     end

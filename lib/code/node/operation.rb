@@ -12,7 +12,8 @@ class Code
 
       def initialize(operation)
         @first = ::Code::Node::Statement.new(operation.fetch(:first))
-        @rest = operation.fetch(:rest).map do |operation|
+        @rest = operation.fetch(:rest)
+        @rest.map! do |operation|
           ::Code::Node::Operation::Operation.new(operation)
         end
       end
@@ -22,7 +23,7 @@ class Code
 
         @rest.each do |operation|
           other = operation.statement.evaluate(context)
-          object = object.fetch(operation.operator, other)
+          object = object.evaluate(operation.operator, other)
         end
 
         object

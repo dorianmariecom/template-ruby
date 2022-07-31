@@ -9,29 +9,22 @@ class Code
           exponent.is_a?(::Code::Object::Number)
       end
 
-      def fetch(key, *args, **kargs)
+      def evaluate(key, *args, **kargs)
         if key == :/
           division(args.first)
-        elsif [:**, :*, :%, :+, :-].include?(key)
+        elsif %i[** * % + -].include?(key)
           integer_or_decimal_operation(key, args.first)
-        elsif [:<<, :>>, :&, :|, :^].include?(key)
+        elsif %i[<< >> & | ^].include?(key)
           integer_operation(key, args.first)
-        elsif [:>, :>=, :<, :<=].include?(key)
+        elsif %i[> >= < <=].include?(key)
           integer_or_decimal_comparaison(key, args.first)
-        elsif [:<=>, :==, :===, :!=].include?(key)
-          comparaison(key, args.first)
         else
-          ::Code::Object::Nothing.new
+          super
         end
       end
 
-      def ==(other)
-        raw == other.raw
-      end
-      alias_method :eql?, :==
-
-      def hash
-        [self.class, raw].hash
+      def succ
+        ::Code::Object::Integer.new(raw + 1)
       end
 
       def to_s
@@ -82,7 +75,7 @@ class Code
 
       def comparaison(key, other)
         if other
-          ::Code::Object::Boolean.new(raw.public_send(key, args.first&.raw))
+          ::Code::Object::Boolean.new(raw.public_send(key, other.raw))
         else
           ::Code::Object::Boolean.new(false)
         end

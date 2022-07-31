@@ -10,27 +10,14 @@ class Code
           exponent.is_a?(::Code::Object::Number)
       end
 
-      def fetch(key, *args, **kargs)
-        if key == :**
-          power(args.first)
-        elsif key == :*
-          multiplication(args.first)
-        elsif key == :/
-          division(args.first)
-        elsif key == :%
-          modulo(args.first)
+      def evaluate(key, *args, **kargs)
+        if %i[** * / %].include?(key)
+          number_operation(key, args.first)
+        elsif %i[> >= < <=].include?(key)
+          number_comparaison(key, args.first)
         else
-          ::Code::Object::Nothing.new
+          super
         end
-      end
-
-      def ==(other)
-        raw == other.raw
-      end
-      alias_method :eql?, :==
-
-      def hash
-        [self.class, raw].hash
       end
 
       def to_s
@@ -43,33 +30,17 @@ class Code
 
       private
 
-      def power(other)
+      def number_operation(operator, other)
         if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Decimal.new(raw**other.raw)
+          ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
         else
           ::Code::Object::Nothing.new
         end
       end
 
-      def multiplication(other)
+      def integer_or_decimal_comparaison(operator, other)
         if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Decimal.new(raw * other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def division(other)
-        if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Decimal.new(raw / other.raw)
-        else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def modulo(other)
-        if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Decimal.new(raw % other.raw)
+          ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
         else
           ::Code::Object::Nothing.new
         end

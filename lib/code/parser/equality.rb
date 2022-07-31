@@ -10,11 +10,8 @@ class Code
       rule(:tilde) { str("~") }
 
       rule(:operator) do
-        (left_caret >> equal >> right_caret) |
-          (equal >> equal >> equal) |
-          (equal >> equal) |
-          (exclamation_point >> equal) |
-          (equal >> tilde) |
+        (left_caret >> equal >> right_caret) | (equal >> equal >> equal) |
+          (equal >> equal) | (exclamation_point >> equal) | (equal >> tilde) |
           (exclamation_point >> tilde)
       end
 

@@ -1,26 +1,22 @@
 class Code
   class Object
-    class String < ::Code::Object
+    class Range < ::Code::Object
       attr_reader :raw
 
-      def initialize(string)
-        @raw = string
+      def initialize(left, right, exclude_end: false)
+        @raw = ::Range.new(left, right, exclude_end)
       end
 
       def evaluate(key, *args, **kargs)
         super
       end
 
-      def succ
-        ::Code::Object::String(raw.succ)
-      end
-
       def to_s
-        raw
+        raw.to_s
       end
 
       def inspect
-        raw.inspect
+        to_s
       end
     end
   end

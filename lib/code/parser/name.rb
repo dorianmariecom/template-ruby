@@ -15,6 +15,29 @@ class Code
       rule(:equal) { str("=") }
       rule(:left_caret) { str("<") }
       rule(:right_caret) { str(">") }
+      rule(:tilde) { str("~") }
+      rule(:pipe) { str("|") }
+      rule(:ampersand) { str("&") }
+      rule(:asterisk) { str("*") }
+      rule(:slash) { str("/") }
+      rule(:antislash) { str("\\") }
+      rule(:percent) { str("%") }
+      rule(:plus) { str("+") }
+      rule(:minus) { str("-") }
+      rule(:equal) { str("=") }
+
+      rule(:exclamation_point) { str("!") }
+      rule(:question_mark) { str("?") }
+
+      rule(:rescue_keyword) { str("rescue") }
+      rule(:defined_keyword) { str("defined?") }
+      rule(:not_keyword) { str("not") }
+      rule(:or_keyword) { str("or") }
+      rule(:and_keyword) { str("and") }
+      rule(:if_keyword) { str("if") }
+      rule(:unless_keyword) { str("unless") }
+      rule(:until_keyword) { str("until") }
+      rule(:while_keyword) { str("while") }
 
       rule(:zero) { str("0") }
       rule(:one) { str("1") }
@@ -32,15 +55,26 @@ class Code
       end
 
       rule(:name_character) do
-        space.absent? >> newline.absent? >> comma.absent? >> colon.absent? >>
-          dot.absent? >> single_quote.absent? >> double_quote.absent? >>
+        exclamation_point.absent? >> question_mark.absent? >> tilde.absent? >>
+          pipe.absent? >> ampersand.absent? >> asterisk.absent? >>
+          slash.absent? >> antislash.absent? >> percent.absent? >>
+          plus.absent? >> minus.absent? >> equal.absent? >> space.absent? >>
+          newline.absent? >> comma.absent? >> colon.absent? >> dot.absent? >>
+          single_quote.absent? >> double_quote.absent? >>
           opening_curly_bracket.absent? >> closing_curly_bracket.absent? >>
           opening_square_bracket.absent? >> closing_square_bracket.absent? >>
           equal.absent? >> left_caret.absent? >> right_caret.absent? >> any
       end
 
       rule(:name) do
-        (digit.absent? >> name_character >> name_character.repeat).as(:name)
+        (
+          rescue_keyword.absent? >> defined_keyword.absent? >>
+            not_keyword.absent? >> or_keyword.absent? >> and_keyword.absent? >>
+            if_keyword.absent? >> unless_keyword.absent? >>
+            until_keyword.absent? >> while_keyword.absent? >> digit.absent? >>
+            name_character >> name_character.repeat >> question_mark.maybe >>
+            exclamation_point.maybe
+        ).as(:name)
       end
 
       root(:name)

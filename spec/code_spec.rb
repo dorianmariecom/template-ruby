@@ -51,6 +51,10 @@ RSpec.describe Code do
     ["5 > 6", "false"],
     ["5 > 5", "false"],
     ["5 > 4", "true"],
+    ["2 > 1 == 3 > 2", "true"],
+    ["true && false", "false"],
+    ["true || false", "true"],
+    ["1..3", "1..3"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

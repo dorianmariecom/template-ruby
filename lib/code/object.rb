@@ -1,11 +1,76 @@
 class Code
   class Object
-    def fetch(_key)
-      ::Code::Object::Nothing.new
+    include Comparable
+
+    def evaluate(key, *args, **kargs)
+      if %i[== === !=].include?(key)
+        comparaison(key, args.first)
+      elsif key == :<=>
+        compare(args.first)
+      elsif key == "&&".to_sym
+        and_operator(args.first)
+      elsif key == "||".to_sym
+        or_operator(args.first)
+      else
+        ::Code::Object::Nothing.new
+      end
+    end
+
+    def truthy?
+      true
+    end
+
+    def <=>(other)
+      (other.is_a?(::Code::Object) && raw <=> other.raw) || raw <=> other
+    end
+
+    def ==(other)
+      (self <=> other) == 0
+    end
+    alias_method :eql?, :==
+
+    def hash
+      [self.class, raw].hash
     end
 
     def to_s
       raise NotImplementedError
+    end
+
+    private
+
+    def comparaison(key, other)
+      if other
+        ::Code::Object::Boolean.new(raw.public_send(key, other.raw))
+      else
+        ::Code::Object::Boolean.new(false)
+      end
+    end
+
+    def compare(other)
+      if other
+        ::Code::Object::Integer.new(raw <=> other.raw)
+      else
+        ::Code::Object::Integer.new(0)
+      end
+    end
+
+    def and_operator(other)
+      if truthy? && other && other.truthy?
+        other
+      else
+        ::Code::Object::Boolean.new(false)
+      end
+    end
+
+    def or_operator(other)
+      if truthy?
+        self
+      elsif other&.truthy?
+        other
+      else
+        ::Code::Object::Boolean.new(false)
+      end
     end
   end
 end

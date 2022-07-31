@@ -8,9 +8,7 @@ class Code
       rule(:equal) { str("=") }
 
       rule(:operator) do
-        (right_caret >> equal) |
-          (left_caret >> equal) |
-          right_caret |
+        (right_caret >> equal) | (left_caret >> equal) | right_caret |
           left_caret
       end
 

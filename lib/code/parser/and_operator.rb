@@ -1,28 +1,28 @@
 class Code
   class Parser
-    class BitwiseAnd < Parslet::Parser
-      rule(:shift) { ::Code::Parser::Shift.new }
+    class AndOperator < Parslet::Parser
+      rule(:equality) { ::Code::Parser::Equality.new }
 
       rule(:ampersand) { str("&") }
 
-      rule(:operator) { ampersand }
+      rule(:operator) { ampersand >> ampersand }
 
       rule(:space) { str(" ") }
       rule(:newline) { str("\n") }
       rule(:whitespace) { (space | newline).repeat(1) }
       rule(:whitespace?) { whitespace.maybe }
 
-      rule(:bitwise_and) do
+      rule(:and_operator) do
         (
-          shift.as(:first) >>
+          equality.as(:first) >>
             (
               whitespace? >> operator.as(:operator) >> whitespace? >>
-                shift.as(:statement)
+                equality.as(:statement)
             ).repeat(1).as(:rest)
-        ).as(:bitwise_and) | shift
+        ).as(:and_operator) | equality
       end
 
-      root(:bitwise_and)
+      root(:and_operator)
     end
   end
 end

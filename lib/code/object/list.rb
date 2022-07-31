@@ -7,8 +7,8 @@ class Code
         @raw = raw
       end
 
-      def fetch(key, *args, **kargs)
-        ::Code::Object::Nothing.new
+      def evaluate(key, *args, **kargs)
+        super
       end
 
       def map(&block)
@@ -18,15 +18,6 @@ class Code
 
       def join
         raw.join
-      end
-
-      def ==(other)
-        raw == other.raw
-      end
-      alias_method :eql?, :==
-
-      def hash
-        [self.class, raw].hash
       end
 
       def to_s

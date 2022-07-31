@@ -9,7 +9,7 @@ class Code
       def evaluate(context)
         right = @right.evaluate(context)
         left = @left.evaluate(context)
-        left.fetch(:**, right)
+        left.evaluate(:**, right)
       end
     end
   end

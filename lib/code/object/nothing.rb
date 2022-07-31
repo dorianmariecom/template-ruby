@@ -7,17 +7,12 @@ class Code
         @raw = nil
       end
 
-      def fetch(key, *args, **kargs)
-        ::Code::Object::Nothing.new
+      def evaluate(key, *args, **kargs)
+        super
       end
 
-      def ==(other)
-        raw == other.raw
-      end
-      alias_method :eql?, :==
-
-      def hash
-        [self.class, raw].hash
+      def truthy?
+        false
       end
 
       def to_s
