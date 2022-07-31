@@ -7,10 +7,6 @@ class Code
         @raw = ::Range.new(left, right, exclude_end)
       end
 
-      def evaluate(key, *args, **kargs)
-        super
-      end
-
       def to_s
         raw.to_s
       end

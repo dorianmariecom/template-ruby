@@ -7,10 +7,6 @@ class Code
         @raw = raw
       end
 
-      def evaluate(key, *args, **kargs)
-        super
-      end
-
       def map(&block)
         @raw = raw.map(&block)
         self

@@ -5,8 +5,14 @@ class Code
 
       def initialize(whole, exponent: nil)
         @raw = whole.to_i
-        @raw = @raw * 10**exponent.raw if exponent &&
-          exponent.is_a?(::Code::Object::Number)
+
+        if exponent
+          if exponent.is_a?(::Code::Object::Number)
+            @raw = @raw * 10**exponent.raw
+          else
+            raise ::Code::Error::TypeError.new("exponent is not a number")
+          end
+        end
       end
 
       def evaluate(key, *args, **kargs)
@@ -41,7 +47,7 @@ class Code
         if other.is_a?(::Code::Object::Number)
           ::Code::Object::Decimal.new(BigDecimal(raw) / other.raw)
         else
-          ::Code::Object::Nothing
+          raise ::Code::Error::TypeError.new("/ only supports numbers")
         end
       end
 
@@ -51,7 +57,7 @@ class Code
         elsif other.is_a?(::Code::Object::Decimal)
           ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
         else
-          ::Code::Object::Nothing.new
+          raise ::Code::Error::TypeError.new("#{operator} only supports numbers")
         end
       end
 
@@ -59,7 +65,7 @@ class Code
         if other.is_a?(::Code::Object::Integer)
           ::Code::Object::Integer.new(raw.public_send(operator, other.raw))
         else
-          ::Code::Object::Nothing.new
+          raise ::Code::Error::TypeError.new("#{operator} only supports integers")
         end
       end
 
@@ -69,15 +75,7 @@ class Code
         elsif other.is_a?(::Code::Object::Decimal)
           ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
         else
-          ::Code::Object::Nothing.new
-        end
-      end
-
-      def comparaison(key, other)
-        if other
-          ::Code::Object::Boolean.new(raw.public_send(key, other.raw))
-        else
-          ::Code::Object::Boolean.new(false)
+          raise ::Code::Error::TypeError.new("#{operator} only supports numbers")
         end
       end
     end

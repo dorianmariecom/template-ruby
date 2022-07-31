@@ -7,10 +7,6 @@ class Code
         @raw = nil
       end
 
-      def evaluate(key, *args, **kargs)
-        super
-      end
-
       def truthy?
         false
       end

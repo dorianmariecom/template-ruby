@@ -57,6 +57,8 @@ RSpec.describe Code do
     ["1..3", "1..3"],
     ['1 > 3 ? "Impossible" : "Sounds about right"', "Sounds about right"],
     ['1 < 3 ? "OK"', "OK"],
+    ['1 < "" rescue "oops"', "oops"],
+    ['"fine" rescue "oops"', "fine"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

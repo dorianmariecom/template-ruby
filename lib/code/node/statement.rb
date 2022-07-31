@@ -46,6 +46,8 @@ class Code
           @statement = ::Code::Node::Range.new(statement[:range])
         elsif statement.key?(:ternary)
           @statement = ::Code::Node::Ternary.new(statement[:ternary])
+        elsif statement.key?(:rescue)
+          @statement = ::Code::Node::Rescue.new(statement[:rescue])
         else
           raise NotImplementedError.new(statement.inspect)
         end

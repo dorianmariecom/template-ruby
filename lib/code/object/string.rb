@@ -7,12 +7,8 @@ class Code
         @raw = string
       end
 
-      def evaluate(key, *args, **kargs)
-        super
-      end
-
       def succ
-        ::Code::Object::String(raw.succ)
+        ::Code::Object::String.new(raw.succ)
       end
 
       def to_s

@@ -7,16 +7,12 @@ class Code
         @raw = raw
       end
 
-      def evaluate(key, *args, **kargs)
-        super
-      end
-
       def truthy?
         raw
       end
 
       def succ
-        new(!raw)
+        ::Code::Object::Boolean.new(!raw)
       end
 
       def to_s
