@@ -54,11 +54,13 @@ RSpec.describe Code do
     ["2 > 1 == 3 > 2", "true"],
     ["true && false", "false"],
     ["true || false", "true"],
-    ["1..3", "1..3"],
+    %w[1..3 1..3],
     ['1 > 3 ? "Impossible" : "Sounds about right"', "Sounds about right"],
     ['1 < 3 ? "OK"', "OK"],
     ['1 < "" rescue "oops"', "oops"],
     ['"fine" rescue "oops"', "fine"],
+    ["a = 1", "1"],
+    ["a = 1 a * 2", "2"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

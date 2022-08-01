@@ -11,6 +11,10 @@ class Code
         raw.fetch(key) { super }
       end
 
+      def []=(key, value)
+        raw[key] = value
+      end
+
       def to_s
         "{#{raw.map { |key, value| "#{key.inspect} => #{value.inspect}" }.join(", ")}}"
       end

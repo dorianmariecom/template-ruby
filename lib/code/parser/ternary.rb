@@ -13,7 +13,9 @@ class Code
 
       rule(:ternary) do
         (
-          range.as(:left) >> whitespace >> question_mark >> whitespace? >> ternary.as(:middle) >> (whitespace? >> colon >> whitespace? >> ternary.as(:right)).maybe
+          range.as(:left) >> whitespace >> question_mark >> whitespace? >>
+            ternary.as(:middle) >>
+            (whitespace? >> colon >> whitespace? >> ternary.as(:right)).maybe
         ).as(:ternary) | range
       end
 

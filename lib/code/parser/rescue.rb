@@ -12,7 +12,8 @@ class Code
 
       rule(:rescue) do
         (
-          ternary.as(:left) >> whitespace? >> rescue_keyword >> whitespace? >> ternary.as(:right)
+          ternary.as(:left) >> whitespace? >> rescue_keyword >> whitespace? >>
+            ternary.as(:right)
         ).as(:rescue) | ternary
       end
 

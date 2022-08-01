@@ -48,6 +48,8 @@ class Code
           @statement = ::Code::Node::Ternary.new(statement[:ternary])
         elsif statement.key?(:rescue)
           @statement = ::Code::Node::Rescue.new(statement[:rescue])
+        elsif statement.key?(:equal)
+          @statement = ::Code::Node::Equal.new(statement[:equal])
         else
           raise NotImplementedError.new(statement.inspect)
         end

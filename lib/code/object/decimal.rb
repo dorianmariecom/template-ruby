@@ -39,7 +39,9 @@ class Code
         if other.is_a?(::Code::Object::Number)
           ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
         else
-          raise ::Code::Error::TypeError.new("#{operator} only supports numbers")
+          raise ::Code::Error::TypeError.new(
+                  "#{operator} only supports numbers",
+                )
         end
       end
 
@@ -47,7 +49,9 @@ class Code
         if other.is_a?(::Code::Object::Number)
           ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
         else
-          raise ::Code::Error::TypeError.new("#{operator} only supports numbers")
+          raise ::Code::Error::TypeError.new(
+                  "#{operator} only supports numbers",
+                )
         end
       end
     end
