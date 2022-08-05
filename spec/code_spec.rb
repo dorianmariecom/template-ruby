@@ -61,6 +61,10 @@ RSpec.describe Code do
     ['"fine" rescue "oops"', "fine"],
     ["a = 1", "1"],
     ["a = 1 a * 2", "2"],
+    ["a = 1 a += 1 a", "2"],
+    ["a = 1 a -= 1 a", "0"],
+    ["defined?(a)", "false"],
+    ["a = 1 defined?(a)", "true"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

@@ -50,6 +50,8 @@ class Code
           @statement = ::Code::Node::Rescue.new(statement[:rescue])
         elsif statement.key?(:equal)
           @statement = ::Code::Node::Equal.new(statement[:equal])
+        elsif statement.key?(:defined)
+          @statement = ::Code::Node::Defined.new(statement[:defined])
         else
           raise NotImplementedError.new(statement.inspect)
         end

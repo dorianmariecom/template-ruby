@@ -12,6 +12,8 @@ class Code
       rule(:closing_curly_bracket) { str("}") }
       rule(:opening_square_bracket) { str("[") }
       rule(:closing_square_bracket) { str("]") }
+      rule(:opening_parenthesis) { str("(") }
+      rule(:closing_parenthesis) { str(")") }
       rule(:equal) { str("=") }
       rule(:left_caret) { str("<") }
       rule(:right_caret) { str(">") }
@@ -55,7 +57,8 @@ class Code
       end
 
       rule(:name_character) do
-        exclamation_point.absent? >> question_mark.absent? >> tilde.absent? >>
+        opening_parenthesis.absent? >> closing_parenthesis.absent? >>
+          exclamation_point.absent? >> question_mark.absent? >> tilde.absent? >>
           pipe.absent? >> ampersand.absent? >> asterisk.absent? >>
           slash.absent? >> antislash.absent? >> percent.absent? >>
           plus.absent? >> minus.absent? >> equal.absent? >> space.absent? >>

@@ -11,8 +11,16 @@ class Code
         raw.fetch(key) { super }
       end
 
+      def [](key)
+        raw[key]
+      end
+
       def []=(key, value)
         raw[key] = value
+      end
+
+      def key?(key)
+        raw.key?(key)
       end
 
       def to_s
