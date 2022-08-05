@@ -12,9 +12,7 @@ class Code
       rule(:whitespace) { (space | newline).repeat(1) }
 
       rule(:not_rule) do
-        (
-          not_keyword >> whitespace >> not_rule
-        ).as(:not_keyword) | defined
+        (not_keyword >> whitespace >> not_rule).as(:not_keyword) | defined
       end
 
       root(:not_rule)

@@ -63,7 +63,7 @@ RSpec.describe Code do
     ["a = 1 a * 2", "2"],
     ["a = 1 a += 1 a", "2"],
     ["a = 1 a -= 1 a", "0"],
-    ["defined?(a)", "false"],
+    %w[defined?(a) false],
     ["a = 1 defined?(a)", "true"],
     ["not true", "false"],
     ["not false", "true"],
@@ -74,6 +74,13 @@ RSpec.describe Code do
     ["false and 2", "false"],
     ["true and false", "false"],
     ["true and true", "true"],
+    ["1 if false", ""],
+    ["1 if true", "1"],
+    ["1 if true if true", "1"],
+    ["1 unless false", "1"],
+    ["1 unless true", ""],
+    ["a = 0 a += 1 while a < 10 a", "10"],
+    ["a = 0 a += 1 until a > 10 a", "11"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

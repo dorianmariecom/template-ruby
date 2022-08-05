@@ -1,7 +1,7 @@
 class Code
   class Parser
     class Statement < Parslet::Parser
-      rule(:statement) { ::Code::Parser::OrKeyword.new }
+      rule(:statement) { ::Code::Parser::IfModifier.new }
       root(:statement)
     end
   end
