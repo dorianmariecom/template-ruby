@@ -20,6 +20,10 @@ class Code
       true
     end
 
+    def falsy?
+      !truthy?
+    end
+
     def <=>(other)
       (other.is_a?(::Code::Object) && raw <=> other.raw) || raw <=> other
     end

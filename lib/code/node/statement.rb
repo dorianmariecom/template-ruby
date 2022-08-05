@@ -58,6 +58,8 @@ class Code
           @statement = ::Code::Node::OrKeyword.new(statement[:or_keyword])
         elsif statement.key?(:if_modifier)
           @statement = ::Code::Node::IfModifier.new(statement[:if_modifier])
+        elsif statement.key?(:if)
+          @statement = ::Code::Node::If.new(statement[:if])
         else
           raise NotImplementedError.new(statement.inspect)
         end

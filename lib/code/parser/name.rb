@@ -37,9 +37,11 @@ class Code
       rule(:or_keyword) { str("or") }
       rule(:and_keyword) { str("and") }
       rule(:if_keyword) { str("if") }
+      rule(:else_keyword) { str("else") }
       rule(:unless_keyword) { str("unless") }
       rule(:until_keyword) { str("until") }
       rule(:while_keyword) { str("while") }
+      rule(:end_keyword) { str("end") }
 
       rule(:zero) { str("0") }
       rule(:one) { str("1") }
@@ -73,8 +75,9 @@ class Code
         (
           rescue_keyword.absent? >> defined_keyword.absent? >>
             not_keyword.absent? >> or_keyword.absent? >> and_keyword.absent? >>
-            if_keyword.absent? >> unless_keyword.absent? >>
+            if_keyword.absent? >> else_keyword.absent? >> unless_keyword.absent? >>
             until_keyword.absent? >> while_keyword.absent? >> digit.absent? >>
+            end_keyword.absent? >>
             name_character >> name_character.repeat >> question_mark.maybe >>
             exclamation_point.maybe
         ).as(:name)
