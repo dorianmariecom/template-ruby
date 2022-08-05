@@ -55,6 +55,7 @@ RSpec.describe Code do
     ["true && false", "false"],
     ["true || false", "true"],
     %w[1..3 1..3],
+    ["a ? true : false", "false"],
     ['1 > 3 ? "Impossible" : "Sounds about right"', "Sounds about right"],
     ['1 < 3 ? "OK"', "OK"],
     ['1 < "" rescue "oops"', "oops"],
@@ -92,6 +93,7 @@ RSpec.describe Code do
     ["if false 1 else unless false 2 else 3 end", "2"],
     ["a = 0\n while a < 10 a += 1 end a", "10"],
     ["a = 0\n until a > 10 a += 1 end a", "11"],
+    ['("Good".."Bad").first', "Good"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

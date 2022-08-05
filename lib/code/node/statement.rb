@@ -62,6 +62,8 @@ class Code
           @statement = ::Code::Node::If.new(statement[:if])
         elsif statement.key?(:while)
           @statement = ::Code::Node::While.new(statement[:while])
+        elsif statement.key?(:group)
+          @statement = ::Code::Node::Group.new(statement[:group])
         else
           raise NotImplementedError.new(statement.inspect)
         end

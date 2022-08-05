@@ -7,6 +7,16 @@ class Code
         @raw = ::Range.new(left, right, exclude_end)
       end
 
+      def evaluate(key, *args, **kargs)
+        if key == "first"
+          raw.first
+        elsif key == "last"
+          raw.last
+        else
+          super
+        end
+      end
+
       def to_s
         raw.to_s
       end

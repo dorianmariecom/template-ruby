@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require_relative "../lib/template-ruby"
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+
+  opts.on("-i INPUT", "--input=INPUT", "Input in the template language") do |input|
+    if File.exists?(input)
+      input = File.read(input)
+    end
+
+    options[:input] = input
+  end
+
+  opts.on("-c CONTEXT", "--context=CONTEXT", "Context in the code language") do |context|
+    if File.exists?(context)
+      context = File.read(context)
+    end
+
+    options[:context] = context
+  end
+end.parse!
+
+puts Template.render(options.fetch(:input, ""), options.fetch(:context, ""))

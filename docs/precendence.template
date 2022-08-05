@@ -1,0 +1,92 @@
+- Code
+  - {a = "Go" a += "od" a}
+- Statement
+  - {a = "Good"}
+  - {
+     a = 0
+     while a < 10
+       a += 1
+       "Good"
+    end
+    }
+- While
+  - {
+     a = 0
+     until a > 10
+       a += 1
+       "Good"
+    end
+    }
+  - {
+    a = 0
+    while
+      if a > 10
+        false
+      else
+        true
+      end
+      a += 1
+      "Good"
+    end
+    }
+- If
+  - {if true "Good" end}
+  - {if true if false "Bad" else "Good" end}
+- IfModifier
+  - {"Good" if true}
+- OrKeyword
+  - {false or "Good"}
+- NotKeyword
+  - {not false and "Good"}
+- Defined
+  - {a = 1 "Good" if defined?(a)}
+- Equal
+  - {a = "Good"}
+- Rescue
+  - {0 > "String" rescue "Good"}
+- Ternary
+  - {nothing ? "Bad" : "Good"}
+- Range
+  - {("Good".."Bad").first}
+- OrOperator
+  - a || b
+- AndOperator
+  - a && b
+- Equality
+  - a == b
+- GreaterThan
+  - a > b
+- BitwiseOr
+  - a | 1
+- BitwiseAnd
+  - a & 1
+- Shift
+  - a >> 1
+- Addition
+  - a + 1
+- Multiplication
+  - a * 2
+- UnaryMinus
+  - -a
+- Power
+  - a ** 2
+- Negation
+  - !a
+- Call
+  - a.b
+- Dictionnary
+  - {{a: 1}}
+- List
+  - [a, 1]
+- String
+  - "a"
+- Number
+  - 1
+- Boolean
+  - true
+- Nothing
+  - nothing
+- Group
+  - (a = 1 a + 1)
+- Name
+  - a
