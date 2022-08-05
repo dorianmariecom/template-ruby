@@ -65,6 +65,15 @@ RSpec.describe Code do
     ["a = 1 a -= 1 a", "0"],
     ["defined?(a)", "false"],
     ["a = 1 defined?(a)", "true"],
+    ["not true", "false"],
+    ["not false", "true"],
+    ["not not 1", "true"],
+    ["1 or 2", "1"],
+    ["true or false", "true"],
+    ["1 and 2", "2"],
+    ["false and 2", "false"],
+    ["true and false", "false"],
+    ["true and true", "true"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

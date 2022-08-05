@@ -52,6 +52,10 @@ class Code
           @statement = ::Code::Node::Equal.new(statement[:equal])
         elsif statement.key?(:defined)
           @statement = ::Code::Node::Defined.new(statement[:defined])
+        elsif statement.key?(:not_keyword)
+          @statement = ::Code::Node::NotKeyword.new(statement[:not_keyword])
+        elsif statement.key?(:or_keyword)
+          @statement = ::Code::Node::OrKeyword.new(statement[:or_keyword])
         else
           raise NotImplementedError.new(statement.inspect)
         end
