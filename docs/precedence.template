@@ -49,11 +49,11 @@
 - Range
   - {("Good".."Bad").first}
 - OrOperator
-  - a || b
+  - {false || "Good"}
 - AndOperator
-  - a && b
+  - {"Bad" && "Good"}
 - Equality
-  - a == b
+  - {1 == 1 ? "Good" : "Bad"}
 - GreaterThan
   - a > b
 - BitwiseOr
