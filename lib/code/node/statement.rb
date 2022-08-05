@@ -60,6 +60,8 @@ class Code
           @statement = ::Code::Node::IfModifier.new(statement[:if_modifier])
         elsif statement.key?(:if)
           @statement = ::Code::Node::If.new(statement[:if])
+        elsif statement.key?(:while)
+          @statement = ::Code::Node::While.new(statement[:while])
         else
           raise NotImplementedError.new(statement.inspect)
         end

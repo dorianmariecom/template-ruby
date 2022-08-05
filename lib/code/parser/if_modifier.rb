@@ -13,8 +13,7 @@ class Code
       end
 
       rule(:space) { str(" ") }
-      rule(:newline) { str("\n") }
-      rule(:whitespace) { (space | newline).repeat(1) }
+      rule(:whitespace) { space.repeat(1) }
 
       rule(:if_modifier) do
         (

@@ -90,6 +90,8 @@ RSpec.describe Code do
     ["if false 1 else if false 2 else 3 end", "3"],
     ["unless false 1 else if false 2 else 3 end", "1"],
     ["if false 1 else unless false 2 else 3 end", "2"],
+    ["a = 0\n while a < 10 a += 1 end a", "10"],
+    ["a = 0\n until a > 10 a += 1 end a", "11"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
