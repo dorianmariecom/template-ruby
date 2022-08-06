@@ -15,8 +15,7 @@ class Code
       rule(:while_rule) do
         (
           (while_keyword | until_keyword).as(:operator) >> whitespace >>
-            if_rule.as(:statement) >> code.as(:body) >>
-            end_keyword
+            if_rule.as(:statement) >> code.as(:body) >> end_keyword
         ).as(:while) | if_rule
       end
 

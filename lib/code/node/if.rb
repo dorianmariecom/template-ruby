@@ -8,7 +8,8 @@ class Code
         def initialize(else_parsed)
           if else_parsed.key?(:operator)
             @operator = else_parsed.fetch(:operator)
-            @statement = ::Code::Node::Statement.new(else_parsed.fetch(:statement))
+            @statement =
+              ::Code::Node::Statement.new(else_parsed.fetch(:statement))
           end
 
           @body = ::Code::Node::Code.new(else_parsed.fetch(:body))
@@ -19,12 +20,11 @@ class Code
 
       def initialize(if_parsed)
         @if_operator = if_parsed.fetch(:if_operator)
-        @if_statement = ::Code::Node::Statement.new(if_parsed.fetch(:if_statement))
+        @if_statement =
+          ::Code::Node::Statement.new(if_parsed.fetch(:if_statement))
         @if_body = ::Code::Node::Code.new(if_parsed.fetch(:if_body))
         @elses = if_parsed.fetch(:elses, [])
-        @elses.map! do |else_parsed|
-          ::Code::Node::If::Else.new(else_parsed)
-        end
+        @elses.map! { |else_parsed| ::Code::Node::If::Else.new(else_parsed) }
       end
 
       def evaluate(context)

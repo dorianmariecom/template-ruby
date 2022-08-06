@@ -23,6 +23,17 @@ OptionParser.new do |opts|
 
     options[:context] = context
   end
+
+  opts.on("-p", "--parse", "Get parser results for input") do |parse|
+    options[:parse] = parse
+  end
 end.parse!
 
-puts Template.render(options.fetch(:input, ""), options.fetch(:context, ""))
+input = options.fetch(:input, "")
+context = options.fetch(:context, "")
+
+if options[:parse]
+  pp ::Template::Parser::Template.new.parse(input)
+else
+  puts Template.render(input, context)
+end

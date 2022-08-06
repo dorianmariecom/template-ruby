@@ -16,33 +16,21 @@ class Code
         if operator == IF_KEYWORD
           right = @right.evaluate(context)
 
-          if right.truthy?
-            @left.evaluate(context)
-          else
-            ::Code::Object::Nothing.new
-          end
+          right.truthy? ? @left.evaluate(context) : ::Code::Object::Nothing.new
         elsif operator == UNLESS_KEYWORD
           right = @right.evaluate(context)
 
-          if right.truthy?
-            ::Code::Object::Nothing.new
-          else
-            @left.evaluate(context)
-          end
+          right.truthy? ? ::Code::Object::Nothing.new : @left.evaluate(context)
         elsif operator == WHILE_KEYWORD
           left = ::Code::Object::Nothing.new
 
-          while @right.evaluate(context).truthy?
-            left = @left.evaluate(context)
-          end
+          left = @left.evaluate(context) while @right.evaluate(context).truthy?
 
           left
         elsif operator == UNTIL_KEYWORD
           left = ::Code::Object::Nothing.new
 
-          until @right.evaluate(context).truthy?
-            left = @left.evaluate(context)
-          end
+          left = @left.evaluate(context) until @right.evaluate(context).truthy?
 
           left
         else

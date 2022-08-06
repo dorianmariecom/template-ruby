@@ -17,11 +17,13 @@ class Code
         (
           (if_keyword | unless_keyword).as(:if_operator) >> whitespace >>
             if_modifier.as(:if_statement) >> code.as(:if_body) >>
-            (else_keyword >>
-               (whitespace >> (if_keyword | unless_keyword).as(:operator) >> whitespace >> if_modifier.as(:statement)).maybe >>
-              code.as(:body)
-            ).repeat(1).as(:elses).maybe >>
-            end_keyword
+            (
+              else_keyword >>
+                (
+                  whitespace >> (if_keyword | unless_keyword).as(:operator) >>
+                    whitespace >> if_modifier.as(:statement)
+                ).maybe >> code.as(:body)
+            ).repeat(1).as(:elses).maybe >> end_keyword
         ).as(:if) | if_modifier
       end
 

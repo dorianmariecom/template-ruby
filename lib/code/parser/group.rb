@@ -8,9 +8,7 @@ class Code
       rule(:closing_parenthesis) { str(")") }
 
       rule(:group) do
-        (
-          opening_parenthesis >> code >> closing_parenthesis
-        ).as(:group) | name
+        (opening_parenthesis >> code >> closing_parenthesis).as(:group) | name
       end
 
       root(:group)

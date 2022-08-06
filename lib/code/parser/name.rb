@@ -75,9 +75,9 @@ class Code
         (
           rescue_keyword.absent? >> defined_keyword.absent? >>
             not_keyword.absent? >> or_keyword.absent? >> and_keyword.absent? >>
-            if_keyword.absent? >> else_keyword.absent? >> unless_keyword.absent? >>
-            until_keyword.absent? >> while_keyword.absent? >> digit.absent? >>
-            end_keyword.absent? >>
+            if_keyword.absent? >> else_keyword.absent? >>
+            unless_keyword.absent? >> until_keyword.absent? >>
+            while_keyword.absent? >> digit.absent? >> end_keyword.absent? >>
             name_character >> name_character.repeat >> question_mark.maybe >>
             exclamation_point.maybe
         ).as(:name)

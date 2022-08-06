@@ -72,6 +72,8 @@
   - {2 ** 2 == 4 ? "Good"}
 - Negation
   - {!false ? "Good"}
+- Function
+  - {good = () => { "Good" } good}
 - Call
   - {["Good"].first}
 - Dictionnary
