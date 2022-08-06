@@ -53,40 +53,40 @@
 - AndOperator
   - {"Bad" && "Good"}
 - Equality
-  - {1 == 1 ? "Good" : "Bad"}
+  - {1 == 1 ? "Good"}
 - GreaterThan
-  - a > b
+  - {2 > 1 ? "Good"}
 - BitwiseOr
-  - a | 1
+  - {2 | 1 == 3 ? "Good"}
 - BitwiseAnd
-  - a & 1
+  - {2 & 1 == 0 ? "Good"}
 - Shift
-  - a >> 1
+  - {1 << 1 == 2 ? "Good"}
 - Addition
-  - a + 1
+  - {1 + 1 == 2 ? "Good"}
 - Multiplication
-  - a * 2
+  - {1 * 2 == 2 ? "Good"}
 - UnaryMinus
-  - -a
+  - {-1 == 1 - 2 ? "Good"}
 - Power
-  - a ** 2
+  - {2 ** 2 == 4 ? "Good"}
 - Negation
-  - !a
+  - {!false ? "Good"}
 - Call
-  - a.b
+  - {["Good"].first}
 - Dictionnary
-  - {{a: 1}}
+  - {{a: "Good"}.a}
 - List
-  - [a, 1]
+  - {["Good", "Bad"].first}
 - String
-  - "a"
+  - {"Good"}
 - Number
-  - 1
+  - {1 == 1 ? "Good"}
 - Boolean
-  - true
+  - {true ? "Good"}
 - Nothing
-  - nothing
+  - {nothing ? "Bad" : "Good"}
 - Group
-  - (a = 1 a + 1)
+  - {(a = 0 a += 1 a) == 1 ? "Good"}
 - Name
-  - a
+  - {a = "Good" a}

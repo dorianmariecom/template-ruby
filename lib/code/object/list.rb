@@ -7,6 +7,16 @@ class Code
         @raw = raw
       end
 
+      def evaluate(key, *args, **kargs)
+        if key == "first"
+          raw.first
+        elsif key == "last"
+          raw.last
+        else
+          super
+        end
+      end
+
       def map(&block)
         @raw = raw.map(&block)
         self
