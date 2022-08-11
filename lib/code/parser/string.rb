@@ -2,10 +2,13 @@ class Code
   class Parser
     class String < Parslet::Parser
       rule(:number) { ::Code::Parser::Number.new }
+      rule(:name) { ::Code::Parser::Name.new.name }
 
       rule(:single_quote) { str("'") }
       rule(:double_quote) { str('"') }
       rule(:backslash) { str("\\") }
+      rule(:colon) { str(":") }
+
       rule(:zero) { str("0") }
       rule(:one) { str("1") }
       rule(:two) { str("2") }
@@ -56,8 +59,12 @@ class Code
           double_quote.ignore
       end
 
+      rule(:symbol) do
+        colon.ignore >> name
+      end
+
       rule(:string) do
-        (single_quoted_string | double_quoted_string).as(:string) | number
+        (single_quoted_string | double_quoted_string | symbol).as(:string) | number
       end
 
       root(:string)

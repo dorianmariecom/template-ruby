@@ -25,7 +25,15 @@ class Code
     end
 
     def <=>(other)
-      (other.is_a?(::Code::Object) && raw <=> other.raw) || raw <=> other
+      if respond_to?(:raw)
+        if other.is_a?(::Code::Object)
+          raw <=> other.raw
+        else
+          raw <=> other
+        end
+      else
+        self == other
+      end
     end
 
     def ==(other)

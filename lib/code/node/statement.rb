@@ -1,6 +1,8 @@
 class Code
   class Node
     class Statement
+      attr_reader :statement
+
       def initialize(statement)
         if statement.key?(:nothing)
           @statement = ::Code::Node::Nothing.new
@@ -64,13 +66,15 @@ class Code
           @statement = ::Code::Node::While.new(statement[:while])
         elsif statement.key?(:group)
           @statement = ::Code::Node::Group.new(statement[:group])
+        elsif statement.key?(:function)
+          @statement = ::Code::Node::Function.new(statement[:function])
         else
           raise NotImplementedError.new(statement.inspect)
         end
       end
 
       def evaluate(context)
-        @statement.evaluate(context)
+        statement.evaluate(context)
       end
     end
   end
