@@ -9,10 +9,12 @@ class Code
       def initialize(argument)
         if argument.key?(:regular)
           @kind = REGULAR
-          @argument = ::Code::Node::RegularCallArgument.new(argument.fetch(:regular))
+          @argument =
+            ::Code::Node::RegularCallArgument.new(argument.fetch(:regular))
         elsif argument.key?(:keyword)
           @kind = KEYWORD
-          @argument = ::Code::Node::KeywordCallArgument.new(argument.fetch(:keyword))
+          @argument =
+            ::Code::Node::KeywordCallArgument.new(argument.fetch(:keyword))
         else
           raise NotImplementedError.new(argument.inspect)
         end
@@ -31,11 +33,7 @@ class Code
       end
 
       def name
-        if keyword?
-          @argument.name
-        else
-          nil
-        end
+        keyword? ? @argument.name : nil
       end
     end
   end

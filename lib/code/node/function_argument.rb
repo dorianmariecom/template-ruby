@@ -9,10 +9,12 @@ class Code
       def initialize(argument)
         if argument.key?(:regular)
           @kind = REGULAR
-          @argument = ::Code::Node::RegularFunctionArgument.new(argument.fetch(:regular))
+          @argument =
+            ::Code::Node::RegularFunctionArgument.new(argument.fetch(:regular))
         elsif argument.key?(:keyword)
           @kind = KEYWORD
-          @argument = ::Code::Node::KeywordFunctionArgument.new(argument.fetch(:keyword))
+          @argument =
+            ::Code::Node::KeywordFunctionArgument.new(argument.fetch(:keyword))
         else
           raise NotImplementedError.new(argument.inspect)
         end
@@ -28,6 +30,14 @@ class Code
 
       def keyword?
         kind == KEYWORD
+      end
+
+      def splat?
+        @argument.splat?
+      end
+
+      def keyword_splat?
+        @argument.keyword_splat?
       end
 
       def name

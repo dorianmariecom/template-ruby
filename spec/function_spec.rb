@@ -5,13 +5,15 @@ RSpec.describe Code do
 
   [
     ['hello = () => { "Hello" } hello', "Hello"],
-    ['add = (a, b) => { a + b } add(1, 2)', "3"],
-    ['add = (a:, b:) => { a + b } add(a: 1, b: 2)', "3"],
-    ['power = (a:, b:) => { a ** b } power(b: 2, a: 1)', "1"],
-    ['add(1, 2)', ""],
-    ['Math.add(1, 2)', ""],
-    ['power = (a, b:) => { a ** b } power(b: 2, 1)', "4"],
-    ['power = (a:, b) => { a ** b } power(b: 1, 3, a: 2)', "8"],
+    ["add = (a, b) => { a + b } add(1, 2)", "3"],
+    ["add = (a:, b:) => { a + b } add(a: 1, b: 2)", "3"],
+    ["add = (a = 1, b = 2) => { a + b } add", "3"],
+    ["add = (a: 1, b: 2) => { a + b } add", "3"],
+    ["add = (*args) => { args.first + args.last } add(1, 2)", "3"],
+    [
+      "add = (**kargs) => { kargs.values.first + kargs.values.last } add(a: 1, b: 2)",
+      "3",
+    ],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

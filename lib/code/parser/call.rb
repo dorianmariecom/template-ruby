@@ -19,8 +19,7 @@ class Code
       rule(:whitespace?) { whitespace.maybe }
 
       rule(:keyword_argument) do
-        name >> whitespace? >> colon >>
-          whitespace? >> code.as(:value)
+        name >> whitespace? >> colon >> whitespace? >> code.as(:value)
       end
 
       rule(:regular_argument) do
@@ -41,24 +40,22 @@ class Code
       rule(:single_call) do
         dictionnary.as(:left) >>
           (
-            opening_parenthesis >> whitespace? >> arguments.as(:arguments).maybe >>
-              whitespace? >> closing_parenthesis
+            opening_parenthesis >> whitespace? >>
+              arguments.as(:arguments).maybe >> whitespace? >>
+              closing_parenthesis
           )
       end
 
       rule(:chained_call) do
         dictionnary.as(:left) >> dot >> call.as(:right) >>
           (
-            opening_parenthesis >> whitespace? >> arguments.as(:arguments).maybe >>
-              whitespace? >> closing_parenthesis
+            opening_parenthesis >> whitespace? >>
+              arguments.as(:arguments).maybe >> whitespace? >>
+              closing_parenthesis
           ).maybe
       end
 
-      rule(:call) do
-        (
-          single_call | chained_call
-        ).as(:call) | dictionnary
-      end
+      rule(:call) { (single_call | chained_call).as(:call) | dictionnary }
 
       root(:call)
     end

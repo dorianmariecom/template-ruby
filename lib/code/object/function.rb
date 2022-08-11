@@ -10,13 +10,42 @@ class Code
         context = original_context.dup
         arguments.each.with_index do |argument, index|
           if argument.regular?
-            call_argument = call_arguments[index]&.evaluate(original_context)
-            call_argument ||= ::Code::Object::Nothing.new
-            context[argument.name] = call_argument
+            if argument.splat?
+              context[argument.name] = ::Code::Object::List.new(
+                call_arguments
+                  .select(&:regular?)
+                  .map do |call_argument|
+                    call_argument.evaluate(original_context)
+                  end,
+              )
+            elsif argument.keyword_splat?
+              context[argument.name] = ::Code::Object::Dictionnary.new(
+                call_arguments
+                  .select(&:keyword?)
+                  .map do |call_argument|
+                    [
+                      call_argument.name,
+                      call_argument.evaluate(original_context),
+                    ]
+                  end
+                  .to_h,
+              )
+            else
+              call_argument = call_arguments[index]
+              call_argument =
+                call_argument.evaluate(original_context) if call_argument
+              call_argument = argument.evaluate(context) if call_argument.nil?
+              context[argument.name] = call_argument
+            end
           elsif argument.keyword?
-            call_argument = call_arguments.detect { |arg| arg.name == argument.name }
-            call_argument = call_argument.evaluate(original_context) if call_argument
-            call_argument ||= ::Code::Object::Nothing.new
+            call_argument =
+              call_arguments.detect do |call_argument|
+                call_argument.name == argument.name
+              end
+
+            call_argument =
+              call_argument.evaluate(original_context) if call_argument
+            call_argument = argument.evaluate(context) if call_argument.nil?
             context[argument.name] = call_argument
           else
             raise NotImplementedError
@@ -30,7 +59,7 @@ class Code
       end
 
       def inspect
-        to_s
+        "function"
       end
 
       private

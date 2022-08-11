@@ -44,10 +44,10 @@ RSpec.describe Code::Parser::Call do
     "User.update_all(**attributes)",
     "User.each(&block)",
     "user.update(*args)",
-    'sort([1, 2, 3], :asc)',
-    'render()',
-    'render(item)',
-    'Renderer.render(item)',
+    "sort([1, 2, 3], :asc)",
+    "render()",
+    "render(item)",
+    "Renderer.render(item)",
   ].each do |input|
     context input.inspect do
       let(:input) { input }

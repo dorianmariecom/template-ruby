@@ -5,9 +5,7 @@ class Code
         @left = ::Code::Node::Statement.new(call.fetch(:left))
 
         @arguments = call.fetch(:arguments, [])
-        @arguments.map! do |argument|
-          ::Code::Node::CallArgument.new(argument)
-        end
+        @arguments.map! { |argument| ::Code::Node::CallArgument.new(argument) }
 
         if call.key?(:right)
           @right = ::Code::Node::Statement.new(call.fetch(:right))

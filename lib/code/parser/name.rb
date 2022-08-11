@@ -81,9 +81,7 @@ class Code
           exclamation_point.maybe
       end
 
-      rule(:name_rule) do
-        name.as(:name)
-      end
+      rule(:name_rule) { name.as(:name) }
 
       root(:name_rule)
     end

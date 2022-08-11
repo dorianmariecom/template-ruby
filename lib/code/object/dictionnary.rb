@@ -8,7 +8,13 @@ class Code
       end
 
       def evaluate(key, *args, **kargs)
-        raw.fetch(key) { super }
+        raw.fetch(key) do
+          if key == "values"
+            ::Code::Object::List.new(raw.values)
+          else
+            super
+          end
+        end
       end
 
       def [](key)

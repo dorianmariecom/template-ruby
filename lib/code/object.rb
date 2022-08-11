@@ -26,11 +26,7 @@ class Code
 
     def <=>(other)
       if respond_to?(:raw)
-        if other.is_a?(::Code::Object)
-          raw <=> other.raw
-        else
-          raw <=> other
-        end
+        other.is_a?(::Code::Object) ? raw <=> other.raw : raw <=> other
       else
         self == other
       end

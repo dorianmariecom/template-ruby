@@ -59,12 +59,11 @@ class Code
           double_quote.ignore
       end
 
-      rule(:symbol) do
-        colon.ignore >> name
-      end
+      rule(:symbol) { colon.ignore >> name }
 
       rule(:string) do
-        (single_quoted_string | double_quoted_string | symbol).as(:string) | number
+        (single_quoted_string | double_quoted_string | symbol).as(:string) |
+          number
       end
 
       root(:string)
