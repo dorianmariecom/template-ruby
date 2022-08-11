@@ -19,18 +19,18 @@ class Code
       rule(:whitespace?) { whitespace.maybe }
 
       rule(:keyword_argument) do
-        name.as(:keyword) >> whitespace? >> colon >>
+        name >> whitespace? >> colon >>
           whitespace? >> code.as(:value)
       end
 
       rule(:regular_argument) do
         ampersand.as(:block).maybe >>
           (asterisk >> asterisk).as(:keyword_splat).maybe >>
-          asterisk.as(:splat).maybe >> code.as(:regular)
+          asterisk.as(:splat).maybe >> code
       end
 
       rule(:argument) do
-        keyword_argument | regular_argument
+        keyword_argument.as(:keyword) | regular_argument.as(:regular)
       end
 
       rule(:arguments) do

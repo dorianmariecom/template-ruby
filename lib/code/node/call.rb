@@ -20,19 +20,16 @@ class Code
           @right.evaluate(context)
         else
           if @left.statement.is_a?(::Code::Node::Name)
-            function = @left.statement.evaluate(context, call_function: false)
-            function.call(context, *arguments(context))
+            object = @left.statement.evaluate(context, call_function: false)
+
+            if object.is_a?(::Code::Object::Function)
+              object.call(context, @arguments)
+            else
+              ::Code::Object::Nothing.new
+            end
           else
             raise NotImplementedError.new(@left.inspect)
           end
-        end
-      end
-
-      private
-
-      def arguments(context)
-        @arguments.map do |argument|
-          argument.evaluate(context)
         end
       end
     end
