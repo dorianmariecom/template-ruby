@@ -12,7 +12,7 @@ class Code
       elsif key == "||".to_sym
         or_operator(args.first)
       else
-        raise ::Code::Error::NotFound.new("#{key} not found")
+        raise ::Code::Error::NotFound.new("#{key} not defined on #{inspect}")
       end
     end
 

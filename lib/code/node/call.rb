@@ -18,7 +18,7 @@ class Code
           @right.evaluate(context)
         else
           if @left.statement.is_a?(::Code::Node::Name)
-            object = @left.statement.evaluate(context)
+            object = @left.statement.evaluate(context, call_function: false)
 
             if object.is_a?(::Code::Object::Function)
               object.call(context, @arguments)

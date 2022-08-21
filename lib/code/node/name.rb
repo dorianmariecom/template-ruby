@@ -5,8 +5,14 @@ class Code
         @name = name
       end
 
-      def evaluate(context)
-        context.evaluate(::Code::Object::String.new(name.to_s))
+      def evaluate(context, call_function: true)
+        object = context.evaluate(::Code::Object::String.new(name.to_s))
+
+        if call_function && object.is_a?(::Code::Object::Function)
+          object.call(context)
+        else
+          object
+        end
       end
 
       private
