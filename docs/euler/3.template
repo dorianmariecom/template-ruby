@@ -1,0 +1,17 @@
+{
+
+  n = 13195
+
+  primes = []
+
+  (2...n).each do |i|
+    prime? = primes.any? do |prime|
+      i % prime == 0
+    end
+
+    primes << i if prime?
+  end
+
+  max = 0
+
+  primes.max_by { |prime| n % prime == 0 }

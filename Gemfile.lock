@@ -4,7 +4,7 @@ PATH
     template-ruby (0.1.0)
       activesupport (~> 7)
       parslet (~> 2)
-      zeitwerk (~> 2)
+      zeitwerk (~> 2.6)
 
 GEM
   remote: https://rubygems.org/

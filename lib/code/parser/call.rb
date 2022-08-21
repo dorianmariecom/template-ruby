@@ -4,14 +4,20 @@ class Code
       rule(:dictionnary) { ::Code::Parser::Dictionnary.new }
       rule(:code) { ::Code::Parser::Code.new }
       rule(:name) { ::Code::Parser::Name.new }
+      rule(:function_arguments) { ::Code::Parser::Function.new.arguments }
 
       rule(:dot) { str(".") }
       rule(:opening_parenthesis) { str("(") }
       rule(:closing_parenthesis) { str(")") }
+      rule(:opening_curly_bracket) { str("{") }
+      rule(:closing_curly_bracket) { str("}") }
       rule(:comma) { str(",") }
       rule(:colon) { str(":") }
       rule(:ampersand) { str("&") }
       rule(:asterisk) { str("*") }
+      rule(:pipe) { str("|") }
+      rule(:do_keyword) { str("do") }
+      rule(:end_keyword) { str("end") }
 
       rule(:space) { str(" ") }
       rule(:newline) { str("\n") }
@@ -25,7 +31,7 @@ class Code
       rule(:regular_argument) do
         ampersand.as(:block).maybe >>
           (asterisk >> asterisk).as(:keyword_splat).maybe >>
-          asterisk.as(:splat).maybe >> code
+          asterisk.as(:splat).maybe >> code.as(:value)
       end
 
       rule(:argument) do
@@ -55,7 +61,16 @@ class Code
           ).maybe
       end
 
-      rule(:call) { (single_call | chained_call).as(:call) | dictionnary }
+      rule(:block_arguments) do
+        pipe >> whitespace? >> function_arguments >> whitespace? >> pipe
+      end
+
+      rule(:block) do
+        (whitespace >> do_keyword >> whitespace >> block_arguments.as(:arguments).maybe >> code.as(:body) >> end_keyword) |
+          (whitespace? >> opening_curly_bracket >> whitespace >> block_arguments.as(:arguments).maybe >> code.as(:body) >> closing_curly_bracket)
+      end
+
+      rule(:call) { ((single_call | chained_call) >> block.as(:block).maybe).as(:call) | dictionnary }
 
       root(:call)
     end

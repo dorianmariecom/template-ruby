@@ -48,6 +48,13 @@ RSpec.describe Code::Parser::Call do
     "render()",
     "render(item)",
     "Renderer.render(item)",
+    "render(item) { 'Hello' }",
+    "render(item) { |item| item * 2 }",
+    "render(item) { |item1, item2| item1 + item2 }",
+    "render(item) do 'Hello' end",
+    "render(item) do |item| item * 2 end",
+    "render(item) do |item1, item2| item1 + item2 end",
+    "(1..2).any?(&:even?)",
   ].each do |input|
     context input.inspect do
       let(:input) { input }

@@ -12,6 +12,8 @@ class Code
           raw.first
         elsif key == "last"
           raw.last
+        elsif key == "any?"
+          raise args.inspect
         else
           super
         end

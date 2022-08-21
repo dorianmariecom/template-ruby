@@ -10,6 +10,8 @@ class Code
       def evaluate(key, *args, **kargs)
         if key == :+
           string_operation(key, args.first)
+        elsif key == :to_function
+          to_function
         else
           super
         end
@@ -37,6 +39,17 @@ class Code
                   "#{operator} only supports strings",
                 )
         end
+      end
+
+      def to_function
+        ::Code::Object::Function.new(
+          arguments: ::Code::Node::FunctionArgument.new(
+            [{ regular: { name: "_" } }]
+          ),
+          body: ::Code::Node::Code.new(
+            [{ call: { left: { name: "_" } }, right: { name: raw } }]
+          )
+        )
       end
     end
   end

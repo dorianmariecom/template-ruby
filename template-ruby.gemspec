@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "activesupport", "~> 7"
   s.add_dependency "parslet", "~> 2"
-  s.add_dependency "zeitwerk", "~> 2"
+  s.add_dependency "zeitwerk", "~> 2.6"
 
   s.add_development_dependency "prettier", "~> 3"
   s.add_development_dependency "rspec", "~> 3"
