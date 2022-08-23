@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Statement
+    class Statement < Node
       attr_reader :statement
 
       def initialize(statement)
@@ -74,7 +74,7 @@ class Code
       end
 
       def evaluate(context)
-        statement.evaluate(context)
+        @statement.evaluate(context)
       end
     end
   end

@@ -1,6 +1,6 @@
 class Code
   class Node
-    class String
+    class String < Node
       def initialize(string)
         @string = string
       end

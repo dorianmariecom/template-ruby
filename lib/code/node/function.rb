@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Function
+    class Function < Node
       def initialize(function)
         @body = ::Code::Node::Code.new(function.fetch(:body))
         @arguments = function.fetch(:arguments, [])

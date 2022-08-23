@@ -13,7 +13,6 @@ RSpec.describe ::Code::Error::TypeError do
     [
       '1 / ""',
       '1 ** ""',
-      '1 * ""',
       '1 % ""',
       '1 + ""',
       '1 - ""',

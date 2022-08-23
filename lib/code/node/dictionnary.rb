@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Dictionnary
+    class Dictionnary < Node
       def initialize(key_values)
         if key_values.blank?
           @key_values = []

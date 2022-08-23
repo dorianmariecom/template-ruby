@@ -15,15 +15,23 @@ class Code
         end
       end
 
-      def evaluate(key, *args, **kargs)
-        if key == :/
-          division(args.first)
-        elsif %i[** * % + -].include?(key)
-          integer_or_decimal_operation(key, args.first)
-        elsif %i[<< >> & | ^].include?(key)
-          integer_operation(key, args.first)
-        elsif %i[> >= < <=].include?(key)
-          integer_or_decimal_comparaison(key, args.first)
+      def call(
+        arguments: [],
+        context: ::Code::Object::Dictionnary.new,
+        operator: nil
+      )
+        if operator == "even?"
+          even?
+        elsif operator == "*"
+          multiplication(arguments)
+        elsif operator == "/"
+          division(arguments)
+        elsif ["%", "-", "+", "**"].detect { |o| operator == o }
+          integer_or_decimal_operation(operator.to_sym, arguments)
+        elsif [">", ">=", "<", "<="].detect { |o| operator == o }
+          comparaison(operator.to_sym, arguments)
+        elsif ["<<", ">>", "&", "|", "^"].detect { |o| operator == o }
+          integer_operation(operator.to_sym, arguments)
         else
           super
         end
@@ -43,46 +51,48 @@ class Code
 
       private
 
-      def division(other)
-        if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Decimal.new(BigDecimal(raw) / other.raw)
+      def even?
+        ::Code::Object::Boolean.new(raw.even?)
+      end
+
+      def multiplication(arguments)
+        sig(arguments, [::Code::Object::Number, ::Code::Object::String])
+        other = arguments.first.value
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw * other.raw)
+        elsif other.is_a?(::Code::Object::Decimal)
+          ::Code::Object::Decimal.new(raw * other.raw)
         else
-          raise ::Code::Error::TypeError.new("/ only supports numbers")
+          ::Code::Object::String.new(other.raw * raw)
         end
       end
 
-      def integer_or_decimal_operation(operator, other)
+      def division(arguments)
+        sig(arguments, ::Code::Object::Number)
+        other = arguments.first.value
+        ::Code::Object::Decimal.new(BigDecimal(raw) / other.raw)
+      end
+
+      def integer_or_decimal_operation(operator, arguments)
+        sig(arguments, ::Code::Object::Number)
+        other = arguments.first.value
         if other.is_a?(::Code::Object::Integer)
           ::Code::Object::Integer.new(raw.public_send(operator, other.raw))
-        elsif other.is_a?(::Code::Object::Decimal)
+        else
           ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
-        else
-          raise ::Code::Error::TypeError.new(
-                  "#{operator} only supports numbers",
-                )
         end
       end
 
-      def integer_operation(operator, other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw.public_send(operator, other.raw))
-        else
-          raise ::Code::Error::TypeError.new(
-                  "#{operator} only supports integers",
-                )
-        end
+      def integer_operation(operator, arguments)
+        sig(arguments, ::Code::Object::Integer)
+        other = arguments.first.value
+        ::Code::Object::Integer.new(raw.public_send(operator, other.raw))
       end
 
-      def integer_or_decimal_comparaison(operator, other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
-        elsif other.is_a?(::Code::Object::Decimal)
-          ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
-        else
-          raise ::Code::Error::TypeError.new(
-                  "#{operator} only supports numbers",
-                )
-        end
+      def comparaison(operator, arguments)
+        sig(arguments, ::Code::Object::Number)
+        other = arguments.first.value
+        ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
       end
     end
   end

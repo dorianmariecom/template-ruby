@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Range
+    class Range < Node
       INCLUSIVE_RANGE = ".."
       EXCLUSIVE_RANGE = "..."
 

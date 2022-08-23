@@ -7,13 +7,11 @@ class Code
         @raw = raw
       end
 
-      def evaluate(key, *args, **kargs)
-        raw.fetch(key) do
-          if key == "values"
-            ::Code::Object::List.new(raw.values)
-          else
-            super
-          end
+      def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
+        if operator == "values"
+          values(arguments)
+        else
+          super
         end
       end
 
@@ -35,6 +33,13 @@ class Code
 
       def inspect
         to_s
+      end
+
+      private
+
+      def values(arguments)
+        sig(arguments)
+        ::Code::Object::List.new(raw.values)
       end
     end
   end

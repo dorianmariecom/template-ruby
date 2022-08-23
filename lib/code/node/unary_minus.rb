@@ -1,6 +1,6 @@
 class Code
   class Node
-    class UnaryMinus
+    class UnaryMinus < Node
       def initialize(unary_minus)
         @statement = ::Code::Node::Statement.new(unary_minus)
       end

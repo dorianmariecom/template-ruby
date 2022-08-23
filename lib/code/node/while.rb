@@ -1,6 +1,6 @@
 class Code
   class Node
-    class While
+    class While < Node
       WHILE_KEYWORD = :while
       UNTIL_KEYWORD = :until
 

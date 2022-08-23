@@ -1,9 +1,10 @@
 class Code
   class Node
-    class Ternary
+    class Ternary < Node
       def initialize(ternary)
         @left = ::Code::Node::Statement.new(ternary.fetch(:left))
         @middle = ::Code::Node::Statement.new(ternary.fetch(:middle))
+
         if ternary.key?(:right)
           @right = ::Code::Node::Statement.new(ternary.fetch(:right))
         end

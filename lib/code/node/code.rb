@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Code
+    class Code < Node
       def initialize(statements)
         statements = [] if statements.blank?
 

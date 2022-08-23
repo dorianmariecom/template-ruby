@@ -66,11 +66,22 @@ class Code
       end
 
       rule(:block) do
-        (whitespace >> do_keyword >> whitespace >> block_arguments.as(:arguments).maybe >> code.as(:body) >> end_keyword) |
-          (whitespace? >> opening_curly_bracket >> whitespace >> block_arguments.as(:arguments).maybe >> code.as(:body) >> closing_curly_bracket)
+        (
+          whitespace >> do_keyword >> whitespace >>
+            block_arguments.as(:arguments).maybe >> code.as(:body) >>
+            end_keyword
+        ) |
+          (
+            whitespace? >> opening_curly_bracket >> whitespace >>
+              block_arguments.as(:arguments).maybe >> code.as(:body) >>
+              closing_curly_bracket
+          )
       end
 
-      rule(:call) { ((single_call | chained_call) >> block.as(:block).maybe).as(:call) | dictionnary }
+      rule(:call) do
+        ((single_call | chained_call) >> block.as(:block).maybe).as(:call) |
+          dictionnary
+      end
 
       root(:call)
     end

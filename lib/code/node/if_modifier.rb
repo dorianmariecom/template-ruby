@@ -1,6 +1,6 @@
 class Code
   class Node
-    class IfModifier
+    class IfModifier < Node
       IF_KEYWORD = :if
       UNLESS_KEYWORD = :unless
       WHILE_KEYWORD = :while

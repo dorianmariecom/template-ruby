@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Equal
+    class Equal < Node
       def initialize(equal)
         @left = equal.fetch(:left).fetch(:name)
         @operator = equal.fetch(:operator)
@@ -12,7 +12,7 @@ class Code
 
         if operator
           if context[left]
-            context[left] = context[left].evaluate(operator, right)
+            context[left] = simple_call(context[left], operator, right)
           else
             raise ::Code::Error::UndefinedVariable.new("#{left} is undefined")
           end

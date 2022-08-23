@@ -1,57 +1,21 @@
 class Code
   class Object
     class Function < ::Code::Object
-      def initialize(arguments: [], body:)
+      def initialize(arguments:, body:)
         @arguments = arguments
         @body = body
       end
 
-      def call(original_context, call_arguments = [])
-        context = original_context.dup
-        arguments.each.with_index do |argument, index|
-          if argument.regular?
-            if argument.splat?
-              context[argument.name] = ::Code::Object::List.new(
-                call_arguments
-                  .select(&:regular?)
-                  .map do |call_argument|
-                    call_argument.evaluate(original_context)
-                  end,
-              )
-            elsif argument.keyword_splat?
-              context[argument.name] = ::Code::Object::Dictionnary.new(
-                call_arguments
-                  .select(&:keyword?)
-                  .map do |call_argument|
-                    [
-                      call_argument.name,
-                      call_argument.evaluate(original_context),
-                    ]
-                  end
-                  .to_h,
-              )
-            else
-              call_argument = call_arguments[index]
-              call_argument =
-                call_argument.evaluate(original_context) if call_argument
-              call_argument = argument.evaluate(context) if call_argument.nil?
-              context[argument.name] = call_argument
-            end
-          elsif argument.keyword?
-            call_argument =
-              call_arguments.detect do |call_argument|
-                call_argument.name == argument.name
-              end
-
-            call_argument =
-              call_argument.evaluate(original_context) if call_argument
-            call_argument = argument.evaluate(context) if call_argument.nil?
-            context[argument.name] = call_argument
-          else
-            raise NotImplementedError
-          end
+      def call(
+        arguments: [],
+        context: ::Code::Object::Dictionnary.new,
+        operator: nil
+      )
+        if operator.nil?
+          call_function(args: arguments, context: context)
+        else
+          super
         end
-        body.evaluate(context)
       end
 
       def to_s
@@ -64,7 +28,36 @@ class Code
 
       private
 
-      attr_reader :body, :arguments
+      attr_reader :arguments, :body
+
+      def call_function(args:, context:)
+        new_context = context.dup
+        arguments.each.with_index do |argument, index|
+          if argument.regular?
+            if argument.splat?
+              new_context[argument.name] = ::Code::Object::List.new(
+                args.select(&:regular?).map(&:value),
+              )
+            elsif argument.keyword_splat?
+              new_context[argument.name] = ::Code::Object::Dictionnary.new(
+                args.select(&:keyword?).map(&:name_value).to_h,
+              )
+            else
+              arg = args[index]&.value
+              arg = argument.evaluate(new_context) if arg.nil?
+              new_context[argument.name] = arg
+            end
+          elsif argument.keyword?
+            arg = args.detect { |arg| arg.name == argument.name }&.value
+            arg = argument.evaluate(new_context) if arg.nil?
+            new_context[argument.name] = arg
+          else
+            raise NotImplementedError
+          end
+        end
+
+        body.evaluate(new_context)
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Group
+    class Group < Node
       def initialize(group)
         @code = ::Code::Node::Code.new(group)
       end

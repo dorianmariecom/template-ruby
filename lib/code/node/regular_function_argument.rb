@@ -1,7 +1,8 @@
 class Code
   class Node
-    class RegularFunctionArgument
+    class RegularFunctionArgument < Node
       def initialize(argument)
+        @block = argument.key?(:block)
         @splat = argument.key?(:splat)
         @keyword_splat = argument.key?(:keyword_splat)
         @name = argument.fetch(:name)
@@ -15,6 +16,10 @@ class Code
         @default ? @default.evaluate(context) : ::Code::Object::Nothing.new
       end
 
+      def name
+        ::Code::Object::String.new(@name.to_s)
+      end
+
       def splat?
         @splat
       end
@@ -23,8 +28,8 @@ class Code
         @keyword_splat
       end
 
-      def name
-        ::Code::Object::String.new(@name.to_s)
+      def block?
+        @block
       end
     end
   end

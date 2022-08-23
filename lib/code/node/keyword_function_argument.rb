@@ -1,6 +1,6 @@
 class Code
   class Node
-    class KeywordFunctionArgument
+    class KeywordFunctionArgument < Node
       def initialize(argument)
         @name = argument.fetch(:name)
 
@@ -22,6 +22,10 @@ class Code
       end
 
       def keyword_splat?
+        false
+      end
+
+      def block?
         false
       end
     end

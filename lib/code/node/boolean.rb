@@ -1,12 +1,21 @@
 class Code
   class Node
-    class Boolean
+    class Boolean < Node
+      TRUE = "true"
+      FALSE = "false"
+
       def initialize(boolean)
-        @boolean = boolean == "true" ? true : false
+        @boolean = boolean
       end
 
       def evaluate(_context)
-        ::Code::Object::Boolean.new(@boolean)
+        if @boolean == TRUE
+          ::Code::Object::Boolean.new(true)
+        elsif @boolean == FALSE
+          ::Code::Object::Boolean.new(false)
+        else
+          raise NotImplementedError, @boolean.inspect
+        end
       end
     end
   end

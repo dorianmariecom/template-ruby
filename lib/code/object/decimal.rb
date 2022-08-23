@@ -15,11 +15,13 @@ class Code
         end
       end
 
-      def evaluate(key, *args, **kargs)
-        if %i[** * / % + -].include?(key)
-          number_operation(key, args.first)
-        elsif %i[> >= < <=].include?(key)
-          number_comparaison(key, args.first)
+      def call(
+        arguments: [],
+        context: ::Code::Object::Dictionnary.new,
+        operator: nil
+      )
+        if ["%", "-", "+", "/", "*"].find(operator)
+          number_operation(operator.to_sym, arguments)
         else
           super
         end
@@ -35,24 +37,10 @@ class Code
 
       private
 
-      def number_operation(operator, other)
-        if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
-        else
-          raise ::Code::Error::TypeError.new(
-                  "#{operator} only supports numbers",
-                )
-        end
-      end
-
-      def number_comparaison(operator, other)
-        if other.is_a?(::Code::Object::Number)
-          ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
-        else
-          raise ::Code::Error::TypeError.new(
-                  "#{operator} only supports numbers",
-                )
-        end
+      def number_operation(operator, arguments)
+        sig(arguments, ::Code::Object::Number)
+        other = arguments.first.value
+        ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
       end
     end
   end

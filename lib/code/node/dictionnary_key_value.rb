@@ -1,6 +1,6 @@
 class Code
   class Node
-    class DictionnaryKeyValue
+    class DictionnaryKeyValue < Node
       def initialize(key_value)
         @key = key_value.fetch(:key)
 

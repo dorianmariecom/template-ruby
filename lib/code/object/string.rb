@@ -7,11 +7,11 @@ class Code
         @raw = string
       end
 
-      def evaluate(key, *args, **kargs)
-        if key == :+
-          string_operation(key, args.first)
-        elsif key == :to_function
-          to_function
+      def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
+        if operator == "to_function"
+          to_function(arguments)
+        elsif operator == "+"
+          plus(arguments)
         else
           super
         end
@@ -19,6 +19,10 @@ class Code
 
       def succ
         ::Code::Object::String.new(raw.succ)
+      end
+
+      def to_sym
+        raw.to_sym
       end
 
       def to_s
@@ -31,25 +35,15 @@ class Code
 
       private
 
-      def string_operation(operator, other)
-        if other.is_a?(::Code::Object::String)
-          ::Code::Object::String.new(raw.public_send(operator, other.raw))
-        else
-          raise ::Code::Error::TypeError.new(
-                  "#{operator} only supports strings",
-                )
-        end
+      def to_function(arguments)
+        sig(arguments)
+        Code.evaluate("(_) => { _.#{raw} }")
       end
 
-      def to_function
-        ::Code::Object::Function.new(
-          arguments: ::Code::Node::FunctionArgument.new(
-            [{ regular: { name: "_" } }]
-          ),
-          body: ::Code::Node::Code.new(
-            [{ call: { left: { name: "_" } }, right: { name: raw } }]
-          )
-        )
+      def plus(arguments)
+        sig(arguments, ::Code::Object::String)
+        other = arguments.first.value
+        ::Code::Object::String.new(raw + other.raw)
       end
     end
   end

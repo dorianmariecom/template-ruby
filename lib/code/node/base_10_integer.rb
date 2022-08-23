@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Base10Integer
+    class Base10Integer < Node
       def initialize(number)
         @sign = number[:sign]
         @whole = number.fetch(:whole)
@@ -12,11 +12,12 @@ class Code
 
       def evaluate(context)
         if @exponent
-          @exponent = @exponent.evaluate(context)
-          if @exponent.is_a?(::Code::Object::Decimal)
-            ::Code::Object::Decimal.new("#{sign}#{whole}", exponent: @exponent)
+          exponent = @exponent.evaluate(context)
+
+          if exponent.is_a?(::Code::Object::Decimal)
+            ::Code::Object::Decimal.new("#{sign}#{whole}", exponent: exponent)
           else
-            ::Code::Object::Integer.new("#{sign}#{whole}", exponent: @exponent)
+            ::Code::Object::Integer.new("#{sign}#{whole}", exponent: exponent)
           end
         else
           ::Code::Object::Integer.new("#{sign}#{whole}")

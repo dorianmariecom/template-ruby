@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Defined
+    class Defined < Node
       def initialize(defined)
         @name = defined.fetch(:name)
       end

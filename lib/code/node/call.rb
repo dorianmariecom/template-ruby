@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Call
+    class Call < Node
       def initialize(call)
         @left = ::Code::Node::Statement.new(call.fetch(:left))
 
@@ -14,20 +14,20 @@ class Code
 
       def evaluate(context)
         if @right
-          context = @left.evaluate(context)
-          @right.evaluate(context)
+          left = @left.evaluate(context)
+          @right.evaluate(left)
         else
-          if @left.statement.is_a?(::Code::Node::Name)
-            object = @left.statement.evaluate(context, call_function: false)
-
-            if object.is_a?(::Code::Object::Function)
-              object.call(context, @arguments)
-            else
-              ::Code::Object::Nothing.new
-            end
-          else
-            raise NotImplementedError.new(@left.inspect)
+          arguments = @arguments.map do |argument|
+            ::Code::Object::Argument.new(
+              argument.evaluate(context),
+              name: argument.name,
+              splat: argument.splat?,
+              keyword_splat: argument.keyword_splat?,
+              block: argument.block?,
+            )
           end
+
+          @left.statement.evaluate(context, arguments: arguments)
         end
       end
     end

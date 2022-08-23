@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Base16Number
+    class Base16Number < Node
       def initialize(number)
         @number = number
       end

@@ -1,11 +1,11 @@
 class Code
   class Node
-    class List
+    class List < Node
       def initialize(codes)
         if codes.blank?
           @codes = []
         else
-          @codes = codes.map { |code| ::Code::Node::Code.new(code[:code]) }
+          @codes = codes.map { |code| ::Code::Node::Code.new(code.fetch(:code)) }
         end
       end
 

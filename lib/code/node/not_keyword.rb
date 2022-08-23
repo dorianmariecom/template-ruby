@@ -1,6 +1,6 @@
 class Code
   class Node
-    class NotKeyword
+    class NotKeyword < Node
       def initialize(not_keyword)
         @statement = ::Code::Node::Statement.new(not_keyword)
       end

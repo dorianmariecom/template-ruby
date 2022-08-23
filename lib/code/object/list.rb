@@ -7,11 +7,13 @@ class Code
         @raw = raw
       end
 
-      def evaluate(key, *args, **kargs)
-        if key == "first"
-          raw.first
-        elsif key == "last"
-          raw.last
+      def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
+        if operator == "any?"
+          any?(arguments)
+        elsif operator == "first"
+          first(arguments)
+        elsif operator == "last"
+          last(arguments)
         else
           super
         end
@@ -32,6 +34,28 @@ class Code
 
       def inspect
         to_s
+      end
+
+      private
+
+      def any?(arguments)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first
+        ::Code::Object::Boolean.new(
+          raw.any? do |element|
+            simple_call(argument.value, nil, element).truthy?
+          end
+        )
+      end
+
+      def first(arguments)
+        sig(arguments)
+        raw.first
+      end
+
+      def last(arguments)
+        sig(arguments)
+        raw.last
       end
     end
   end

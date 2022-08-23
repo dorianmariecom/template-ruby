@@ -1,6 +1,6 @@
 class Code
   class Node
-    class If
+    class If < Node
       IF_KEYWORD = "if"
       UNLESS_KEYWORD = "unless"
 

@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Base10Number
+    class Base10Number < Node
       def initialize(number)
         if number.key?(:integer)
           @number = ::Code::Node::Base10Integer.new(number[:integer])

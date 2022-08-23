@@ -1,11 +1,11 @@
 class Code
   class Node
-    class Operation
+    class Operation < Node
       class Operation
         attr_reader :operator, :statement
 
         def initialize(operation)
-          @operator = operation.fetch(:operator).to_sym
+          @operator = operation.fetch(:operator).to_s
           @statement = ::Code::Node::Statement.new(operation.fetch(:statement))
         end
       end
@@ -23,7 +23,7 @@ class Code
 
         @rest.each do |operation|
           other = operation.statement.evaluate(context)
-          object = object.evaluate(operation.operator, other)
+          object = simple_call(object, operation.operator, other)
         end
 
         object

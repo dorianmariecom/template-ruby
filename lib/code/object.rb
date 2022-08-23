@@ -2,18 +2,33 @@ class Code
   class Object
     include Comparable
 
-    def evaluate(key, *args, **kargs)
-      if %i[== === !=].include?(key)
-        comparaison(key, args.first)
-      elsif key == :<=>
-        compare(args.first)
-      elsif key == "&&".to_sym
-        and_operator(args.first)
-      elsif key == "||".to_sym
-        or_operator(args.first)
+    def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
+      if %w[== === !=].detect { |o| operator == o }
+        comparaison(operator.to_sym, arguments)
+      elsif operator == "<=>"
+        compare(arguments)
+      elsif operator == "&&"
+        and_operator(arguments)
+      elsif operator == "||"
+        or_operator(arguments)
       else
-        raise ::Code::Error::NotFound.new("#{key} not defined on #{inspect}")
+        raise ::Code::Error::Undefined.new("#{operator} not defined on #{inspect}")
       end
+    end
+
+    def []=(key, value)
+      @attributes ||= {}
+      @attributes[key] = value
+    end
+
+    def [](key)
+      @attributes ||= {}
+      @attributes[key]
+    end
+
+    def key?(key)
+      @attributes ||= {}
+      @attributes.key?(key)
     end
 
     def truthy?
@@ -28,7 +43,7 @@ class Code
       if respond_to?(:raw)
         other.is_a?(::Code::Object) ? raw <=> other.raw : raw <=> other
       else
-        self == other
+        self <=> other
       end
     end
 
@@ -38,7 +53,11 @@ class Code
     alias_method :eql?, :==
 
     def hash
-      [self.class, raw].hash
+      if respond_to?(:raw)
+        [self.class, raw].hash
+      else
+        raise NotImplementedError
+      end
     end
 
     def to_s
@@ -47,38 +66,64 @@ class Code
 
     private
 
-    def comparaison(key, other)
-      if other
-        ::Code::Object::Boolean.new(raw.public_send(key, other.raw))
-      else
-        ::Code::Object::Boolean.new(false)
+    def simple_call(object, operator, value = nil)
+      object.call(
+        operator: operator && ::Code::Object::String.new(operator.to_s),
+        arguments: [value && ::Code::Object::Argument.new(value)].compact
+      )
+    end
+
+    def sig(actual_arguments, *expected_arguments)
+      if actual_arguments.size != expected_arguments.size
+        raise ::Code::Error::ArgumentError.new(
+          "Expected #{expected_arguments.size} arguments, " \
+            "got #{actual_arguments.size} arguments"
+        )
+      end
+
+      expected_arguments.each.with_index do |expected_argument, index|
+        actual_argument = actual_arguments[index].value
+
+        if expected_argument.is_a?(Array)
+          if expected_argument.none? do |expected_arg|
+              actual_argument.class < expected_arg || actual_argument.is_a?(expected_arg)
+            end
+            raise ::Code::Error::TypeError.new(
+              "Expected #{expected_argument}, got #{actual_argument.class}"
+            )
+          end
+        else
+          if !(actual_argument.class < expected_argument) && !actual_argument.is_a?(expected_argument)
+            raise ::Code::Error::TypeError.new(
+              "Expected #{expected_argument}, got #{actual_argument.class}"
+            )
+          end
+        end
       end
     end
 
-    def compare(other)
-      if other
-        ::Code::Object::Integer.new(raw <=> other.raw)
-      else
-        ::Code::Object::Integer.new(0)
-      end
+    def comparaison(operator, arguments)
+      sig(arguments, ::Code::Object)
+      other = arguments.first.value
+      ::Code::Object::Boolean.new(public_send(operator, other))
     end
 
-    def and_operator(other)
-      if truthy? && other && other.truthy?
-        other
-      else
-        ::Code::Object::Boolean.new(false)
-      end
+    def compare(arguments)
+      sig(arguments, ::Code::Object)
+      other = arguments.first.value
+      ::Code::Object::Integer.new(self <=> other)
     end
 
-    def or_operator(other)
-      if truthy?
-        self
-      elsif other&.truthy?
-        other
-      else
-        ::Code::Object::Boolean.new(false)
-      end
+    def and_operator(arguments)
+      sig(arguments, ::Code::Object)
+      other = arguments.first.value
+      truthy? ? other : self
+    end
+
+    def or_operator(arguments)
+      sig(arguments, ::Code::Object)
+      other = arguments.first.value
+      truthy? ? self : other
     end
   end
 end

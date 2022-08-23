@@ -1,18 +1,11 @@
 class Code
   class Node
-    class FunctionArgument
-      REGULAR = :regular
-      KEYWORD = :keyword
-
-      attr_reader :kind
-
+    class FunctionArgument < Node
       def initialize(argument)
         if argument.key?(:regular)
-          @kind = REGULAR
           @argument =
             ::Code::Node::RegularFunctionArgument.new(argument.fetch(:regular))
         elsif argument.key?(:keyword)
-          @kind = KEYWORD
           @argument =
             ::Code::Node::KeywordFunctionArgument.new(argument.fetch(:keyword))
         else
@@ -22,14 +15,6 @@ class Code
 
       def evaluate(context)
         @argument.evaluate(context)
-      end
-
-      def regular?
-        kind == REGULAR
-      end
-
-      def keyword?
-        kind == KEYWORD
       end
 
       def splat?
@@ -42,6 +27,18 @@ class Code
 
       def name
         @argument.name
+      end
+
+      def block?
+        @argument.block?
+      end
+
+      def regular?
+        @argument.is_a?(::Code::Node::RegularFunctionArgument)
+      end
+
+      def keyword?
+        @argument.is_a?(::Code::Node::KeywordFunctionArgument)
       end
     end
   end

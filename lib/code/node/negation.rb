@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Negation
+    class Negation < Node
       EXCLAMATION_POINT = "!"
       PLUS = "+"
 

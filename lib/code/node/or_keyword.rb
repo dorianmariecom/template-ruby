@@ -1,8 +1,8 @@
 class Code
   class Node
-    class OrKeyword
-      OR_KEYWORD = :or
-      AND_KEYWORD = :and
+    class OrKeyword < Node
+      OR_KEYWORD = "or"
+      AND_KEYWORD = "and"
 
       def initialize(or_keyword)
         @first = ::Code::Node::Statement.new(or_keyword.fetch(:first))

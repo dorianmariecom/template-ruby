@@ -1,6 +1,6 @@
 class Code
   class Node
-    class Nothing
+    class Nothing < Node
       def initialize
       end
 
