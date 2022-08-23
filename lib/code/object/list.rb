@@ -7,7 +7,7 @@ class Code
         @raw = raw
       end
 
-      def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
+      def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
         if operator == "any?"
           any?(arguments)
         elsif operator == "first"

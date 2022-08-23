@@ -1,18 +1,14 @@
 class Code
   class Object
-    class Dictionnary < ::Code::Object
+    class Context < ::Code::Object
       attr_reader :raw
 
       def initialize(raw = {})
         @raw = raw
       end
 
-      def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
-        if operator == "values"
-          values(arguments)
-        else
-          super
-        end
+      def call(...)
+        raise NotImplementedError
       end
 
       def [](key)
@@ -33,13 +29,6 @@ class Code
 
       def inspect
         to_s
-      end
-
-      private
-
-      def values(arguments)
-        sig(arguments)
-        ::Code::Object::List.new(raw.values)
       end
     end
   end

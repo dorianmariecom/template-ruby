@@ -12,7 +12,7 @@ class Template
     if context.present?
       context = ::Code.evaluate(context)
     else
-      context = ::Code::Object::Dictionnary.new
+      context = ::Code::Object::Context.new
     end
 
     ::Template::Node::Template.new(@parsed).evaluate(context).map(&:to_s).join

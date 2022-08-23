@@ -2,7 +2,7 @@ class Code
   class Object
     include Comparable
 
-    def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
+    def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
       if %w[== === !=].detect { |o| operator == o }
         comparaison(operator.to_sym, arguments)
       elsif operator == "<=>"
@@ -29,6 +29,10 @@ class Code
     def key?(key)
       @attributes ||= {}
       @attributes.key?(key)
+    end
+
+    def context
+      @context ||= ::Code::Object::Context.new
     end
 
     def truthy?

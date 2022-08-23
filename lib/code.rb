@@ -12,7 +12,7 @@ class Code
     if context.present?
       context = ::Code.evaluate(context)
     else
-      context = ::Code::Object::Dictionnary.new
+      context = ::Code::Object::Context.new
     end
 
     ::Code::Node::Code.new(parsed).evaluate(context)

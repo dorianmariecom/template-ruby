@@ -17,7 +17,7 @@ class Code
 
       def call(
         arguments: [],
-        context: ::Code::Object::Dictionnary.new,
+        context: ::Code::Object::Context.new,
         operator: nil
       )
         if operator == "even?"
