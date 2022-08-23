@@ -12,8 +12,8 @@ class Code
         end
       end
 
-      def evaluate(context)
-        object = @first.evaluate(context)
+      def evaluate(**args)
+        object = @first.evaluate(**args)
 
         @rest.each do |operation|
           if operation.operator == OR_KEYWORD
@@ -24,7 +24,7 @@ class Code
             raise NotImplementedError.new(operation.operator.inspect)
           end
 
-          object = operation.statement.evaluate(context)
+          object = operation.statement.evaluate(**args)
         end
 
         object

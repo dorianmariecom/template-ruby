@@ -10,13 +10,13 @@ class Code
         end
       end
 
-      def evaluate(context)
-        left = @left.evaluate(context)
+      def evaluate(**args)
+        left = @left.evaluate(**args)
 
         if left.truthy?
-          @middle.evaluate(context)
+          @middle.evaluate(**args)
         elsif @right
-          @right.evaluate(context)
+          @right.evaluate(**args)
         else
           ::Code::Object::Nothing.new
         end

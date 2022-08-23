@@ -73,8 +73,8 @@ class Code
         end
       end
 
-      def evaluate(context)
-        @statement.evaluate(context)
+      def evaluate(**args)
+        @statement.evaluate(**args)
       end
     end
   end

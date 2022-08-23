@@ -10,9 +10,15 @@ class Code
       def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
         if operator == "values"
           values(arguments)
+        elsif key?(operator)
+          fetch(operator)
         else
           super
         end
+      end
+
+      def fetch(key)
+        raw.fetch(key)
       end
 
       def [](key)

@@ -44,19 +44,19 @@ class Code
               )
             else
               arg = args[index]&.value
-              arg = argument.evaluate(new_context) if arg.nil?
+              arg = argument.evaluate(context: new_context) if arg.nil?
               new_context[argument.name] = arg
             end
           elsif argument.keyword?
             arg = args.detect { |arg| arg.name == argument.name }&.value
-            arg = argument.evaluate(new_context) if arg.nil?
+            arg = argument.evaluate(context: new_context) if arg.nil?
             new_context[argument.name] = arg
           else
             raise NotImplementedError
           end
         end
 
-        body.evaluate(new_context)
+        body.evaluate(context: new_context)
       end
     end
   end

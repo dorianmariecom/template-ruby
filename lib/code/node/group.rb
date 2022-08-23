@@ -5,8 +5,8 @@ class Code
         @code = ::Code::Node::Code.new(group)
       end
 
-      def evaluate(context)
-        @code.evaluate(context)
+      def evaluate(**args)
+        @code.evaluate(**args)
       end
     end
   end

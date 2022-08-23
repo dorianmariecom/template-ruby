@@ -9,8 +9,8 @@ class Code
         @statement = ::Code::Node::Statement.new(negation.fetch(:statement))
       end
 
-      def evaluate(context)
-        object = @statement.evaluate(context)
+      def evaluate(**args)
+        object = @statement.evaluate(**args)
 
         if operator == EXCLAMATION_POINT
           if object.truthy?

@@ -10,9 +10,9 @@ class Code
         @right = ::Code::Node::Statement.new(range.fetch(:right))
       end
 
-      def evaluate(context)
-        left = @left.evaluate(context)
-        right = @right.evaluate(context)
+      def evaluate(**args)
+        left = @left.evaluate(**args)
+        right = @right.evaluate(**args)
 
         if operator == INCLUSIVE_RANGE
           ::Code::Object::Range.new(left, right, exclude_end: false)

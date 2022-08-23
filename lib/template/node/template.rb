@@ -5,8 +5,8 @@ class Template
         @parts = parts.map { |part| ::Template::Node::Part.new(part) }
       end
 
-      def evaluate(context)
-        ::Code::Object::List.new(@parts.map { |part| part.evaluate(context) })
+      def evaluate(**args)
+        ::Code::Object::List.new(@parts.map { |part| part.evaluate(**args) })
       end
     end
   end

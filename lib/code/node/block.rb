@@ -9,7 +9,7 @@ class Code
         end
       end
 
-      def evaluate(context)
+      def evaluate(**args)
         ::Code::Object::Function.new(arguments: @arguments, body: @body)
       end
     end

@@ -5,8 +5,8 @@ class Code
         @name = defined.fetch(:name)
       end
 
-      def evaluate(context)
-        ::Code::Object::Boolean.new(context.key?(name))
+      def evaluate(**args)
+        ::Code::Object::Boolean.new(args.fetch(:context).key?(name))
       end
 
       private

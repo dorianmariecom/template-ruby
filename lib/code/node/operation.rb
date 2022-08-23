@@ -18,11 +18,11 @@ class Code
         end
       end
 
-      def evaluate(context)
-        object = @first.evaluate(context)
+      def evaluate(**args)
+        object = @first.evaluate(**args)
 
         @rest.each do |operation|
-          other = operation.statement.evaluate(context)
+          other = operation.statement.evaluate(**args)
           object = simple_call(object, operation.operator, other)
         end
 

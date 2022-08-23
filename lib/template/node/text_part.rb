@@ -5,7 +5,7 @@ class Template
         @text = text
       end
 
-      def evaluate(_context)
+      def evaluate(**args)
         ::Code::Object::String.new(@text.to_s)
       end
     end

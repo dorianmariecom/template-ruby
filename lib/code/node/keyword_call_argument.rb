@@ -6,8 +6,8 @@ class Code
         @value = ::Code::Node::Code.new(argument.fetch(:value))
       end
 
-      def evaluate(context)
-        @value.evaluate(context)
+      def evaluate(**args)
+        @value.evaluate(**args)
       end
 
       def name

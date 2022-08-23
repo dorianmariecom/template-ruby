@@ -13,8 +13,8 @@ class Code
         end
       end
 
-      def evaluate(context)
-        @argument.evaluate(context)
+      def evaluate(**args)
+        @argument.evaluate(**args)
       end
 
       def splat?

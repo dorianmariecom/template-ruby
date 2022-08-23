@@ -10,9 +10,9 @@ class Code
         end
       end
 
-      def evaluate(context)
+      def evaluate(**args)
         if @exponent
-          exponent = @exponent.evaluate(context)
+          exponent = @exponent.evaluate(**args)
 
           if exponent.is_a?(::Code::Object::Decimal)
             ::Code::Object::Decimal.new("#{sign}#{whole}", exponent: exponent)

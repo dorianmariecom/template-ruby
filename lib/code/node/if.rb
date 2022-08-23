@@ -27,23 +27,23 @@ class Code
         @elses.map! { |else_parsed| ::Code::Node::If::Else.new(else_parsed) }
       end
 
-      def evaluate(context)
-        if_object = @if_statement.evaluate(context)
+      def evaluate(**args)
+        if_object = @if_statement.evaluate(**args)
 
         if @if_operator == IF_KEYWORD && if_object.truthy?
-          @if_body.evaluate(context)
+          @if_body.evaluate(**args)
         elsif @if_operator == UNLESS_KEYWORD && if_object.falsy?
-          @if_body.evaluate(context)
+          @if_body.evaluate(**args)
         else
           @elses.each do |else_node|
             if else_node.operator == IF_KEYWORD
-              else_object = else_node.statement.evaluate(context)
-              return else_node.body.evaluate(context) if else_object.truthy?
+              else_object = else_node.statement.evaluate(**args)
+              return else_node.body.evaluate(**args) if else_object.truthy?
             elsif else_node.operator == UNLESS_KEYWORD
-              else_object = else_node.statement.evaluate(context)
-              return else_node.body.evaluate(context) if else_object.falsy?
+              else_object = else_node.statement.evaluate(**args)
+              return else_node.body.evaluate(**args) if else_object.falsy?
             elsif else_node.operator.nil?
-              return else_node.body.evaluate(context)
+              return else_node.body.evaluate(**args)
             end
           end
 

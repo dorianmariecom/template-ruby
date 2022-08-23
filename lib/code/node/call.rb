@@ -16,47 +16,32 @@ class Code
         end
       end
 
-      def evaluate(context, arguments: [])
+      def evaluate(**args)
         if @right
-          left = @left.evaluate(context)
+          left = @left.evaluate(**args)
+        end
 
-          arguments = @arguments.map do |argument|
-            ::Code::Object::Argument.new(
-              argument.evaluate(context),
-              name: argument.name,
-              splat: argument.splat?,
-              keyword_splat: argument.keyword_splat?,
-              block: argument.block?,
-            )
-          end
+        arguments = @arguments.map do |argument|
+          ::Code::Object::Argument.new(
+            argument.evaluate(**args),
+            name: argument.name,
+            splat: argument.splat?,
+            keyword_splat: argument.keyword_splat?,
+            block: argument.block?,
+          )
+        end
 
-          if @block
-            arguments << ::Code::Object::Argument.new(
-              @block.evaluate(context),
-              block: true
-            )
-          end
+        if @block
+          arguments << ::Code::Object::Argument.new(
+            @block.evaluate(**args),
+            block: true
+          )
+        end
 
-          @right.statement.evaluate(left, arguments: arguments)
+        if @right
+          @right.statement.evaluate(**args.merge(object: left, arguments: arguments))
         else
-          arguments = @arguments.map do |argument|
-            ::Code::Object::Argument.new(
-              argument.evaluate(context),
-              name: argument.name,
-              splat: argument.splat?,
-              keyword_splat: argument.keyword_splat?,
-              block: argument.block?,
-            )
-          end
-
-          if @block
-            arguments << ::Code::Object::Argument.new(
-              @block.evaluate(context),
-              block: true
-            )
-          end
-
-          @left.statement.evaluate(context, arguments: arguments)
+          @left.statement.evaluate(**args.merge(arguments: arguments))
         end
       end
     end

@@ -15,3 +15,5 @@
   max = 0
 
   primes.max_by { |prime| n % prime == 0 }
+
+  primes

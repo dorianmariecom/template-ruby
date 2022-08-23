@@ -11,8 +11,8 @@ class Template
         end
       end
 
-      def evaluate(context)
-        @part.evaluate(context)
+      def evaluate(**args)
+        @part.evaluate(**args)
       end
     end
   end

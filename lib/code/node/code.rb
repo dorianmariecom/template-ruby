@@ -8,8 +8,8 @@ class Code
           statements.map { |statement| ::Code::Node::Statement.new(statement) }
       end
 
-      def evaluate(context)
-        @statements.map { |statement| statement.evaluate(context) }.last
+      def evaluate(**args)
+        @statements.map { |statement| statement.evaluate(**args) }.last
       end
     end
   end

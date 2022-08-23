@@ -31,10 +31,6 @@ class Code
       @attributes.key?(key)
     end
 
-    def context
-      @context ||= ::Code::Object::Context.new
-    end
-
     def truthy?
       true
     end

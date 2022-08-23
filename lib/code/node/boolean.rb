@@ -8,7 +8,7 @@ class Code
         @boolean = boolean
       end
 
-      def evaluate(_context)
+      def evaluate(**args)
         if @boolean == TRUE
           ::Code::Object::Boolean.new(true)
         elsif @boolean == FALSE

@@ -4,7 +4,7 @@ class Code
       def initialize
       end
 
-      def evaluate(_context)
+      def evaluate(**args)
         ::Code::Object::Nothing.new
       end
     end

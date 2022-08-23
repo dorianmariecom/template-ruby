@@ -5,7 +5,7 @@ class Code
         @string = string
       end
 
-      def evaluate(context)
+      def evaluate(**args)
         ::Code::Object::String.new(string.to_s)
       end
 

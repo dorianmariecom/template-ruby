@@ -15,8 +15,8 @@ class Code
         @value = ::Code::Node::Code.new(key_value.fetch(:value))
       end
 
-      def evaluate(context)
-        [@key.evaluate(context), @value.evaluate(context)]
+      def evaluate(**args)
+        [@key.evaluate(**args), @value.evaluate(**args)]
       end
     end
   end

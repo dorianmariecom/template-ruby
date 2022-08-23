@@ -5,8 +5,8 @@ class Code
         @statement = ::Code::Node::Statement.new(unary_minus)
       end
 
-      def evaluate(context)
-        object = @statement.evaluate(context)
+      def evaluate(**args)
+        object = @statement.evaluate(**args)
 
         case object
         when ::Code::Object::Integer

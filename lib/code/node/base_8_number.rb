@@ -5,7 +5,7 @@ class Code
         @number = number
       end
 
-      def evaluate(context)
+      def evaluate(**args)
         ::Code::Object::Integer.new(number)
       end
 

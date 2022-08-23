@@ -5,17 +5,25 @@ class Code
         @name = name
       end
 
-      def evaluate(context, arguments: [])
-        if context.key?(name)
+      def evaluate(**args)
+        context = args.fetch(:context)
+        arguments = args.fetch(:arguments, [])
+        object = args.fetch(:object, nil)
+
+        if object
+          object.call(context: context, operator: name, arguments: arguments)
+        elsif context.key?(name)
           object = context[name]
 
           if object.is_a?(::Code::Object::Function)
-            object.call(context: context, arguments: arguments)
+            object.call(context: context, operator: nil, arguments: arguments)
           else
             object
           end
         else
-          context.call(context: context, operator: name, arguments: arguments)
+          p context
+          p object
+          raise ::Code::Error::Undefined.new("#{name} undefined")
         end
       end
 

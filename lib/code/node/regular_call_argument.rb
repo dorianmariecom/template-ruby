@@ -8,8 +8,8 @@ class Code
         @value = ::Code::Node::Code.new(argument.fetch(:value))
       end
 
-      def evaluate(context)
-        object = @value.evaluate(context)
+      def evaluate(**args)
+        object = @value.evaluate(**args)
 
         block? ? simple_call(object, :to_function) : object
       end

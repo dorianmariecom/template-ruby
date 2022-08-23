@@ -15,7 +15,7 @@ class Code
       context = ::Code::Object::Context.new
     end
 
-    ::Code::Node::Code.new(parsed).evaluate(context)
+    ::Code::Node::Code.new(parsed).evaluate(context: context)
   end
 
   private

@@ -7,8 +7,9 @@ class Code
         @right = ::Code::Node::Statement.new(equal.fetch(:right))
       end
 
-      def evaluate(context)
-        right = @right.evaluate(context)
+      def evaluate(**args)
+        right = @right.evaluate(**args)
+        context = args.fetch(:context)
 
         if operator
           if context[left]

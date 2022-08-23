@@ -12,25 +12,25 @@ class Code
         @right = ::Code::Node::Statement.new(if_modifier.fetch(:right))
       end
 
-      def evaluate(context)
+      def evaluate(**args)
         if operator == IF_KEYWORD
-          right = @right.evaluate(context)
+          right = @right.evaluate(**args)
 
-          right.truthy? ? @left.evaluate(context) : ::Code::Object::Nothing.new
+          right.truthy? ? @left.evaluate(**args) : ::Code::Object::Nothing.new
         elsif operator == UNLESS_KEYWORD
-          right = @right.evaluate(context)
+          right = @right.evaluate(**args)
 
-          right.truthy? ? ::Code::Object::Nothing.new : @left.evaluate(context)
+          right.truthy? ? ::Code::Object::Nothing.new : @left.evaluate(**args)
         elsif operator == WHILE_KEYWORD
           left = ::Code::Object::Nothing.new
 
-          left = @left.evaluate(context) while @right.evaluate(context).truthy?
+          left = @left.evaluate(**args) while @right.evaluate(**args).truthy?
 
           left
         elsif operator == UNTIL_KEYWORD
           left = ::Code::Object::Nothing.new
 
-          left = @left.evaluate(context) until @right.evaluate(context).truthy?
+          left = @left.evaluate(**args) until @right.evaluate(**args).truthy?
 
           left
         else

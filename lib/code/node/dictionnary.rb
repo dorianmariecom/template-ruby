@@ -12,9 +12,9 @@ class Code
         end
       end
 
-      def evaluate(context)
+      def evaluate(**args)
         ::Code::Object::Dictionnary.new(
-          @key_values.map { |key_value| key_value.evaluate(context) }.to_h,
+          @key_values.map { |key_value| key_value.evaluate(**args) }.to_h,
         )
       end
     end

@@ -6,10 +6,10 @@ class Code
         @right = ::Code::Node::Statement.new(power.fetch(:right))
       end
 
-      def evaluate(context)
-        @left.evaluate(context)
+      def evaluate(**args)
+        @left.evaluate(**args)
       rescue ::Code::Error
-        @right.evaluate(context)
+        @right.evaluate(**args)
       end
     end
   end

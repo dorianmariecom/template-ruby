@@ -10,20 +10,20 @@ class Code
         @body = ::Code::Node::Code.new(while_parsed.fetch(:body))
       end
 
-      def evaluate(context)
+      def evaluate(**args)
         if operator == WHILE_KEYWORD
           object = ::Code::Object::Nothing.new
 
-          while @statement.evaluate(context).truthy?
-            object = @body.evaluate(context)
+          while @statement.evaluate(**args).truthy?
+            object = @body.evaluate(**args)
           end
 
           object
         elsif operator == UNTIL_KEYWORD
           object = ::Code::Object::Nothing.new
 
-          until @statement.evaluate(context).truthy?
-            object = @body.evaluate(context)
+          until @statement.evaluate(**args).truthy?
+            object = @body.evaluate(**args)
           end
 
           object

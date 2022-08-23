@@ -15,6 +15,6 @@ class Template
       context = ::Code::Object::Context.new
     end
 
-    ::Template::Node::Template.new(@parsed).evaluate(context).map(&:to_s).join
+    ::Template::Node::Template.new(@parsed).evaluate(context: context).map(&:to_s).join
   end
 end

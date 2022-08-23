@@ -9,8 +9,8 @@ class Code
         end
       end
 
-      def evaluate(context)
-        @default ? @default.evaluate(context) : ::Code::Object::Nothing.new
+      def evaluate(**args)
+        @default ? @default.evaluate(**args) : ::Code::Object::Nothing.new
       end
 
       def name

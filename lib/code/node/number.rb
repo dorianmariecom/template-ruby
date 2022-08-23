@@ -15,8 +15,8 @@ class Code
         end
       end
 
-      def evaluate(context)
-        @number.evaluate(context)
+      def evaluate(**args)
+        @number.evaluate(**args)
       end
     end
   end

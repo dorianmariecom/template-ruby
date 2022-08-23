@@ -5,8 +5,8 @@ class Code
         @statement = ::Code::Node::Statement.new(not_keyword)
       end
 
-      def evaluate(context)
-        ::Code::Object::Boolean.new(!@statement.evaluate(context).truthy?)
+      def evaluate(**args)
+        ::Code::Object::Boolean.new(!@statement.evaluate(**args).truthy?)
       end
     end
   end
