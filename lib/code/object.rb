@@ -86,14 +86,14 @@ class Code
 
         if expected_argument.is_a?(Array)
           if expected_argument.none? do |expected_arg|
-              actual_argument.class < expected_arg || actual_argument.is_a?(expected_arg)
+              actual_argument.is_a?(expected_arg)
             end
             raise ::Code::Error::TypeError.new(
               "Expected #{expected_argument}, got #{actual_argument.class}"
             )
           end
         else
-          if !(actual_argument.class < expected_argument) && !actual_argument.is_a?(expected_argument)
+          if !actual_argument.is_a?(expected_argument)
             raise ::Code::Error::TypeError.new(
               "Expected #{expected_argument}, got #{actual_argument.class}"
             )

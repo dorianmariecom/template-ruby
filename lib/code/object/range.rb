@@ -9,9 +9,9 @@ class Code
 
       def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
         if operator == "any?"
-          any?(arguments)
+          any?(arguments, context)
         elsif operator == "each"
-          each(arguments)
+          each(arguments, context)
         elsif operator == "first"
           first(arguments)
         elsif operator == "last"
@@ -31,21 +31,27 @@ class Code
 
       private
 
-      def any?(arguments)
+      def any?(arguments, context)
         sig(arguments, ::Code::Object::Function)
         argument = arguments.first
         ::Code::Object::Boolean.new(
           raw.any? do |element|
-            simple_call(argument.value, nil, element).truthy?
+            argument.value.call(
+              arguments: [::Code::Object::Argument.new(element)],
+              context: context
+            ).truthy?
           end
         )
       end
 
-      def each(arguments)
+      def each(arguments, context)
         sig(arguments, ::Code::Object::Function)
         argument = arguments.first
         raw.each do |element|
-          simple_call(argument.value, nil, element)
+          argument.value.call(
+            arguments: [::Code::Object::Argument.new(element)],
+            context: context
+          )
         end
         self
       end
