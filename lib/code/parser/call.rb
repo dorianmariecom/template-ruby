@@ -53,12 +53,7 @@ class Code
       end
 
       rule(:chained_call) do
-        dictionnary.as(:left) >> dot >> call.as(:right) >>
-          (
-            opening_parenthesis >> whitespace? >>
-              arguments.as(:arguments).maybe >> whitespace? >>
-              closing_parenthesis
-          ).maybe
+        dictionnary.as(:left) >> dot >> call.as(:right)
       end
 
       rule(:block_arguments) do
@@ -79,8 +74,7 @@ class Code
       end
 
       rule(:call) do
-        ((single_call | chained_call) >> block.as(:block).maybe).as(:call) |
-          dictionnary
+        ((single_call | chained_call) >> block.as(:block).maybe).as(:call) | dictionnary
       end
 
       root(:call)

@@ -8,5 +8,8 @@ class Code
 
     class UndefinedVariable < ::Code::Error
     end
+
+    class ArgumentError < ::Code::Error
+    end
   end
 end

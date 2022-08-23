@@ -10,12 +10,34 @@ class Code
         if call.key?(:right)
           @right = ::Code::Node::Statement.new(call.fetch(:right))
         end
+
+        if call.key?(:block)
+          @block = ::Code::Node::Block.new(call.fetch(:block))
+        end
       end
 
-      def evaluate(context)
+      def evaluate(context, arguments: [])
         if @right
           left = @left.evaluate(context)
-          @right.evaluate(left)
+
+          arguments = @arguments.map do |argument|
+            ::Code::Object::Argument.new(
+              argument.evaluate(context),
+              name: argument.name,
+              splat: argument.splat?,
+              keyword_splat: argument.keyword_splat?,
+              block: argument.block?,
+            )
+          end
+
+          if @block
+            arguments << ::Code::Object::Argument.new(
+              @block.evaluate(context),
+              block: true
+            )
+          end
+
+          @right.statement.evaluate(left, arguments: arguments)
         else
           arguments = @arguments.map do |argument|
             ::Code::Object::Argument.new(
@@ -24,6 +46,13 @@ class Code
               splat: argument.splat?,
               keyword_splat: argument.keyword_splat?,
               block: argument.block?,
+            )
+          end
+
+          if @block
+            arguments << ::Code::Object::Argument.new(
+              @block.evaluate(context),
+              block: true
             )
           end
 

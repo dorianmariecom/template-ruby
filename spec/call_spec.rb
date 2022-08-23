@@ -8,6 +8,7 @@ RSpec.describe Code do
     %w[(1..1).any?(&:even?) false],
     %w[(3..3).any?(&:even?) false],
     %w[(2..5).any?(&:even?) true],
+    ["(2..5).any? { |n| n.even? }", "true"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

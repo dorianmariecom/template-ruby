@@ -10,6 +10,8 @@ class Code
       def call(arguments: [], context: ::Code::Object::Dictionnary.new, operator: nil)
         if operator == "any?"
           any?(arguments)
+        elsif operator == "each"
+          each(arguments)
         elsif operator == "first"
           first(arguments)
         elsif operator == "last"
@@ -37,6 +39,15 @@ class Code
             simple_call(argument.value, nil, element).truthy?
           end
         )
+      end
+
+      def each(arguments)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first
+        raw.each do |element|
+          simple_call(argument.value, nil, element)
+        end
+        self
       end
 
       def first(arguments)
