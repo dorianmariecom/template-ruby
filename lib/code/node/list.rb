@@ -2,9 +2,13 @@ class Code
   class Node
     class List < Node
       def initialize(codes)
-        @codes = codes.map do |code|
-          code.fetch(:code).presence && ::Code::Node::Code.new(code.fetch(:code))
-        end.compact
+        @codes =
+          codes
+            .map do |code|
+              code.fetch(:code).presence &&
+                ::Code::Node::Code.new(code.fetch(:code))
+            end
+            .compact
       end
 
       def evaluate(**args)

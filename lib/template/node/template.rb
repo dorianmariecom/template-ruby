@@ -6,9 +6,7 @@ class Template
       end
 
       def evaluate(**args)
-        @parts.each do |part|
-          args.fetch(:io).print(part.evaluate(**args))
-        end
+        @parts.each { |part| args.fetch(:io).print(part.evaluate(**args)) }
       end
     end
   end

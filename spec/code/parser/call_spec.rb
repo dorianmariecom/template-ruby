@@ -6,7 +6,7 @@ RSpec.describe Code::Parser::Call do
   [
     [
       "user.first_name",
-      { call: { left: { name: "user" }, right: { name: "first_name" } } },
+      { call: { left: { name: "user" }, right: [{ name: "first_name" }] } },
     ],
     [
       "3.times",
@@ -21,9 +21,9 @@ RSpec.describe Code::Parser::Call do
               },
             },
           },
-          right: {
+          right: [{
             name: "times",
-          },
+          }],
         },
       },
     ],
@@ -55,6 +55,7 @@ RSpec.describe Code::Parser::Call do
     "render(item) do |item| item * 2 end",
     "render(item) do |item1, item2| item1 + item2 end",
     "(1..2).any?(&:even?)",
+    "(2..5).select { |i| i.even? }.any? { |n| n.even? }",
   ].each do |input|
     context input.inspect do
       let(:input) { input }

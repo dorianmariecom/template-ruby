@@ -14,7 +14,9 @@ class Code
       elsif operator == "||"
         or_operator(arguments)
       else
-        raise ::Code::Error::Undefined.new("#{operator} not defined on #{inspect}")
+        raise ::Code::Error::Undefined.new(
+                "#{operator} not defined on #{inspect}",
+              )
       end
     end
 
@@ -71,27 +73,27 @@ class Code
     def sig(actual_arguments, *expected_arguments)
       if actual_arguments.size != expected_arguments.size
         raise ::Code::Error::ArgumentError.new(
-          "Expected #{expected_arguments.size} arguments, " \
-            "got #{actual_arguments.size} arguments"
-        )
+                "Expected #{expected_arguments.size} arguments, " \
+                  "got #{actual_arguments.size} arguments",
+              )
       end
 
       expected_arguments.each.with_index do |expected_argument, index|
         actual_argument = actual_arguments[index].value
 
         if expected_argument.is_a?(Array)
-          if expected_argument.none? do |expected_arg|
-              actual_argument.is_a?(expected_arg)
-            end
+          if expected_argument.none? { |expected_arg|
+               actual_argument.is_a?(expected_arg)
+             }
             raise ::Code::Error::TypeError.new(
-              "Expected #{expected_argument}, got #{actual_argument.class}"
-            )
+                    "Expected #{expected_argument}, got #{actual_argument.class}",
+                  )
           end
         else
           if !actual_argument.is_a?(expected_argument)
             raise ::Code::Error::TypeError.new(
-              "Expected #{expected_argument}, got #{actual_argument.class}"
-            )
+                    "Expected #{expected_argument}, got #{actual_argument.class}",
+                  )
           end
         end
       end

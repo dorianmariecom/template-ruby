@@ -20,16 +20,18 @@ class Code
         arguments = args.fetch(:arguments, [])
 
         if operator == "even?"
-          even?
+          even?(arguments)
+        elsif operator == "to_string"
+          code_to_s(arguments)
         elsif operator == "*"
           multiplication(arguments)
         elsif operator == "/"
           division(arguments)
-        elsif ["%", "-", "+", "**"].detect { |o| operator == o }
+        elsif %w[% - + **].detect { |o| operator == o }
           integer_or_decimal_operation(operator.to_sym, arguments)
-        elsif [">", ">=", "<", "<="].detect { |o| operator == o }
+        elsif %w[> >= < <=].detect { |o| operator == o }
           comparaison(operator.to_sym, arguments)
-        elsif ["<<", ">>", "&", "|", "^"].detect { |o| operator == o }
+        elsif %w[<< >> & | ^].detect { |o| operator == o }
           integer_operation(operator.to_sym, arguments)
         else
           super
@@ -50,8 +52,14 @@ class Code
 
       private
 
-      def even?
+      def even?(arguments)
+        sig(arguments)
         ::Code::Object::Boolean.new(raw.even?)
+      end
+
+      def code_to_s(arguments)
+        sig(arguments)
+        ::Code::Object::String.new(raw.to_s)
       end
 
       def multiplication(arguments)

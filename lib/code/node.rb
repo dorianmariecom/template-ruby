@@ -7,7 +7,7 @@ class Code
         operator: operator && ::Code::Object::String.new(operator.to_s),
         arguments: [value && ::Code::Object::Argument.new(value)].compact,
         context: args.fetch(:context),
-        io: args.fetch(:io)
+        io: args.fetch(:io),
       )
     end
   end

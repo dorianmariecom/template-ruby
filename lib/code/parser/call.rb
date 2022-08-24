@@ -49,11 +49,20 @@ class Code
             opening_parenthesis >> whitespace? >>
               arguments.as(:arguments).maybe >> whitespace? >>
               closing_parenthesis
-          )
+          ) >> block.as(:block).maybe
+      end
+
+      rule(:chained_single_call) do
+        dot >> name >>
+          (
+            opening_parenthesis >> whitespace? >>
+              arguments.as(:arguments).maybe >> whitespace? >>
+              closing_parenthesis
+          ).maybe >> block.as(:block).maybe
       end
 
       rule(:chained_call) do
-        dictionnary.as(:left) >> dot >> call.as(:right)
+        dictionnary.as(:left) >> chained_single_call.repeat(1).as(:right)
       end
 
       rule(:block_arguments) do
@@ -73,9 +82,7 @@ class Code
           )
       end
 
-      rule(:call) do
-        ((single_call | chained_call) >> block.as(:block).maybe).as(:call) | dictionnary
-      end
+      rule(:call) { (single_call | chained_call).as(:call) | dictionnary }
 
       root(:call)
     end

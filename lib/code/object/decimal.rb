@@ -19,9 +19,9 @@ class Code
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
 
-        if ["%", "-", "+", "/", "*", "**"].detect { |o| operator == o }
+        if %w[% - + / * **].detect { |o| operator == o }
           number_operation(operator.to_sym, arguments)
-        elsif ["<", "<=", ">", ">="].detect { |o| operator == o }
+        elsif %w[< <= > >=].detect { |o| operator == o }
           comparaison(operator.to_sym, arguments)
         else
           super

@@ -12,19 +12,27 @@ class Code
         io = args.fetch(:io)
 
         if object
-          object.call(context: context, operator: name, arguments: arguments, io: io)
+          object.call(
+            context: context,
+            operator: name,
+            arguments: arguments,
+            io: io,
+          )
         elsif context.key?(name)
           object = context[name]
 
           if object.is_a?(::Code::Object::Function)
-            object.call(context: context, operator: nil, arguments: arguments, io: io)
+            object.call(
+              context: context,
+              operator: nil,
+              arguments: arguments,
+              io: io,
+            )
           else
             object
           end
         elsif name == "puts"
-          arguments.each do |argument|
-            args.fetch(:io).puts argument.value
-          end
+          arguments.each { |argument| args.fetch(:io).puts argument.value }
 
           ::Code::Object::Nothing.new
         else

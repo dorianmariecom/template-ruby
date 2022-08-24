@@ -17,6 +17,20 @@ class Code
           any?(arguments, context: context, io: io)
         elsif operator == "none?"
           none?(arguments, context: context, io: io)
+        elsif operator == "detect"
+          detect(arguments, context: context, io: io)
+        elsif operator == "each"
+          each(arguments, context: context, io: io)
+        elsif operator == "select"
+          select(arguments, context: context, io: io)
+        elsif operator == "map"
+          map(arguments, context: context, io: io)
+        elsif operator == "max"
+          max(arguments)
+        elsif operator == "flatten"
+          flatten(arguments)
+        elsif operator == "reverse"
+          reverse(arguments)
         elsif operator == "first"
           first(arguments)
         elsif operator == "last"
@@ -30,13 +44,17 @@ class Code
         end
       end
 
-      def map(&block)
-        @raw = raw.map(&block)
-        self
-      end
-
-      def join
-        raw.join
+      def flatten(arguments)
+        sig(arguments)
+        ::Code::Object::List.new(
+          raw.reduce([]) do |acc, element|
+            if element.is_a?(::Code::Object::List)
+              acc + element.flatten(arguments).raw
+            else
+              acc + [element]
+            end
+          end
+        )
       end
 
       def to_s
@@ -54,12 +72,15 @@ class Code
         argument = arguments.first
         ::Code::Object::Boolean.new(
           raw.any? do |element|
-            argument.value.call(
-              arguments: [::Code::Object::Argument.new(element)],
-              context: context,
-              io: io
-            ).truthy?
-          end
+            argument
+              .value
+              .call(
+                arguments: [::Code::Object::Argument.new(element)],
+                context: context,
+                io: io,
+              )
+              .truthy?
+          end,
         )
       end
 
@@ -68,12 +89,15 @@ class Code
         argument = arguments.first
         ::Code::Object::Boolean.new(
           raw.none? do |element|
-            argument.value.call(
-              arguments: [::Code::Object::Argument.new(element)],
-              context: context,
-              io: io
-            ).truthy?
-          end
+            argument
+              .value
+              .call(
+                arguments: [::Code::Object::Argument.new(element)],
+                context: context,
+                io: io,
+              )
+              .truthy?
+          end,
         )
       end
 
@@ -84,9 +108,62 @@ class Code
           argument.value.call(
             arguments: [::Code::Object::Argument.new(element)],
             context: context,
-            io: io
+            io: io,
           )
         end || ::Code::Object::Nothing.new
+      end
+
+      def detect(arguments, context:, io:)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first
+        raw.detect do |element|
+          argument.value.call(
+            arguments: [::Code::Object::Argument.new(element)],
+            context: context,
+            io: io,
+          )
+        end || ::Code::Object::Nothing.new
+      end
+
+      def each(arguments, context:, io:)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first
+        raw.each do |element|
+          argument.value.call(
+            arguments: [::Code::Object::Argument.new(element)],
+            context: context,
+            io: io,
+          )
+        end
+        self
+      end
+
+      def select(arguments, context:, io:)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first
+        ::Code::Object::List.new(
+          raw.select do |element|
+            argument.value.call(
+              arguments: [::Code::Object::Argument.new(element)],
+              context: context,
+              io: io,
+            ).truthy?
+          end
+        )
+      end
+
+      def map(arguments, context:, io:)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first
+        ::Code::Object::List.new(
+          raw.map do |element|
+            argument.value.call(
+              arguments: [::Code::Object::Argument.new(element)],
+              context: context,
+              io: io,
+            )
+          end
+        )
       end
 
       def append(arguments)
@@ -98,6 +175,16 @@ class Code
       def first(arguments)
         sig(arguments)
         raw.first
+      end
+
+      def max(arguments)
+        sig(arguments)
+        raw.max || ::Code::Object::Nothing.new
+      end
+
+      def reverse(arguments)
+        sig(arguments)
+        ::Code::Object::List.new(raw.reverse)
       end
 
       def last(arguments)

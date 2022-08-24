@@ -18,10 +18,6 @@ class Template
 
     ::Template::Node::Template.new(@parsed).evaluate(context: context, io: @io)
 
-    if @io.is_a?(StringIO)
-      @io.string
-    else
-      nil
-    end
+    @io.is_a?(StringIO) ? @io.string : nil
   end
 end

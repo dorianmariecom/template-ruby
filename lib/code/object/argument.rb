@@ -3,7 +3,13 @@ class Code
     class Argument < ::Code::Object
       attr_reader :value, :name, :splat, :keyword_splat, :block
 
-      def initialize(value, name: nil, splat: false, keyword_splat: false, block: false)
+      def initialize(
+        value,
+        name: nil,
+        splat: false,
+        keyword_splat: false,
+        block: false
+      )
         @value = value
         @name = name
         @splat = !!splat
