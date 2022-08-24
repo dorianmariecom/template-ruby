@@ -9,20 +9,25 @@ class Code
         context = args.fetch(:context)
         arguments = args.fetch(:arguments, [])
         object = args.fetch(:object, nil)
+        io = args.fetch(:io)
 
         if object
-          object.call(context: context, operator: name, arguments: arguments)
+          object.call(context: context, operator: name, arguments: arguments, io: io)
         elsif context.key?(name)
           object = context[name]
 
           if object.is_a?(::Code::Object::Function)
-            object.call(context: context, operator: nil, arguments: arguments)
+            object.call(context: context, operator: nil, arguments: arguments, io: io)
           else
             object
           end
+        elsif name == "puts"
+          arguments.each do |argument|
+            args.fetch(:io).puts argument.value
+          end
+
+          ::Code::Object::Nothing.new
         else
-          p context
-          p object
           raise ::Code::Error::Undefined.new("#{name} undefined")
         end
       end

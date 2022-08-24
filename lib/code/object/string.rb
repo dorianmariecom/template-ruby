@@ -7,7 +7,10 @@ class Code
         @raw = string
       end
 
-      def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
+      def call(**args)
+        operator = args.fetch(:operator, nil)
+        arguments = args.fetch(:arguments, [])
+
         if operator == "to_function"
           to_function(arguments)
         elsif operator == "+"

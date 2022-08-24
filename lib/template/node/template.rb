@@ -6,7 +6,9 @@ class Template
       end
 
       def evaluate(**args)
-        ::Code::Object::List.new(@parts.map { |part| part.evaluate(**args) })
+        @parts.each do |part|
+          args.fetch(:io).print(part.evaluate(**args))
+        end
       end
     end
   end

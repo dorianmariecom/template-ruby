@@ -7,15 +7,22 @@ class Code
         @raw = raw
       end
 
-      def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
+      def call(**args)
+        operator = args.fetch(:operator, nil)
+        arguments = args.fetch(:arguments, [])
+        context = args.fetch(:context)
+        io = args.fetch(:io)
+
         if operator == "any?"
-          any?(arguments, context)
+          any?(arguments, context: context, io: io)
+        elsif operator == "none?"
+          none?(arguments, context: context, io: io)
         elsif operator == "first"
           first(arguments)
         elsif operator == "last"
           last(arguments)
         elsif operator == "max_by"
-          max_by(arguments, context)
+          max_by(arguments, context: context, io: io)
         elsif operator == "<<"
           append(arguments)
         else
@@ -42,26 +49,42 @@ class Code
 
       private
 
-      def any?(arguments, context)
+      def any?(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
         argument = arguments.first
         ::Code::Object::Boolean.new(
           raw.any? do |element|
             argument.value.call(
               arguments: [::Code::Object::Argument.new(element)],
-              context: context
+              context: context,
+              io: io
             ).truthy?
           end
         )
       end
 
-      def max_by(arguments, context)
+      def none?(arguments, context:, io:)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first
+        ::Code::Object::Boolean.new(
+          raw.none? do |element|
+            argument.value.call(
+              arguments: [::Code::Object::Argument.new(element)],
+              context: context,
+              io: io
+            ).truthy?
+          end
+        )
+      end
+
+      def max_by(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
         argument = arguments.first
         raw.max_by do |element|
           argument.value.call(
             arguments: [::Code::Object::Argument.new(element)],
-            context: context
+            context: context,
+            io: io
           )
         end || ::Code::Object::Nothing.new
       end

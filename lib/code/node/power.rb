@@ -9,7 +9,7 @@ class Code
       def evaluate(**args)
         right = @right.evaluate(**args)
         left = @left.evaluate(**args)
-        simple_call(left, :**, right)
+        simple_call(left, :**, right, **args)
       end
     end
   end

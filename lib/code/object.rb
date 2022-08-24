@@ -2,7 +2,9 @@ class Code
   class Object
     include Comparable
 
-    def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
+    def call(**args)
+      operator = args.fetch(:operator, nil)
+      arguments = args.fetch(:arguments, [])
       if %w[== === !=].detect { |o| operator == o }
         comparaison(operator.to_sym, arguments)
       elsif operator == "<=>"
@@ -65,13 +67,6 @@ class Code
     end
 
     private
-
-    def simple_call(object, operator, value = nil)
-      object.call(
-        operator: operator && ::Code::Object::String.new(operator.to_s),
-        arguments: [value && ::Code::Object::Argument.new(value)].compact
-      )
-    end
 
     def sig(actual_arguments, *expected_arguments)
       if actual_arguments.size != expected_arguments.size

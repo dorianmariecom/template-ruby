@@ -6,13 +6,14 @@ class Code
         @body = body
       end
 
-      def call(
-        arguments: [],
-        context: ::Code::Object::Context.new,
-        operator: nil
-      )
+      def call(**args)
+        operator = args.fetch(:operator, nil)
+        arguments = args.fetch(:arguments, [])
+        context = args.fetch(:context)
+        io = args.fetch(:io)
+
         if operator.nil?
-          call_function(args: arguments, context: context)
+          call_function(args: arguments, context: context, io: io)
         else
           super
         end
@@ -30,7 +31,7 @@ class Code
 
       attr_reader :arguments, :body
 
-      def call_function(args:, context:)
+      def call_function(args:, context:, io:)
         new_context = context.dup
         arguments.each.with_index do |argument, index|
           if argument.regular?
@@ -44,19 +45,19 @@ class Code
               )
             else
               arg = args[index]&.value
-              arg = argument.evaluate(context: new_context) if arg.nil?
+              arg = argument.evaluate(context: new_context, io: io) if arg.nil?
               new_context[argument.name] = arg
             end
           elsif argument.keyword?
             arg = args.detect { |arg| arg.name == argument.name }&.value
-            arg = argument.evaluate(context: new_context) if arg.nil?
+            arg = argument.evaluate(context: new_context, io: io) if arg.nil?
             new_context[argument.name] = arg
           else
             raise NotImplementedError
           end
         end
 
-        body.evaluate(context: new_context)
+        body.evaluate(context: new_context, io: io)
       end
     end
   end

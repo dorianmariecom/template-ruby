@@ -13,7 +13,7 @@ class Code
 
         if operator
           if context[left]
-            context[left] = simple_call(context[left], operator, right)
+            context[left] = simple_call(context[left], operator, right, **args)
           else
             raise ::Code::Error::UndefinedVariable.new("#{left} is undefined")
           end

@@ -7,11 +7,16 @@ class Code
         @raw = ::Range.new(left, right, exclude_end)
       end
 
-      def call(arguments: [], context: ::Code::Object::Context.new, operator: nil)
+      def call(**args)
+        operator = args.fetch(:operator, nil)
+        arguments = args.fetch(:arguments, [])
+        context = args.fetch(:context)
+        io = args.fetch(:io)
+
         if operator == "any?"
-          any?(arguments, context)
+          any?(arguments, context: context, io: io)
         elsif operator == "each"
-          each(arguments, context)
+          each(arguments, context: context, io: io)
         elsif operator == "first"
           first(arguments)
         elsif operator == "last"
@@ -31,26 +36,28 @@ class Code
 
       private
 
-      def any?(arguments, context)
+      def any?(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
         argument = arguments.first
         ::Code::Object::Boolean.new(
           raw.any? do |element|
             argument.value.call(
               arguments: [::Code::Object::Argument.new(element)],
-              context: context
+              context: context,
+              io: io
             ).truthy?
           end
         )
       end
 
-      def each(arguments, context)
+      def each(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
         argument = arguments.first
         raw.each do |element|
           argument.value.call(
             arguments: [::Code::Object::Argument.new(element)],
-            context: context
+            context: context,
+            io: io
           )
         end
         self

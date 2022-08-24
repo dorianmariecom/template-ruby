@@ -35,5 +35,5 @@ context = options.fetch(:context, "")
 if options[:parse]
   pp ::Template::Parser::Template.new.parse(input)
 else
-  puts Template.render(input, context)
+  Template.render(input, context, io: $stdout)
 end

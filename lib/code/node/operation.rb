@@ -23,7 +23,7 @@ class Code
 
         @rest.each do |operation|
           other = operation.statement.evaluate(**args)
-          object = simple_call(object, operation.operator, other)
+          object = simple_call(object, operation.operator, other, **args)
         end
 
         object

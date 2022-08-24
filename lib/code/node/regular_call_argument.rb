@@ -11,7 +11,7 @@ class Code
       def evaluate(**args)
         object = @value.evaluate(**args)
 
-        block? ? simple_call(object, :to_function) : object
+        block? ? simple_call(object, :to_function, **args) : object
       end
 
       def block?

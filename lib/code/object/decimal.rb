@@ -15,13 +15,14 @@ class Code
         end
       end
 
-      def call(
-        arguments: [],
-        context: ::Code::Object::Context.new,
-        operator: nil
-      )
-        if ["%", "-", "+", "/", "*"].find(operator)
+      def call(**args)
+        operator = args.fetch(:operator, nil)
+        arguments = args.fetch(:arguments, [])
+
+        if ["%", "-", "+", "/", "*", "**"].detect { |o| operator == o }
           number_operation(operator.to_sym, arguments)
+        elsif ["<", "<=", ">", ">="].detect { |o| operator == o }
+          comparaison(operator.to_sym, arguments)
         else
           super
         end
@@ -41,6 +42,12 @@ class Code
         sig(arguments, ::Code::Object::Number)
         other = arguments.first.value
         ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
+      end
+
+      def comparaison(operator, arguments)
+        sig(arguments, ::Code::Object::Number)
+        other = arguments.first.value
+        ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
       end
     end
   end

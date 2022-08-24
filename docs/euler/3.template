@@ -1,19 +1,16 @@
 {
-
-  n = 13195
-
-  primes = []
-
-  (2...n).each do |i|
-    prime? = primes.any? do |prime|
-      i % prime == 0
-    end
-
-    primes << i if prime?
-  end
-
+  n = 600851475143
   max = 0
 
-  primes.max_by { |prime| n % prime == 0 }
+  i = 2
 
-  primes
+  until n == 1
+    if n % i == 0
+      max = i
+      n = n / i
+    end
+
+    i += 1
+  end
+
+  max
