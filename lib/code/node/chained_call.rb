@@ -16,7 +16,7 @@ class Code
         arguments =
           @arguments.map do |argument|
             ::Code::Object::Argument.new(
-              argument.evaluate(**args),
+              argument.evaluate(**args.merge(object: nil)),
               name: argument.name,
               splat: argument.splat?,
               keyword_splat: argument.keyword_splat?,
@@ -26,11 +26,10 @@ class Code
 
         if @block
           arguments << ::Code::Object::Argument.new(
-            @block.evaluate(**args),
+            @block.evaluate(**args.merge(object: nil)),
             block: true,
           )
         end
-
 
         @name.evaluate(**args.merge(arguments: arguments))
       end

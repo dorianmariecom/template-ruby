@@ -38,6 +38,16 @@ class Code
         end
       end
 
+      def +(other)
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw + other.raw)
+        elsif other.is_a?(::Code::Object::Decimal)
+          ::Code::Object::Decimal.new(raw + other.raw)
+        else
+          raise ::Code::Error::TypeError
+        end
+      end
+
       def succ
         ::Code::Object::Integer.new(raw + 1)
       end

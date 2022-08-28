@@ -44,10 +44,12 @@ class Code
     end
 
     def <=>(other)
-      if respond_to?(:raw)
-        other.is_a?(::Code::Object) ? raw <=> other.raw : raw <=> other
-      else
-        self <=> other
+      raw <=> other.raw
+    rescue => e
+      begin
+        raw <=> other
+      rescue => e
+        other <=> self
       end
     end
 

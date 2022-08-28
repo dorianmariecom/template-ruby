@@ -3,7 +3,7 @@ class Code
     class List < ::Code::Object
       attr_reader :raw
 
-      def initialize(raw)
+      def initialize(raw = [])
         @raw = raw
       end
 
@@ -19,6 +19,8 @@ class Code
           none?(arguments, context: context, io: io)
         elsif operator == "detect"
           detect(arguments, context: context, io: io)
+        elsif operator == "reduce"
+          reduce(arguments, context: context, io: io)
         elsif operator == "each"
           each(arguments, context: context, io: io)
         elsif operator == "select"
@@ -42,6 +44,10 @@ class Code
         else
           super
         end
+      end
+
+      def <<(element)
+        raw << element
       end
 
       def flatten(arguments)
@@ -103,9 +109,9 @@ class Code
 
       def max_by(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
-        argument = arguments.first
+        argument = arguments.first.value
         raw.max_by do |element|
-          argument.value.call(
+          argument.call(
             arguments: [::Code::Object::Argument.new(element)],
             context: context,
             io: io,
@@ -115,10 +121,25 @@ class Code
 
       def detect(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
-        argument = arguments.first
+        argument = arguments.first.value
         raw.detect do |element|
-          argument.value.call(
+          argument.call(
             arguments: [::Code::Object::Argument.new(element)],
+            context: context,
+            io: io,
+          ).truthy?
+        end || ::Code::Object::Nothing.new
+      end
+
+      def reduce(arguments, context:, io:)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first.value
+        raw.reduce do |acc, element|
+          argument.call(
+            arguments: [
+              ::Code::Object::Argument.new(acc),
+              ::Code::Object::Argument.new(element)
+            ],
             context: context,
             io: io,
           )
@@ -127,9 +148,9 @@ class Code
 
       def each(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
-        argument = arguments.first
+        argument = arguments.first.value
         raw.each do |element|
-          argument.value.call(
+          argument.call(
             arguments: [::Code::Object::Argument.new(element)],
             context: context,
             io: io,
@@ -140,10 +161,10 @@ class Code
 
       def select(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
-        argument = arguments.first
+        argument = arguments.first.value
         ::Code::Object::List.new(
           raw.select do |element|
-            argument.value.call(
+            argument.call(
               arguments: [::Code::Object::Argument.new(element)],
               context: context,
               io: io,
@@ -154,10 +175,10 @@ class Code
 
       def map(arguments, context:, io:)
         sig(arguments, ::Code::Object::Function)
-        argument = arguments.first
+        argument = arguments.first.value
         ::Code::Object::List.new(
           raw.map do |element|
-            argument.value.call(
+            argument.call(
               arguments: [::Code::Object::Argument.new(element)],
               context: context,
               io: io,
