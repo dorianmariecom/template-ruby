@@ -1,12 +1,11 @@
 {
 
-  min = 900
+  min = 1
   max = 999
 
+
   (min..max).map do |i|
-    (min..max).select do |j|
+    ((min..max).to_list.reverse.detect do |j|
       (i * j).to_string.reverse == (i * j).to_string
-    end.map do |j|
-      i * j
-    end
-  end.flatten.max
+    end || 0) * i
+  end.max

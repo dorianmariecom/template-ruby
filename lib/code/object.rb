@@ -44,17 +44,27 @@ class Code
     end
 
     def <=>(other)
-      raw <=> other.raw
-    rescue => e
-      begin
-        raw <=> other
-      rescue => e
+      if respond_to?(:raw)
+        if other.respond_to?(:raw)
+          raw <=> other.raw
+        else
+          raw <=> other
+        end
+      else
         other <=> self
       end
     end
 
     def ==(other)
-      (self <=> other) == 0
+      if respond_to?(:raw)
+        if other.respond_to?(:raw)
+          raw == other.raw
+        else
+          raw == other
+        end
+      else
+        other == self
+      end
     end
     alias_method :eql?, :==
 

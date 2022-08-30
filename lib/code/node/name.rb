@@ -32,7 +32,7 @@ class Code
             object
           end
         elsif name == "puts"
-          arguments.each { |argument| args.fetch(:io).puts argument.value }
+          arguments.each { |argument| io.puts argument.value }
 
           ::Code::Object::Nothing.new
         else
