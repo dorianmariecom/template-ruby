@@ -1,4 +1,6 @@
 class Template
+  VERSION = Gem::Version.new("0.2.1")
+
   def initialize(input, io: StringIO.new)
     @input = input
     @parsed = ::Template::Parser::Template.new.parse(@input)

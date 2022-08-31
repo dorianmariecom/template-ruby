@@ -12,10 +12,8 @@ RSpec.describe Template do
       '{ user: { first_name: "Dorian" } }',
       "Hello Dorian",
     ],
-    [<<~TEMPLATE, "", ""]
-      {
-        until true
-        end
+    [<<~TEMPLATE, "", "Hello "]
+      Hello {
       TEMPLATE
   ].each do |(input, input_context, expected)|
     context "#{input.inspect} #{input_context.inspect}" do

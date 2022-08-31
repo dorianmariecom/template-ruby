@@ -15,7 +15,7 @@ class Template
       end
 
       rule(:code_part) do
-        left_curly_bracket >> code >> (right_curly_bracket | any.absent?)
+        left_curly_bracket.ignore >> code >> (right_curly_bracket.ignore | any.absent?)
       end
 
       rule(:template) { (text_part.as(:text) | code_part.as(:code)).repeat(1) }
