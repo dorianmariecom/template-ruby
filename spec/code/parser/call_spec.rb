@@ -21,9 +21,7 @@ RSpec.describe Code::Parser::Call do
               },
             },
           },
-          right: [{
-            name: "times",
-          }],
+          right: [{ name: "times" }],
         },
       },
     ],

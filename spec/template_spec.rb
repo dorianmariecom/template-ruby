@@ -12,9 +12,8 @@ RSpec.describe Template do
       '{ user: { first_name: "Dorian" } }',
       "Hello Dorian",
     ],
-    [<<~TEMPLATE, "", "Hello "]
-      Hello {
-      TEMPLATE
+    ["Hello {", "", "Hello "],
+    ["", "", ""],
   ].each do |(input, input_context, expected)|
     context "#{input.inspect} #{input_context.inspect}" do
       let(:input) { input }

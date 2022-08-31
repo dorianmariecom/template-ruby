@@ -59,7 +59,7 @@ class Code
             else
               acc + [element]
             end
-          end
+          end,
         )
       end
 
@@ -138,7 +138,7 @@ class Code
           argument.call(
             arguments: [
               ::Code::Object::Argument.new(acc),
-              ::Code::Object::Argument.new(element)
+              ::Code::Object::Argument.new(element),
             ],
             context: context,
             io: io,
@@ -169,7 +169,7 @@ class Code
               context: context,
               io: io,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -183,7 +183,7 @@ class Code
               context: context,
               io: io,
             )
-          end
+          end,
         )
       end
 

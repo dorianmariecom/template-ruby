@@ -8,9 +8,10 @@ class Code
         @arguments.map! { |argument| ::Code::Node::CallArgument.new(argument) }
 
         if call.key?(:right)
-          @right = call.fetch(:right).map do |right|
-            ::Code::Node::ChainedCall.new(right)
-          end
+          @right =
+            call
+              .fetch(:right)
+              .map { |right| ::Code::Node::ChainedCall.new(right) }
         end
 
         if call.key?(:block)

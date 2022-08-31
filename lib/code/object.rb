@@ -45,11 +45,7 @@ class Code
 
     def <=>(other)
       if respond_to?(:raw)
-        if other.respond_to?(:raw)
-          raw <=> other.raw
-        else
-          raw <=> other
-        end
+        other.respond_to?(:raw) ? raw <=> other.raw : raw <=> other
       else
         other <=> self
       end
@@ -57,11 +53,7 @@ class Code
 
     def ==(other)
       if respond_to?(:raw)
-        if other.respond_to?(:raw)
-          raw == other.raw
-        else
-          raw == other
-        end
+        other.respond_to?(:raw) ? raw == other.raw : raw == other
       else
         other == self
       end

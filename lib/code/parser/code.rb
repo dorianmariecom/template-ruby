@@ -9,7 +9,8 @@ class Code
       rule(:whitespace?) { whitespace.maybe }
 
       rule(:code) do
-        (whitespace?.ignore >> statement >> whitespace?.ignore).repeat(1) | whitespace?.ignore
+        (whitespace?.ignore >> statement >> whitespace?.ignore).repeat(1) |
+          whitespace?.ignore
       end
 
       root(:code)

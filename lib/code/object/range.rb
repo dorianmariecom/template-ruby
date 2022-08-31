@@ -54,13 +54,11 @@ class Code
         argument = arguments.first.value
         ::Code::Object::Boolean.new(
           raw.any? do |element|
-            argument
-              .call(
-                arguments: [::Code::Object::Argument.new(element)],
-                context: context,
-                io: io,
-              )
-              .truthy?
+            argument.call(
+              arguments: [::Code::Object::Argument.new(element)],
+              context: context,
+              io: io,
+            ).truthy?
           end,
         )
       end
@@ -70,13 +68,11 @@ class Code
         argument = arguments.first.value
         ::Code::Object::Boolean.new(
           raw.all? do |element|
-            argument
-              .call(
-                arguments: [::Code::Object::Argument.new(element)],
-                context: context,
-                io: io,
-              )
-              .truthy?
+            argument.call(
+              arguments: [::Code::Object::Argument.new(element)],
+              context: context,
+              io: io,
+            ).truthy?
           end,
         )
       end
@@ -104,7 +100,7 @@ class Code
               context: context,
               io: io,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -118,7 +114,7 @@ class Code
               context: context,
               io: io,
             )
-          end
+          end,
         )
       end
 
@@ -131,9 +127,13 @@ class Code
         list << element
 
         if @exlucde_end
-          list << element while (element = element + argument) < @right
+          while (element = element + argument) < @right
+            list << element
+          end
         else
-          list << element while (element = element + argument) <= @right
+          while (element = element + argument) <= @right
+            list << element
+          end
         end
 
         list
