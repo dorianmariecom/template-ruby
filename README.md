@@ -1,5 +1,7 @@
 # Template
 
+[![RSpec](https://github.com/dorianmariefr/template-ruby/actions/workflows/rspec.yml/badge.svg)](https://github.com/dorianmariefr/template-ruby/actions/workflows/rspec.yml)
+
 See [templatelang.com](https://templatelang.com) for the full documentation and
 live code editing.
 
