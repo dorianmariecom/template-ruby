@@ -1,7 +1,3 @@
-- GitHub description
-- GitHub topics
-- GitHub tags
-- Featured on profile
 - Build
 - Build badge
 - Code gem
