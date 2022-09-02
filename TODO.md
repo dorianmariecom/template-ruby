@@ -1,4 +1,3 @@
-- README
 - GitHub description
 - GitHub topics
 - GitHub tags
