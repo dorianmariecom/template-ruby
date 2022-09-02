@@ -1,5 +1,3 @@
-- {"Hello Dorian " * 10}
-- $ template
 - LICENSE
 - README
 - GitHub description

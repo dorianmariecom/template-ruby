@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Not released
 
-- Add method `String#*`, e.g. `{"Dorian " * 2}" -> "Dorian Dorian "
+- Add method `String#*`, e.g. `{"Dorian " \* 2}" -> "Dorian Dorian "
 
 ## 0.2.3 / 2022-08-31
 

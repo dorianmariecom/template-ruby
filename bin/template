@@ -6,9 +6,9 @@ require_relative "../lib/template-ruby"
 options = {}
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+  opts.banner = "Usage: template [options]"
 
-  opts.on("-i INPUT", "--input=INPUT", "Input in the template language") do |input|
+  opts.on("-i INPUT", "--input=INPUT", "Input in the template language (String or File)") do |input|
     if File.exists?(input)
       input = File.read(input)
     end
@@ -16,7 +16,7 @@ OptionParser.new do |opts|
     options[:input] = input
   end
 
-  opts.on("-c CONTEXT", "--context=CONTEXT", "Context in the code language") do |context|
+  opts.on("-c CONTEXT", "--context=CONTEXT", "Context in the code language (String or File)") do |context|
     if File.exists?(context)
       context = File.read(context)
     end

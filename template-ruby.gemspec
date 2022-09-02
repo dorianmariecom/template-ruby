@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.homepage = "https://github.com/dorianmariefr/template-ruby"
   s.license = "MIT"
+  s.executables = "template"
 
   s.add_dependency "activesupport", "~> 7"
   s.add_dependency "parslet", "~> 2"

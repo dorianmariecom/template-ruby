@@ -1,9 +1,8 @@
 class Code
   def initialize(input, io: $stdout, timeout: 10)
     @input = input
-    @parsed = Timeout::timeout(timeout) do
-      ::Code::Parser::Code.new.parse(@input)
-    end
+    @parsed =
+      Timeout.timeout(timeout) { ::Code::Parser::Code.new.parse(@input) }
     @io = io
     @timeout = timeout
   end
@@ -13,7 +12,7 @@ class Code
   end
 
   def evaluate(context = "")
-    Timeout::timeout(@timeout) do
+    Timeout.timeout(@timeout) do
       if context.present?
         context = ::Code.evaluate(context, timeout: @timeout)
       else
