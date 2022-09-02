@@ -1,3 +1,1 @@
-- Build
-- Build badge
 - Code gem
