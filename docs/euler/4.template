@@ -3,7 +3,6 @@
   min = 1
   max = 999
 
-
   (min..max).map do |i|
     ((min..max).to_list.reverse.detect do |j|
       (i * j).to_string.reverse == (i * j).to_string
