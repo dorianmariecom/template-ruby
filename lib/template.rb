@@ -1,6 +1,6 @@
-class Template
-  VERSION = Gem::Version.new("0.2.3")
+require_relative "template/version"
 
+class Template
   def initialize(input, io: StringIO.new, timeout: 10)
     @input = input
     @parsed =

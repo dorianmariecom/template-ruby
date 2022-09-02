@@ -1,8 +1,8 @@
-require_relative "lib/template-ruby"
+require_relative "lib/template/version"
 
 Gem::Specification.new do |s|
   s.name = "template-ruby"
-  s.version = ::Template::VERSION
+  s.version = ::Template::Version
   s.summary = "A templating programming language"
   s.description =
     'Like "Hello {name}" with {name: "Dorian"} gives "Hello Dorian"'
