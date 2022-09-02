@@ -1,3 +1,4 @@
 source "https://rubygems.org"
 
-gemspec
+gemspec name: "template-ruby"
+gemspec name: "code-ruby"
