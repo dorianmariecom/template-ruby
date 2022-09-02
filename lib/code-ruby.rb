@@ -7,5 +7,6 @@ require "stringio"
 require "timeout"
 
 loader = Zeitwerk::Loader.for_gem(warn_on_extra_files: false)
-loader.ignore(__FILE__)
+loader.ignore(File.expand_path("lib/template-ruby.rb"))
+loader.ignore(File.expand_path("lib/code-ruby.rb"))
 loader.setup
