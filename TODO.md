@@ -1,4 +1,3 @@
-- LICENSE
 - README
 - GitHub description
 - GitHub topics
