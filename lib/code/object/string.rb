@@ -15,6 +15,8 @@ class Code
           to_function(arguments)
         elsif operator == "+"
           plus(arguments)
+        elsif operator == "*"
+          multiplication(arguments)
         elsif operator == "reverse"
           reverse(arguments)
         else
@@ -49,6 +51,12 @@ class Code
         sig(arguments, ::Code::Object::String)
         other = arguments.first.value
         ::Code::Object::String.new(raw + other.raw)
+      end
+
+      def multiplication(arguments)
+        sig(arguments, ::Code::Object::Number)
+        other = arguments.first.value
+        ::Code::Object::String.new(raw * other.raw)
       end
 
       def reverse(arguments)
