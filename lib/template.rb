@@ -1,5 +1,3 @@
-require_relative "template/version"
-
 class Template
   def initialize(input, io: StringIO.new, timeout: 10)
     @input = input
@@ -32,3 +30,5 @@ class Template
     end
   end
 end
+
+require_relative "template/version"
