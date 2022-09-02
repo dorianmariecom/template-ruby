@@ -1,0 +1,16 @@
+name: CI RSpec Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: RSpec
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-ruby@v1
+      - run: |
+        gem install bundler
+        bundle install
+      - run: bundle exec rspec
