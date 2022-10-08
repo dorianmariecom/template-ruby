@@ -2,7 +2,7 @@ class Code
   class Parser
     class Group < Parslet::Parser
       rule(:name) { ::Code::Parser::Name.new }
-      rule(:code) { ::Code::Parser::Code.new }
+      rule(:code) { ::Code::Parser::Code.new.present }
 
       rule(:opening_parenthesis) { str("(") }
       rule(:closing_parenthesis) { str(")") }

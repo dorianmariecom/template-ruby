@@ -2,13 +2,13 @@ class Code
   class Node
     class List < Node
       def initialize(codes)
-        @codes =
-          codes
-            .map do |code|
-              code.fetch(:code).presence &&
-                ::Code::Node::Code.new(code.fetch(:code))
-            end
-            .compact
+        if codes.to_s.blank?
+          @codes = []
+        else
+          @codes = codes.map do |code|
+            ::Code::Node::Code.new(code.fetch(:code))
+          end
+        end
       end
 
       def evaluate(**args)

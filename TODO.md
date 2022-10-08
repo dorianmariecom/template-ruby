@@ -1,4 +1,3 @@
-- code `{ temperature:  }`
 - `defined?(name) ? name : nothing`
 - `while false end == nothing`
 - reference

@@ -2,7 +2,7 @@ class Code
   class Parser
     class Function < Parslet::Parser
       rule(:call) { ::Code::Parser::Call.new }
-      rule(:code) { ::Code::Parser::Code.new }
+      rule(:code) { ::Code::Parser::Code.new.present }
       rule(:name) { ::Code::Parser::Name.new }
 
       rule(:opening_parenthesis) { str("(") }
@@ -46,7 +46,7 @@ class Code
           opening_parenthesis >> whitespace? >>
             arguments.as(:arguments).maybe >> whitespace? >>
             closing_parenthesis >> whitespace? >> equal >> right_caret >>
-            whitespace? >> opening_curly_bracket >> code.as(:body) >>
+            whitespace? >> opening_curly_bracket >> code.as(:body).maybe >>
             closing_curly_bracket
         ).as(:function) | call
       end

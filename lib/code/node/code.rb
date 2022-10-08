@@ -9,7 +9,13 @@ class Code
       end
 
       def evaluate(**args)
-        @statements.map { |statement| statement.evaluate(**args) }.last
+        last = ::Code::Object::Nothing.new
+
+        @statements.each do |statement|
+          last = statement.evaluate(**args)
+        end
+
+        last
       end
     end
   end

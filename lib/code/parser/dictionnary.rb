@@ -2,7 +2,7 @@ class Code
   class Parser
     class Dictionnary < Parslet::Parser
       rule(:list) { ::Code::Parser::List.new }
-      rule(:code) { ::Code::Parser::Code.new }
+      rule(:code) { ::Code::Parser::Code.new.present }
       rule(:string) { ::Code::Parser::String.new }
 
       rule(:opening_curly_bracket) { str("{") }

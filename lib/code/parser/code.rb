@@ -8,11 +8,10 @@ class Code
       rule(:whitespace) { (space | newline).repeat(1) }
       rule(:whitespace?) { whitespace.maybe }
 
-      rule(:code) do
-        (whitespace?.ignore >> statement >> whitespace?.ignore).repeat(1) |
-          whitespace?.ignore
+      rule(:present) do
+        (whitespace?.ignore >> statement >> whitespace?.ignore).repeat(1)
       end
-
+      rule(:code) { present | whitespace?.ignore }
       root(:code)
     end
   end

@@ -2,7 +2,7 @@ class Code
   class Parser
     class List < Parslet::Parser
       rule(:string) { ::Code::Parser::String.new }
-      rule(:code) { ::Code::Parser::Code.new }
+      rule(:code) { ::Code::Parser::Code.new.present }
 
       rule(:opening_square_bracket) { str("[") }
       rule(:closing_square_bracket) { str("]") }

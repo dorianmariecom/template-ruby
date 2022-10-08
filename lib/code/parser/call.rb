@@ -2,7 +2,7 @@ class Code
   class Parser
     class Call < Parslet::Parser
       rule(:dictionnary) { ::Code::Parser::Dictionnary.new }
-      rule(:code) { ::Code::Parser::Code.new }
+      rule(:code) { ::Code::Parser::Code.new.present }
       rule(:name) { ::Code::Parser::Name.new }
       rule(:function_arguments) { ::Code::Parser::Function.new.arguments }
 
@@ -72,12 +72,12 @@ class Code
       rule(:block) do
         (
           whitespace >> do_keyword >> whitespace >>
-            block_arguments.as(:arguments).maybe >> code.as(:body) >>
+            block_arguments.as(:arguments).maybe >> code.as(:body).maybe >>
             end_keyword
         ) |
           (
             whitespace? >> opening_curly_bracket >> whitespace >>
-              block_arguments.as(:arguments).maybe >> code.as(:body) >>
+              block_arguments.as(:arguments).maybe >> code.as(:body).maybe >>
               closing_curly_bracket
           )
       end
