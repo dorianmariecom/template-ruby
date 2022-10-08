@@ -1,7 +1,7 @@
 class Code
   class Parser
     class Ternary < Parslet::Parser
-      rule(:range) { ::Code::Parser::Range.new }
+      rule(:defined) { ::Code::Parser::Defined.new }
 
       rule(:question_mark) { str("?") }
       rule(:colon) { str(":") }
@@ -13,10 +13,10 @@ class Code
 
       rule(:ternary) do
         (
-          range.as(:left) >> whitespace >> question_mark >> whitespace? >>
+          defined.as(:left) >> whitespace >> question_mark >> whitespace? >>
             ternary.as(:middle) >>
             (whitespace? >> colon >> whitespace? >> ternary.as(:right)).maybe
-        ).as(:ternary) | range
+        ).as(:ternary) | defined
       end
 
       root(:ternary)

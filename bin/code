@@ -47,5 +47,5 @@ context = options.fetch(:context, "")
 if options[:parse]
   pp ::Code::Parser::Code.new.parse(input)
 else
-  puts Code.evaluate(input, context, io: $stdout, timeout: options[:timeout])
+  print Code.evaluate(input, context, io: $stdout, timeout: options[:timeout]).to_s
 end

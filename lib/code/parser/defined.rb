@@ -1,7 +1,7 @@
 class Code
   class Parser
     class Defined < Parslet::Parser
-      rule(:equal) { ::Code::Parser::Equal.new }
+      rule(:range) { ::Code::Parser::Range.new }
       rule(:name) { ::Code::Parser::Name.new }
 
       rule(:defined_keyword) { str("defined?") }
@@ -11,7 +11,7 @@ class Code
       rule(:defined) do
         (
           defined_keyword >> opening_parenthesis >> name >> closing_parenthesis
-        ).as(:defined) | equal
+        ).as(:defined) | range
       end
 
       root(:defined)

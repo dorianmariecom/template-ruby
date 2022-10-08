@@ -38,14 +38,14 @@
   - {false or "Good"}
 - NotKeyword
   - {not false and "Good"}
-- Defined
-  - {a = 1 "Good" if defined?(a)}
 - Equal
   - {a = "Good"}
 - Rescue
   - {0 > "String" rescue "Good"}
 - Ternary
   - {nothing ? "Bad" : "Good"}
+- Defined
+  - {a = 1 "Good" if defined?(a)}
 - Range
   - {("Good".."Bad").first}
 - OrOperator

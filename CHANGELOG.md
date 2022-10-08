@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `bin/template` accepts `--timeout` (or `-t`) parameter
 - Adds `bin/code` with same options as `bin/template`
 - Prevent loose syntax like `{ a: }`, `[1,,,]` and `()`
+- Change precedence of defined? (to allow `defined?(name) ? name : nothing`)
 
 ## 0.2.4 / 2022-08-02
 
