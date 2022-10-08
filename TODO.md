@@ -1,4 +1,3 @@
-- `bin/template timeout`
 - code `{ temperature:  }`
 - `defined?(name) ? name : nothing`
 - `while false end == nothing`
@@ -11,6 +10,7 @@
 - `"a" + 1`
 - `1 + "a"`
 - `{}.each`
+- `0.0 >> 2`
 
 ```
 {

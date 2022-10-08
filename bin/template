@@ -27,6 +27,10 @@ OptionParser.new do |opts|
   opts.on("-p", "--parse", "Get parser results for input") do |parse|
     options[:parse] = parse
   end
+
+  opts.on("-t TIMEOUT", "--timeout=TIMEOUT", "Set timeout in seconds") do |timeout|
+    options[:timeout] = timeout.to_f
+  end
 end.parse!
 
 input = options.fetch(:input, "")
@@ -35,5 +39,5 @@ context = options.fetch(:context, "")
 if options[:parse]
   pp ::Template::Parser::Template.new.parse(input)
 else
-  Template.render(input, context, io: $stdout)
+  Template.render(input, context, io: $stdout, timeout: options[:timeout])
 end
