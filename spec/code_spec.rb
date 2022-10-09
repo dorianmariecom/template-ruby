@@ -99,6 +99,7 @@ RSpec.describe Code do
     ["while false end == nothing", "true"],
     ['"1 + 1 = {1 + 1}"', "1 + 1 = 2"],
     ["'1 + 1 = {1 + 1}'", "1 + 1 = 2"],
+    ["{}.to_string + [].to_string", "{}[]"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

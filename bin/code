@@ -3,7 +3,7 @@
 require "optparse"
 require_relative "../lib/template-ruby"
 
-options = {}
+options = { timeout: 0 }
 
 OptionParser.new do |opts|
   opts.banner = "Usage: bin/code [options]"

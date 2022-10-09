@@ -12,6 +12,11 @@ RSpec.describe Template do
       '{ user: { first_name: "Dorian" } }',
       "Hello Dorian",
     ],
+    [
+      "{add(1, 2)",
+      'add = (a, b) => { a + b } { add: context(:add) }',
+      "3",
+    ],
     ["Hello {", "", "Hello "],
     ["", "", ""],
   ].each do |(input, input_context, expected)|

@@ -35,6 +35,9 @@ class Code
           arguments.each { |argument| io.puts argument.value }
 
           ::Code::Object::Nothing.new
+        elsif name == "context"
+          return ::Code::Object::Nothing.new if arguments.size != 1
+          context[arguments.first&.value] || ::Code::Object::Nothing.new
         else
           raise ::Code::Error::Undefined.new("#{name} undefined")
         end

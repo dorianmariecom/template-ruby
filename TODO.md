@@ -1,5 +1,3 @@
-- `function(:fibonnaci)`
-- `method(:to_string)`
 - &block
 - `"a" + 1`
 - `1 + "a"`

@@ -13,6 +13,8 @@ class Code
         and_operator(arguments)
       elsif operator == "||"
         or_operator(arguments)
+      elsif operator == "to_string"
+        to_string(arguments)
       else
         raise ::Code::Error::Undefined.new(
                 "#{operator} not defined on #{inspect}",
@@ -125,6 +127,11 @@ class Code
       sig(arguments, ::Code::Object)
       other = arguments.first.value
       truthy? ? self : other
+    end
+
+    def to_string(arguments)
+      sig(arguments)
+      ::Code::Object::String.new(to_s)
     end
   end
 end
