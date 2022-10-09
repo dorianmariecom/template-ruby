@@ -21,13 +21,13 @@ class Code
 
         if operator == "even?"
           even?(arguments)
-        elsif operator == "to_string"
-          code_to_s(arguments)
         elsif operator == "*"
           multiplication(arguments)
         elsif operator == "/"
           division(arguments)
-        elsif %w[% - + **].detect { |o| operator == o }
+        elsif operator == "+"
+          plus(arguments)
+        elsif %w[% - **].detect { |o| operator == o }
           integer_or_decimal_operation(operator.to_sym, arguments)
         elsif %w[> >= < <=].detect { |o| operator == o }
           comparaison(operator.to_sym, arguments)
@@ -35,16 +35,6 @@ class Code
           integer_operation(operator.to_sym, arguments)
         else
           super
-        end
-      end
-
-      def +(other)
-        if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw + other.raw)
-        elsif other.is_a?(::Code::Object::Decimal)
-          ::Code::Object::Decimal.new(raw + other.raw)
-        else
-          raise ::Code::Error::TypeError
         end
       end
 
@@ -67,11 +57,6 @@ class Code
         ::Code::Object::Boolean.new(raw.even?)
       end
 
-      def code_to_s(arguments)
-        sig(arguments)
-        ::Code::Object::String.new(raw.to_s)
-      end
-
       def multiplication(arguments)
         sig(arguments, [::Code::Object::Number, ::Code::Object::String])
         other = arguments.first.value
@@ -81,6 +66,19 @@ class Code
           ::Code::Object::Decimal.new(raw * other.raw)
         else
           ::Code::Object::String.new(other.raw * raw)
+        end
+      end
+
+      def plus(arguments)
+        sig(arguments, ::Code::Object)
+        other = arguments.first.value
+
+        if other.is_a?(::Code::Object::Integer)
+          ::Code::Object::Integer.new(raw + other.raw)
+        elsif other.is_a?(::Code::Object::Decimal)
+          ::Code::Object::Decimal.new(raw + other.raw)
+        else
+          ::Code::Object::String.new(to_s + other.to_s)
         end
       end
 

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - String interpolations like `"1 + 1 = {1 + 1}"`
 - `context(:name)` to get a function without calling it for instance
 - `.to_string` on all objects
+- `1 + "a"` and `"a" + 1.0` for instance now convert to strings
 
 ## 0.2.4 / 2022-08-02
 

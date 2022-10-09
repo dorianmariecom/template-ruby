@@ -19,10 +19,12 @@ class Code
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
 
-        if %w[% - + / * **].detect { |o| operator == o }
+        if %w[% - / * **].detect { |o| operator == o }
           number_operation(operator.to_sym, arguments)
         elsif %w[< <= > >=].detect { |o| operator == o }
           comparaison(operator.to_sym, arguments)
+        elsif operator == "+"
+          plus(arguments)
         else
           super
         end
@@ -48,6 +50,17 @@ class Code
         sig(arguments, ::Code::Object::Number)
         other = arguments.first.value
         ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
+      end
+
+      def plus(arguments)
+        sig(arguments, ::Code::Object)
+        other = arguments.first.value
+
+        if other.is_a?(::Code::Object::Number)
+          ::Code::Object::Decimal.new(raw + other.raw)
+        else
+          ::Code::Object::String.new(to_s + other.to_s)
+        end
       end
     end
   end

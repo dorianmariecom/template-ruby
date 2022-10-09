@@ -48,9 +48,9 @@ class Code
       end
 
       def plus(arguments)
-        sig(arguments, ::Code::Object::String)
+        sig(arguments, ::Code::Object)
         other = arguments.first.value
-        ::Code::Object::String.new(raw + other.raw)
+        ::Code::Object::String.new(raw + other.to_s)
       end
 
       def multiplication(arguments)

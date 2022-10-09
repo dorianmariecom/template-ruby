@@ -100,6 +100,10 @@ RSpec.describe Code do
     ['"1 + 1 = {1 + 1}"', "1 + 1 = 2"],
     ["'1 + 1 = {1 + 1}'", "1 + 1 = 2"],
     ["{}.to_string + [].to_string", "{}[]"],
+    ["'a' + 1", "a1"],
+    ["'a' + 1.0", "a1.0"],
+    ["1 + 'a'", "1a"],
+    ["1.0 + 'a'", "1.0a"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
