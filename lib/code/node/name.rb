@@ -33,7 +33,9 @@ class Code
           end
         elsif name == "puts"
           arguments.each { |argument| io.puts argument.value }
-
+          ::Code::Object::Nothing.new
+        elsif name == "print"
+          arguments.each { |argument| io.print argument.value }
           ::Code::Object::Nothing.new
         elsif name == "context"
           return ::Code::Object::Nothing.new if arguments.size != 1

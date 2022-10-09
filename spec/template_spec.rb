@@ -18,6 +18,7 @@ RSpec.describe Template do
       "3",
     ],
     ["Hello {", "", "Hello "],
+    ["{{a: 1}.each { |k, v| print(k) } nothing", "", "a"],
     ["", "", ""],
   ].each do |(input, input_context, expected)|
     context "#{input.inspect} #{input_context.inspect}" do

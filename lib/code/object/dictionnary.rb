@@ -10,9 +10,13 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
+        context = args.fetch(:context)
+        io = args.fetch(:io)
 
         if operator == "values"
           values(arguments)
+        elsif operator == "each"
+          each(arguments, context: context, io: io)
         elsif key?(operator)
           fetch(operator)
         else
@@ -49,6 +53,22 @@ class Code
       def values(arguments)
         sig(arguments)
         ::Code::Object::List.new(raw.values)
+      end
+
+      def each(arguments, context:, io:)
+        sig(arguments, ::Code::Object::Function)
+        argument = arguments.first.value
+        raw.each do |key, value|
+          argument.call(
+            arguments: [
+              ::Code::Object::Argument.new(key),
+              ::Code::Object::Argument.new(value)
+            ],
+            context: context,
+            io: io,
+          )
+        end
+        self
       end
     end
   end
