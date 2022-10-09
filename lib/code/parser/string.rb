@@ -3,11 +3,14 @@ class Code
     class String < Parslet::Parser
       rule(:number) { ::Code::Parser::Number.new }
       rule(:name) { ::Code::Parser::Name.new.name }
+      rule(:code) { ::Code::Parser::Code.new }
 
       rule(:single_quote) { str("'") }
       rule(:double_quote) { str('"') }
       rule(:backslash) { str("\\") }
       rule(:colon) { str(":") }
+      rule(:opening_curly_bracket) { str("{") }
+      rule(:closing_curly_bracket) { str("}") }
 
       rule(:zero) { str("0") }
       rule(:one) { str("1") }
@@ -31,6 +34,10 @@ class Code
       rule(:t) { str("t") | str("T") }
       rule(:u) { str("u") | str("U") }
 
+      rule(:interpolation) do
+        opening_curly_bracket >> code >> closing_curly_bracket
+      end
+
       rule(:base_16_digit) do
         zero | one | two | three | four | five | six | seven | eight | nine |
           a | b | c | d | e | f
@@ -42,20 +49,28 @@ class Code
       end
 
       rule(:single_quoted_character) do
-        escaped_character | (single_quote.absent? >> any)
+        escaped_character | (opening_curly_bracket.absent? >> single_quote.absent? >> any)
       end
 
       rule(:double_quoted_character) do
-        escaped_character | (double_quote.absent? >> any)
+        escaped_character | (opening_curly_bracket.absent? >> double_quote.absent? >> any)
       end
 
       rule(:single_quoted_string) do
-        single_quote.ignore >> single_quoted_character.repeat >>
+        single_quote.ignore >>
+          (
+            interpolation.as(:interpolation) |
+            single_quoted_character.repeat(1).as(:characters)
+          ).repeat >>
           single_quote.ignore
       end
 
       rule(:double_quoted_string) do
-        double_quote.ignore >> double_quoted_character.repeat >>
+        double_quote.ignore >>
+          (
+            interpolation.as(:interpolation) |
+            double_quoted_character.repeat(1).as(:characters)
+          ).repeat >>
           double_quote.ignore
       end
 

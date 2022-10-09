@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prevent loose syntax like `{ a: }`, `[1,,,]` and `()`
 - Change precedence of defined? (to allow `defined?(name) ? name : nothing`)
 - Updates parsers to allow `while false end == nothing`
+- String interpolations like `"1 + 1 = {1 + 1}"`
 
 ## 0.2.4 / 2022-08-02
 

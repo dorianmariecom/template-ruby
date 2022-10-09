@@ -4,26 +4,25 @@ RSpec.describe Code::Parser::String do
   subject { described_class.new.parse(input) }
 
   [
-    ["'hello'", { string: "hello" }],
-    ['"hello"', { string: "hello" }],
-    ["''", { string: "" }],
-    ['""', { string: "" }],
-    ["'\\''", { string: "'" }],
-    ['"\\t"', { string: "\\t" }],
-    ["'\\r'", { string: "\\r" }],
-    ['"\\b\\f\\n\\r\\t"', { string: "\\b\\f\\n\\r\\t" }],
-    ['"\\uABCG"', { string: "uABCG" }],
-    [
-      "'\\u0123\\u4567\\u89aA\\ubBcC\\UdDeE\\ufFfF'",
-      { string: "\\u0123\\u4567\\u89aA\\ubBcC\\UdDeE\\ufFfF" },
-    ],
-    [":asc", { string: "asc" }],
-  ].each do |(input, expected)|
+    "'hello'",
+    '"hello"',
+    "''",
+    '""',
+    "'\\''",
+    '"\\t"',
+    "'\\r'",
+    '"\\b\\f\\n\\r\\t"',
+    '"\\uABCG"',
+    "'\\u0123\\u4567\\u89aA\\ubBcC\\UdDeE\\ufFfF'",
+    ":asc",
+    "'1 + 1 = {1 + 1}'",
+    "'a + b = {'{'a'}{'b'}'}'"
+  ].each do |input|
     context input.inspect do
       let(:input) { input }
 
       it "succeeds" do
-        expect(subject).to eq(expected)
+        expect { subject }.to_not raise_error
       end
     end
   end

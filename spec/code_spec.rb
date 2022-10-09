@@ -97,6 +97,8 @@ RSpec.describe Code do
     %w[("Good".."Bad").first Good],
     ['"Dorian " * 2', "Dorian Dorian "],
     ["while false end == nothing", "true"],
+    ['"1 + 1 = {1 + 1}"', "1 + 1 = 2"],
+    ["'1 + 1 = {1 + 1}'", "1 + 1 = 2"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

@@ -2,16 +2,21 @@ class Code
   class Node
     class String < Node
       def initialize(string)
-        @string = string
+        if string.to_s.blank?
+          @string = []
+        elsif string.is_a?(Array)
+          @string = string.map do |component|
+            ::Code::Node::StringComponent.new(component)
+          end
+        else
+          @string = [::Code::Node::StringCharacters.new(string)]
+        end
       end
 
       def evaluate(**args)
-        ::Code::Object::String.new(string.to_s)
+        string = @string.map { |component| component.evaluate(**args) }.map(&:to_s).join
+        ::Code::Object::String.new(string)
       end
-
-      private
-
-      attr_reader :string
     end
   end
 end
