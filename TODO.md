@@ -1,5 +1,3 @@
-- reference
-- editor
 - string interpolation
 - `function(:fibonnaci)`
 - `method(:to_string)`
