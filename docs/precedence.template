@@ -2,36 +2,13 @@
   - {a = "Go" a += "od" a}
 - Statement
   - {a = "Good"}
-  - {
-     a = 0
-     while a < 10
-       a += 1
-       "Good"
-    end
-    }
+- Equality
+  - {1 == 1 ? "Good"}
 - While
-  - {
-     a = 0
-     until a > 10
-       a += 1
-       "Good"
-    end
-    }
-  - {
-    a = 0
-    while
-      if a > 10
-        false
-      else
-        true
-      end
-      a += 1
-      "Good"
-    end
-    }
+  - {a = 0
+     while a < 10 a += 1 "Good" end}
 - If
   - {if true "Good" end}
-  - {if true if false "Bad" else "Good" end}
 - IfModifier
   - {"Good" if true}
 - OrKeyword
@@ -52,8 +29,6 @@
   - {false || "Good"}
 - AndOperator
   - {"Bad" && "Good"}
-- Equality
-  - {1 == 1 ? "Good"}
 - GreaterThan
   - {2 > 1 ? "Good"}
 - BitwiseOr

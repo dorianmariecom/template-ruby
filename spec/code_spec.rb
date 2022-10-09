@@ -96,6 +96,7 @@ RSpec.describe Code do
     ["until true\nend", ""],
     %w[("Good".."Bad").first Good],
     ['"Dorian " * 2', "Dorian Dorian "],
+    ["while false end == nothing", "true"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

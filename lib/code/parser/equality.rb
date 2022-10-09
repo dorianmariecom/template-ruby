@@ -1,7 +1,7 @@
 class Code
   class Parser
     class Equality < Parslet::Parser
-      rule(:greater_than) { ::Code::Parser::GreaterThan.new }
+      rule(:while_parser) { ::Code::Parser::While.new }
 
       rule(:right_caret) { str(">") }
       rule(:left_caret) { str("<") }
@@ -22,12 +22,12 @@ class Code
 
       rule(:equality) do
         (
-          greater_than.as(:first) >>
+          while_parser.as(:first) >>
             (
               whitespace? >> operator.as(:operator) >> whitespace? >>
-                greater_than.as(:statement)
+                while_parser.as(:statement)
             ).repeat(1).as(:rest)
-        ).as(:equality) | greater_than
+        ).as(:equality) | while_parser
       end
 
       root(:equality)

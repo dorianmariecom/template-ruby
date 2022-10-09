@@ -1,7 +1,7 @@
 class Code
   class Parser
     class AndOperator < Parslet::Parser
-      rule(:equality) { ::Code::Parser::Equality.new }
+      rule(:greater_than) { ::Code::Parser::GreaterThan.new }
 
       rule(:ampersand) { str("&") }
 
@@ -14,12 +14,12 @@ class Code
 
       rule(:and_operator) do
         (
-          equality.as(:first) >>
+          greater_than.as(:first) >>
             (
               whitespace? >> operator.as(:operator) >> whitespace? >>
-                equality.as(:statement)
+                greater_than.as(:statement)
             ).repeat(1).as(:rest)
-        ).as(:and_operator) | equality
+        ).as(:and_operator) | greater_than
       end
 
       root(:and_operator)

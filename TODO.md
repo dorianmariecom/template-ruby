@@ -1,5 +1,3 @@
-- `defined?(name) ? name : nothing`
-- `while false end == nothing`
 - reference
 - editor
 - string interpolation
