@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.to_string` on all objects
 - `1 + "a"` and `"a" + 1.0` for instance now convert to strings
 - `Dictionnary#each` e.g. `{ a: 1 }.each { |k, v| print(k) }`
+- Fix context duplication issue that was preventing implementation of recursive
+  functions like Fibonacci
 
 ## 0.2.4 / 2022-08-02
 

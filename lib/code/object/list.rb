@@ -63,6 +63,10 @@ class Code
         )
       end
 
+      def deep_dup
+        ::Code::Object::List.new(raw.deep_dup)
+      end
+
       def to_s
         "[#{raw.map(&:inspect).join(", ")}]"
       end

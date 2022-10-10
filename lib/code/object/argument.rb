@@ -30,7 +30,7 @@ class Code
       end
 
       def to_s
-        "argument"
+        "<Argument #{value.inspect}>"
       end
 
       def inspect

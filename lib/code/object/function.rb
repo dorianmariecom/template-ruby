@@ -32,7 +32,8 @@ class Code
       attr_reader :arguments, :body
 
       def call_function(args:, context:, io:)
-        new_context = context.dup
+        new_context = context.deep_dup
+
         arguments.each.with_index do |argument, index|
           if argument.regular?
             if argument.splat?

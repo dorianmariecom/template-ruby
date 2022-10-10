@@ -40,6 +40,10 @@ class Code
         raw.key?(key)
       end
 
+      def deep_dup
+        ::Code::Object::Dictionnary.new(raw.deep_dup)
+      end
+
       def to_s
         "{#{raw.map { |key, value| "#{key.inspect} => #{value.inspect}" }.join(", ")}}"
       end

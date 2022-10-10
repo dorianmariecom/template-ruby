@@ -104,6 +104,10 @@ RSpec.describe Code do
     ["'a' + 1.0", "a1.0"],
     ["1 + 'a'", "1a"],
     ["1.0 + 'a'", "1.0a"],
+    ["1 << 1", "2"],
+    ["1.0 << 1", "2"],
+    ["1 << 1.0", "2"],
+    ["1.0 << 1.0", "2"],
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

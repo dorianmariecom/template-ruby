@@ -23,6 +23,8 @@ class Code
           number_operation(operator.to_sym, arguments)
         elsif %w[< <= > >=].detect { |o| operator == o }
           comparaison(operator.to_sym, arguments)
+        elsif %w[<< >> & | ^].detect { |o| operator == o }
+          integer_operation(operator.to_sym, arguments)
         elsif operator == "+"
           plus(arguments)
         else
@@ -44,6 +46,12 @@ class Code
         sig(arguments, ::Code::Object::Number)
         other = arguments.first.value
         ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
+      end
+
+      def integer_operation(operator, arguments)
+        sig(arguments, ::Code::Object::Number)
+        other = arguments.first.value
+        ::Code::Object::Integer.new(raw.to_i.public_send(operator, other.raw.to_i))
       end
 
       def comparaison(operator, arguments)

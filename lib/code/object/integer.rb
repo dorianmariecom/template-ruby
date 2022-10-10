@@ -99,9 +99,9 @@ class Code
       end
 
       def integer_operation(operator, arguments)
-        sig(arguments, ::Code::Object::Integer)
+        sig(arguments, ::Code::Object::Number)
         other = arguments.first.value
-        ::Code::Object::Integer.new(raw.public_send(operator, other.raw))
+        ::Code::Object::Integer.new(raw.to_i.public_send(operator, other.raw.to_i))
       end
 
       def comparaison(operator, arguments)

@@ -3,6 +3,7 @@ require "zeitwerk"
 require "bigdecimal"
 require "active_support"
 require "active_support/core_ext/object/blank"
+require "active_support/core_ext/object/deep_dup"
 require "stringio"
 require "timeout"
 
