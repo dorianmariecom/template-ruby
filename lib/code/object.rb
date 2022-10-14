@@ -5,16 +5,28 @@ class Code
     def call(**args)
       operator = args.fetch(:operator, nil)
       arguments = args.fetch(:arguments, [])
-      if %w[== === !=].detect { |o| operator == o }
-        comparaison(operator.to_sym, arguments)
+
+      if operator == "=="
+        sig(arguments, ::Code::Object)
+        equal(arguments.first.value)
+      elsif operator == "==="
+        sig(arguments, ::Code::Object)
+        strict_equal(arguments.first.value)
+      elsif operator == "!="
+        sig(arguments, ::Code::Object)
+        different(arguments.first.value)
       elsif operator == "<=>"
-        compare(arguments)
+        sig(arguments, ::Code::Object)
+        compare(arguments.first.value)
       elsif operator == "&&"
-        and_operator(arguments)
+        sig(arguments, ::Code::Object)
+        and_operator(arguments.first.value)
       elsif operator == "||"
-        or_operator(arguments)
+        sig(arguments, ::Code::Object)
+        or_operator(arguments.first.value)
       elsif operator == "to_string"
-        to_string(arguments)
+        sig(arguments)
+        to_string
       else
         raise ::Code::Error::Undefined.new(
                 "#{operator} not defined on #{inspect}",
@@ -78,10 +90,12 @@ class Code
 
     def sig(actual_arguments, *expected_arguments)
       if actual_arguments.size != expected_arguments.size
-        raise ::Code::Error::ArgumentError.new(
-                "Expected #{expected_arguments.size} arguments, " \
-                  "got #{actual_arguments.size} arguments",
-              )
+        raise(
+          ::Code::Error::ArgumentError.new(
+            "Expected #{expected_arguments.size} arguments, " \
+              "got #{actual_arguments.size} arguments",
+          )
+        )
       end
 
       expected_arguments.each.with_index do |expected_argument, index|
@@ -91,46 +105,49 @@ class Code
           if expected_argument.none? { |expected_arg|
                actual_argument.is_a?(expected_arg)
              }
-            raise ::Code::Error::TypeError.new(
-                    "Expected #{expected_argument}, got #{actual_argument.class}",
-                  )
+            raise(
+              ::Code::Error::TypeError.new(
+                "Expected #{expected_argument}, got #{actual_argument.class}",
+              )
+            )
           end
         else
           if !actual_argument.is_a?(expected_argument)
-            raise ::Code::Error::TypeError.new(
-                    "Expected #{expected_argument}, got #{actual_argument.class}",
-                  )
+            raise(
+              ::Code::Error::TypeError.new(
+                "Expected #{expected_argument}, got #{actual_argument.class}",
+              )
+            )
           end
         end
       end
     end
 
-    def comparaison(operator, arguments)
-      sig(arguments, ::Code::Object)
-      other = arguments.first.value
-      ::Code::Object::Boolean.new(public_send(operator, other))
+    def equal(other)
+      ::Code::Object::Boolean.new(self == other)
     end
 
-    def compare(arguments)
-      sig(arguments, ::Code::Object)
-      other = arguments.first.value
+    def strict_equal(other)
+      ::Code::Object::Boolean.new(self === other)
+    end
+
+    def different(other)
+      ::Code::Object::Boolean.new(self != other)
+    end
+
+    def compare(other)
       ::Code::Object::Integer.new(self <=> other)
     end
 
-    def and_operator(arguments)
-      sig(arguments, ::Code::Object)
-      other = arguments.first.value
+    def and_operator(other)
       truthy? ? other : self
     end
 
-    def or_operator(arguments)
-      sig(arguments, ::Code::Object)
-      other = arguments.first.value
+    def or_operator(other)
       truthy? ? self : other
     end
 
-    def to_string(arguments)
-      sig(arguments)
+    def to_string
       ::Code::Object::String.new(to_s)
     end
   end
