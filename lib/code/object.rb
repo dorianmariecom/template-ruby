@@ -28,9 +28,11 @@ class Code
         sig(arguments)
         to_string
       else
-        raise ::Code::Error::Undefined.new(
-                "#{operator} not defined on #{inspect}",
-              )
+        raise(
+          Code::Error::Undefined.new(
+            "#{operator} not defined on #{inspect}",
+          )
+        )
       end
     end
 

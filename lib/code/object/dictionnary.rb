@@ -10,14 +10,19 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        context = args.fetch(:context)
-        io = args.fetch(:io)
+        globals = args.slice(:context, :io)
 
         if operator == "values"
-          values(arguments)
+          sig(arguments)
+          values
+        elsif operator == "keys"
+          sig(arguments)
+          keys
         elsif operator == "each"
-          each(arguments, context: context, io: io)
+          sig(arguments, ::Code::Object::Function)
+          each(arguments.first.value, **globals)
         elsif key?(operator)
+          sig(arguments)
           fetch(operator)
         else
           super
@@ -54,24 +59,25 @@ class Code
 
       private
 
-      def values(arguments)
-        sig(arguments)
+      def keys
+        ::Code::Object::List.new(raw.keys)
+      end
+
+      def values
         ::Code::Object::List.new(raw.values)
       end
 
-      def each(arguments, context:, io:)
-        sig(arguments, ::Code::Object::Function)
-        argument = arguments.first.value
+      def each(argument, **globals)
         raw.each do |key, value|
           argument.call(
             arguments: [
               ::Code::Object::Argument.new(key),
               ::Code::Object::Argument.new(value)
             ],
-            context: context,
-            io: io,
+            **globals
           )
         end
+
         self
       end
     end

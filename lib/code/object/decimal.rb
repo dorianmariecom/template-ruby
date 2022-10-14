@@ -57,13 +57,13 @@ class Code
           right_shift(arguments.first.value)
         elsif operator == "&"
           sig(arguments, ::Code::Object::Number)
-          and_operator(arguments.first.value)
+          bitwise_and(arguments.first.value)
         elsif operator == "|"
           sig(arguments, ::Code::Object::Number)
-          or_operator(arguments.first.value)
+          bitwise_or(arguments.first.value)
         elsif operator == "^"
           sig(arguments, ::Code::Object::Number)
-          xor(arguments.first.value)
+          bitwise_xor(arguments.first.value)
         else
           super
         end
@@ -131,15 +131,15 @@ class Code
         ::Code::Object::Integer.new(raw.to_i >> other.raw.to_i)
       end
 
-      def and_operator(other)
+      def bitwise_and(other)
         ::Code::Object::Integer.new(raw.to_i & other.raw.to_i)
       end
 
-      def or_operator(other)
+      def bitwise_or(other)
         ::Code::Object::Integer.new(raw.to_i | other.raw.to_i)
       end
 
-      def xor(other)
+      def bitwise_xor(other)
         ::Code::Object::Integer.new(raw.to_i ^ other.raw.to_i)
       end
     end
