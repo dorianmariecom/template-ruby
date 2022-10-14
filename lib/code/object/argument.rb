@@ -1,6 +1,6 @@
 class Code
   class Object
-    class Argument < ::Code::Object
+    class Argument
       attr_reader :value, :name, :splat, :keyword_splat, :block
 
       def initialize(

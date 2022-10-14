@@ -19,14 +19,51 @@ class Code
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
 
-        if %w[% - / * **].detect { |o| operator == o }
-          number_operation(operator.to_sym, arguments)
-        elsif %w[< <= > >=].detect { |o| operator == o }
-          comparaison(operator.to_sym, arguments)
-        elsif %w[<< >> & | ^].detect { |o| operator == o }
-          integer_operation(operator.to_sym, arguments)
+        if operator == "%"
+          sig(arguments, ::Code::Object::Number)
+          modulo(arguments.first.value)
         elsif operator == "+"
-          plus(arguments)
+          sig(arguments, ::Code::Object)
+          plus(arguments.first.value)
+        elsif operator == "-"
+          sig(arguments, ::Code::Object::Number)
+          minus(arguments.first.value)
+        elsif operator == "/"
+          sig(arguments, ::Code::Object::Number)
+          division(arguments.first.value)
+        elsif operator == "*"
+          sig(arguments, ::Code::Object::Number)
+          multiplication(arguments.first.value)
+        elsif operator == "**"
+          sig(arguments, ::Code::Object::Number)
+          power(arguments.first.value)
+        elsif operator == "<"
+          sig(arguments, ::Code::Object::Number)
+          inferior(arguments.first.value)
+        elsif operator == "<="
+          sig(arguments, ::Code::Object::Number)
+          inferior_or_equal(arguments.first.value)
+        elsif operator == ">"
+          sig(arguments, ::Code::Object::Number)
+          superior(arguments.first.value)
+        elsif operator == ">="
+          sig(arguments, ::Code::Object::Number)
+          superior_or_equal(arguments.first.value)
+        elsif operator == "<<"
+          sig(arguments, ::Code::Object::Number)
+          left_shift(arguments.first.value)
+        elsif operator == ">>"
+          sig(arguments, ::Code::Object::Number)
+          right_shift(arguments.first.value)
+        elsif operator == "&"
+          sig(arguments, ::Code::Object::Number)
+          and_operator(arguments.first.value)
+        elsif operator == "|"
+          sig(arguments, ::Code::Object::Number)
+          or_operator(arguments.first.value)
+        elsif operator == "^"
+          sig(arguments, ::Code::Object::Number)
+          xor(arguments.first.value)
         else
           super
         end
@@ -42,33 +79,68 @@ class Code
 
       private
 
-      def number_operation(operator, arguments)
-        sig(arguments, ::Code::Object::Number)
-        other = arguments.first.value
-        ::Code::Object::Decimal.new(raw.public_send(operator, other.raw))
+      def modulo(other)
+        ::Code::Object::Decimal.new(raw % other.raw)
       end
 
-      def integer_operation(operator, arguments)
-        sig(arguments, ::Code::Object::Number)
-        other = arguments.first.value
-        ::Code::Object::Integer.new(raw.to_i.public_send(operator, other.raw.to_i))
-      end
-
-      def comparaison(operator, arguments)
-        sig(arguments, ::Code::Object::Number)
-        other = arguments.first.value
-        ::Code::Object::Boolean.new(raw.public_send(operator, other.raw))
-      end
-
-      def plus(arguments)
-        sig(arguments, ::Code::Object)
-        other = arguments.first.value
-
+      def plus(other)
         if other.is_a?(::Code::Object::Number)
           ::Code::Object::Decimal.new(raw + other.raw)
         else
           ::Code::Object::String.new(to_s + other.to_s)
         end
+      end
+
+      def minus(other)
+        ::Code::Object::Decimal.new(raw - other.raw)
+      end
+
+      def division(other)
+        ::Code::Object::Decimal.new(raw / other.raw)
+      end
+
+      def multiplication(other)
+        ::Code::Object::Decimal.new(raw * other.raw)
+      end
+
+      def power(other)
+        ::Code::Object::Decimal.new(raw ** other.raw)
+      end
+
+      def inferior(other)
+        ::Code::Object::Boolean.new(raw < other.raw)
+      end
+
+      def inferior_or_equal(other)
+        ::Code::Object::Boolean.new(raw <= other.raw)
+      end
+
+      def superior(other)
+        ::Code::Object::Boolean.new(raw > other.raw)
+      end
+
+      def superior_or_equal(other)
+        ::Code::Object::Boolean.new(raw >= other.raw)
+      end
+
+      def left_shift(other)
+        ::Code::Object::Integer.new(raw.to_i << other.raw.to_i)
+      end
+
+      def right_shift(other)
+        ::Code::Object::Integer.new(raw.to_i >> other.raw.to_i)
+      end
+
+      def and_operator(other)
+        ::Code::Object::Integer.new(raw.to_i & other.raw.to_i)
+      end
+
+      def or_operator(other)
+        ::Code::Object::Integer.new(raw.to_i | other.raw.to_i)
+      end
+
+      def xor(other)
+        ::Code::Object::Integer.new(raw.to_i ^ other.raw.to_i)
       end
     end
   end
