@@ -5,16 +5,21 @@ class Code
         if string.to_s.blank?
           @string = []
         elsif string.is_a?(Array)
-          @string = string.map do |component|
-            ::Code::Node::StringComponent.new(component)
-          end
+          @string =
+            string.map do |component|
+              ::Code::Node::StringComponent.new(component)
+            end
         else
           @string = [::Code::Node::StringCharacters.new(string)]
         end
       end
 
       def evaluate(**args)
-        string = @string.map { |component| component.evaluate(**args) }.map(&:to_s).join
+        string =
+          @string
+            .map { |component| component.evaluate(**args) }
+            .map(&:to_s)
+            .join
         ::Code::Object::String.new(string)
       end
     end

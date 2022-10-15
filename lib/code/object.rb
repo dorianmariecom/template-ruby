@@ -29,9 +29,7 @@ class Code
         to_string
       else
         raise(
-          Code::Error::Undefined.new(
-            "#{operator} not defined on #{inspect}",
-          )
+          Code::Error::Undefined.new("#{operator} not defined on #{inspect}"),
         )
       end
     end
@@ -96,7 +94,7 @@ class Code
           ::Code::Error::ArgumentError.new(
             "Expected #{expected_arguments.size} arguments, " \
               "got #{actual_arguments.size} arguments",
-          )
+          ),
         )
       end
 
@@ -110,7 +108,7 @@ class Code
             raise(
               ::Code::Error::TypeError.new(
                 "Expected #{expected_argument}, got #{actual_argument.class}",
-              )
+              ),
             )
           end
         else
@@ -118,7 +116,7 @@ class Code
             raise(
               ::Code::Error::TypeError.new(
                 "Expected #{expected_argument}, got #{actual_argument.class}",
-              )
+              ),
             )
           end
         end

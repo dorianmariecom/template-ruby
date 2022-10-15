@@ -30,7 +30,9 @@ class Code
         ampersand.as(:block).maybe >>
           (asterisk >> asterisk).as(:keyword_splat).maybe >>
           asterisk.as(:splat).maybe >> name >>
-          (whitespace? >> equal >> whitespace? >> code_present.as(:default)).maybe
+          (
+            whitespace? >> equal >> whitespace? >> code_present.as(:default)
+          ).maybe
       end
 
       rule(:argument) do

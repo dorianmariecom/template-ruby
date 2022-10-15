@@ -3,13 +3,13 @@ class Code
     class StringComponent < Node
       def initialize(component)
         if component.key?(:characters)
-          @component = ::Code::Node::StringCharacters.new(
-            component.fetch(:characters)
-          )
+          @component =
+            ::Code::Node::StringCharacters.new(component.fetch(:characters))
         elsif component.key?(:interpolation)
-          @component = ::Code::Node::StringInterpolation.new(
-            component.fetch(:interpolation)
-          )
+          @component =
+            ::Code::Node::StringInterpolation.new(
+              component.fetch(:interpolation),
+            )
         else
           raise NotImplementedError.new(component.inspect)
         end

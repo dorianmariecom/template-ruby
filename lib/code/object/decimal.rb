@@ -104,7 +104,7 @@ class Code
       end
 
       def power(other)
-        ::Code::Object::Decimal.new(raw ** other.raw)
+        ::Code::Object::Decimal.new(raw**other.raw)
       end
 
       def inferior(other)

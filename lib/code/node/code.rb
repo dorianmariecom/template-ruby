@@ -11,9 +11,7 @@ class Code
       def evaluate(**args)
         last = ::Code::Object::Nothing.new
 
-        @statements.each do |statement|
-          last = statement.evaluate(**args)
-        end
+        @statements.each { |statement| last = statement.evaluate(**args) }
 
         last
       end

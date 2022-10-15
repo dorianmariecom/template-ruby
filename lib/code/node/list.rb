@@ -5,9 +5,8 @@ class Code
         if codes.to_s.blank?
           @codes = []
         else
-          @codes = codes.map do |code|
-            ::Code::Node::Code.new(code.fetch(:code))
-          end
+          @codes =
+            codes.map { |code| ::Code::Node::Code.new(code.fetch(:code)) }
         end
       end
 

@@ -3,7 +3,8 @@ class Code
 
   def initialize(input, io: $stdout, timeout: DEFAULT_TIMEOUT)
     @input = input
-    @parsed = Timeout.timeout(timeout) { ::Code::Parser::Code.new.parse(@input) }
+    @parsed =
+      Timeout.timeout(timeout) { ::Code::Parser::Code.new.parse(@input) }
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT
   end

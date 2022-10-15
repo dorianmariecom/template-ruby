@@ -72,9 +72,9 @@ class Code
           argument.call(
             arguments: [
               ::Code::Object::Argument.new(key),
-              ::Code::Object::Argument.new(value)
+              ::Code::Object::Argument.new(value),
             ],
-            **globals
+            **globals,
           )
         end
 

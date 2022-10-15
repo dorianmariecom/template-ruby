@@ -132,9 +132,9 @@ class Code
 
       def power(other)
         if other.is_a?(::Code::Object::Integer)
-          ::Code::Object::Integer.new(raw ** other.raw)
+          ::Code::Object::Integer.new(raw**other.raw)
         else
-          ::Code::Object::Decimal.new(raw ** other.raw)
+          ::Code::Object::Decimal.new(raw**other.raw)
         end
       end
 

@@ -11,7 +11,12 @@ class Template
     @timeout = timeout || DEFAULT_TIMEOUT
   end
 
-  def self.render(input, context = "", io: StringIO.new, timeout: DEFAULT_TIMEOUT)
+  def self.render(
+    input,
+    context = "",
+    io: StringIO.new,
+    timeout: DEFAULT_TIMEOUT
+  )
     new(input, io: io, timeout: timeout).render(context)
   end
 
@@ -23,10 +28,7 @@ class Template
         context = ::Code::Object::Dictionnary.new
       end
 
-      ::Template::Node::Template.new(parsed).evaluate(
-        context: context,
-        io: io,
-      )
+      ::Template::Node::Template.new(parsed).evaluate(context: context, io: io)
 
       io.is_a?(StringIO) ? io.string : nil
     end

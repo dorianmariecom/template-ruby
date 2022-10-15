@@ -16,7 +16,7 @@ RSpec.describe Code::Parser::String do
     "'\\u0123\\u4567\\u89aA\\ubBcC\\UdDeE\\ufFfF'",
     ":asc",
     "'1 + 1 = {1 + 1}'",
-    "'a + b = {'{'a'}{'b'}'}'"
+    "'a + b = {'{'a'}{'b'}'}'",
   ].each do |input|
     context input.inspect do
       let(:input) { input }

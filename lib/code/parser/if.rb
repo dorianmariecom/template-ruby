@@ -16,7 +16,7 @@ class Code
       rule(:if_rule) do
         (
           (if_keyword | unless_keyword).as(:if_operator) >> whitespace >>
-          if_modifier.as(:if_statement) >> code.as(:if_body).maybe >>
+            if_modifier.as(:if_statement) >> code.as(:if_body).maybe >>
             (
               else_keyword >>
                 (

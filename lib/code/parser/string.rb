@@ -49,29 +49,29 @@ class Code
       end
 
       rule(:single_quoted_character) do
-        escaped_character | (opening_curly_bracket.absent? >> single_quote.absent? >> any)
+        escaped_character |
+          (opening_curly_bracket.absent? >> single_quote.absent? >> any)
       end
 
       rule(:double_quoted_character) do
-        escaped_character | (opening_curly_bracket.absent? >> double_quote.absent? >> any)
+        escaped_character |
+          (opening_curly_bracket.absent? >> double_quote.absent? >> any)
       end
 
       rule(:single_quoted_string) do
         single_quote.ignore >>
           (
             interpolation.as(:interpolation) |
-            single_quoted_character.repeat(1).as(:characters)
-          ).repeat >>
-          single_quote.ignore
+              single_quoted_character.repeat(1).as(:characters)
+          ).repeat >> single_quote.ignore
       end
 
       rule(:double_quoted_string) do
         double_quote.ignore >>
           (
             interpolation.as(:interpolation) |
-            double_quoted_character.repeat(1).as(:characters)
-          ).repeat >>
-          double_quote.ignore
+              double_quoted_character.repeat(1).as(:characters)
+          ).repeat >> double_quote.ignore
       end
 
       rule(:symbol) { colon.ignore >> name }
