@@ -11,7 +11,7 @@ class Code
         arguments = args.fetch(:arguments, [])
         globals = args.slice(:context, :io)
 
-        if operator.nil?
+        if operator.nil? || operator == "call"
           call_function(args: arguments, globals: globals)
         else
           super

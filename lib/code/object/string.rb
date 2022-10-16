@@ -10,15 +10,20 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
+        globals = args.slice(:context, :io)
 
         if operator == "to_function"
-          to_function(arguments)
+          sig(arguments)
+          to_function(**globals)
         elsif operator == "+"
-          plus(arguments)
+          sig(arguments, ::Code::Object)
+          plus(arguments.first.value)
         elsif operator == "*"
-          multiplication(arguments)
+          sig(arguments, ::Code::Object::Number)
+          multiplication(arguments.first.value)
         elsif operator == "reverse"
-          reverse(arguments)
+          sig(arguments)
+          reverse
         else
           super
         end
@@ -42,25 +47,30 @@ class Code
 
       private
 
-      def to_function(arguments)
-        sig(arguments)
-        Code.evaluate("(_) => { _.#{raw} }")
+      def to_function(**globals)
+        ::Code::Node::Code.new(
+          [
+            {
+              function: {
+                arguments: [{ regular: { name: "_" } }],
+                body: [
+                  { call: { left: { name: "_" }, right: [{ name: raw }] } },
+                ],
+              },
+            },
+          ],
+        ).evaluate(**globals)
       end
 
-      def plus(arguments)
-        sig(arguments, ::Code::Object)
-        other = arguments.first.value
+      def plus(other)
         ::Code::Object::String.new(raw + other.to_s)
       end
 
-      def multiplication(arguments)
-        sig(arguments, ::Code::Object::Number)
-        other = arguments.first.value
+      def multiplication(other)
         ::Code::Object::String.new(raw * other.raw)
       end
 
-      def reverse(arguments)
-        sig(arguments)
+      def reverse
         ::Code::Object::String.new(raw.reverse)
       end
     end

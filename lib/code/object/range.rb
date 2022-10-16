@@ -13,27 +13,35 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        context = args.fetch(:context)
-        io = args.fetch(:io)
+        globals = args.slice(:context, :io)
 
         if operator == "any?"
-          any?(arguments, context: context, io: io)
+          sig(arguments, ::Code::Object::Function)
+          any?(arguments.first.value, **globals)
         elsif operator == "all?"
-          all?(arguments, context: context, io: io)
+          sig(arguments, ::Code::Object::Function)
+          all?(arguments.first.value, **globals)
         elsif operator == "each"
-          each(arguments, context: context, io: io)
+          sig(arguments, ::Code::Object::Function)
+          each(arguments.first.value, **globals)
         elsif operator == "select"
-          select(arguments, context: context, io: io)
+          sig(arguments, ::Code::Object::Function)
+          select(arguments.first.value, **globals)
         elsif operator == "map"
-          map(arguments, context: context, io: io)
+          sig(arguments, ::Code::Object::Function)
+          map(arguments.first.value, **globals)
         elsif operator == "step"
-          step(arguments)
+          sig(arguments, ::Code::Object::Number)
+          step(arguments.first.value)
         elsif operator == "to_list"
-          to_list(arguments)
+          sig(arguments)
+          to_list
         elsif operator == "first"
-          first(arguments)
+          sig(arguments)
+          first
         elsif operator == "last"
-          last(arguments)
+          sig(arguments)
+          last
         else
           super
         end
@@ -49,79 +57,61 @@ class Code
 
       private
 
-      def any?(arguments, context:, io:)
-        sig(arguments, ::Code::Object::Function)
-        argument = arguments.first.value
+      def any?(argument, **globals)
         ::Code::Object::Boolean.new(
           raw.any? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              context: context,
-              io: io,
+              **globals
             ).truthy?
           end,
         )
       end
 
-      def all?(arguments, context:, io:)
-        sig(arguments, ::Code::Object::Function)
-        argument = arguments.first.value
+      def all?(argument, **globals)
         ::Code::Object::Boolean.new(
           raw.all? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              context: context,
-              io: io,
+              **globals
             ).truthy?
           end,
         )
       end
 
-      def each(arguments, context:, io:)
-        sig(arguments, ::Code::Object::Function)
-        argument = arguments.first.value
+      def each(argument, **globals)
         raw.each do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            context: context,
-            io: io,
+            **globals
           )
         end
         self
       end
 
-      def select(arguments, context:, io:)
-        sig(arguments, ::Code::Object::Function)
-        argument = arguments.first.value
+      def select(argument, **globals)
         ::Code::Object::List.new(
           raw.select do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              context: context,
-              io: io,
+              **globals
             ).truthy?
           end,
         )
       end
 
-      def map(arguments, context:, io:)
-        sig(arguments, ::Code::Object::Function)
-        argument = arguments.first.value
+      def map(argument, **globals)
         ::Code::Object::List.new(
           raw.map do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              context: context,
-              io: io,
+              **globals
             )
           end,
         )
       end
 
-      def step(arguments)
-        sig(arguments, ::Code::Object::Number)
-        argument = arguments.first.value
-
+      def step(argument)
         list = ::Code::Object::List.new
         element = @left
         list << element
@@ -139,18 +129,15 @@ class Code
         list
       end
 
-      def to_list(arguments)
-        sig(arguments)
+      def to_list
         ::Code::Object::List.new(raw.to_a)
       end
 
-      def first(arguments)
-        sig(arguments)
+      def first
         raw.first
       end
 
-      def last(arguments)
-        sig(arguments)
+      def last
         raw.last
       end
     end
