@@ -13,7 +13,7 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.slice(:context, :io)
+        globals = args.multi_fetch(:context, :io, :object)
 
         if operator == "any?"
           sig(arguments, ::Code::Object::Function)

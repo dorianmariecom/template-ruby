@@ -9,7 +9,7 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.slice(:context, :io)
+        globals = args.multi_fetch(:context, :io, :object)
 
         if operator.nil? || operator == "call"
           call_function(args: arguments, globals: globals)
@@ -57,7 +57,7 @@ class Code
           end
         end
 
-        body.evaluate(context: new_context, io: globals[:io])
+        body.evaluate(context: new_context, io: globals[:io], object: ::Code::Object::Global.new)
       end
     end
   end

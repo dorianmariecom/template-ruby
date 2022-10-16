@@ -74,7 +74,7 @@ class Code
       end
 
       def evaluate(**args)
-        @statement.evaluate(**args)
+        @statement.evaluate(**args.merge(object: ::Code::Object::Global.new))
       end
     end
   end

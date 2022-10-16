@@ -8,41 +8,16 @@ class Code
       def evaluate(**args)
         context = args.fetch(:context)
         arguments = args.fetch(:arguments, [])
-        object = args.fetch(:object, nil)
+        object = args.fetch(:object)
         io = args.fetch(:io)
 
-        if object
-          object.call(
-            context: context,
-            operator: name,
-            arguments: arguments,
-            io: io,
-          )
-        elsif context.key?(name)
-          object = context[name]
-
-          if object.is_a?(::Code::Object::Function)
-            object.call(
-              context: context,
-              operator: nil,
-              arguments: arguments,
-              io: io,
-            )
-          else
-            object
-          end
-        elsif name == "puts"
-          arguments.each { |argument| io.puts argument.value }
-          ::Code::Object::Nothing.new
-        elsif name == "print"
-          arguments.each { |argument| io.print argument.value }
-          ::Code::Object::Nothing.new
-        elsif name == "context"
-          return ::Code::Object::Nothing.new if arguments.size != 1
-          context[arguments.first&.value] || ::Code::Object::Nothing.new
-        else
-          raise ::Code::Error::Undefined.new("#{name} undefined")
-        end
+        object.call(
+          context: context,
+          operator: name,
+          arguments: arguments,
+          io: io,
+          object: object
+        )
       end
 
       private

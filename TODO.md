@@ -1,5 +1,3 @@
-- remove `public_send`
-- Global object for global methods
-- Global methods from ruby
+- Global functions from ruby
 - Classes
-- private methods
+- private functions

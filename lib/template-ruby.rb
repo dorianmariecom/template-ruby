@@ -11,3 +11,9 @@ loader = Zeitwerk::Loader.for_gem(warn_on_extra_files: false)
 loader.ignore("#{__dir__}/template-ruby.rb")
 loader.ignore("#{__dir__}/code-ruby.rb")
 loader.setup
+
+class Hash
+  def multi_fetch(*keys)
+    keys.map { |key| [key, fetch(key)] }.to_h
+  end
+end

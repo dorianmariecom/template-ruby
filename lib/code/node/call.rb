@@ -22,6 +22,7 @@ class Code
       def evaluate(**args)
         if @right
           left = @left.evaluate(**args)
+
           @right.reduce(left) do |acc, element|
             element.evaluate(**args.merge(object: acc))
           end

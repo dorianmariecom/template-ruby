@@ -15,6 +15,7 @@ RSpec.describe Template do
     ["{add(1, 2)", "add = (a, b) => { a + b } { add: context(:add) }", "3"],
     ["Hello {", "", "Hello "],
     ["{{a: 1}.each { |k, v| print(k) } nothing", "", "a"],
+    ["{{a: 1}.each { |k, v| puts(k) } nothing", "", "a\n"],
     ["", "", ""],
   ].each do |(input, input_context, expected)|
     context "#{input.inspect} #{input_context.inspect}" do
