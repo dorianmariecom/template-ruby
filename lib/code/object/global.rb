@@ -6,7 +6,8 @@ class Code
         arguments = args.fetch(:arguments, [])
         context = args.fetch(:context)
         io = args.fetch(:io)
-        globals = args.multi_fetch(:context, :io, :object)
+        ruby = args.fetch(:ruby)
+        globals = args.multi_fetch(*::Code::GLOBALS)
 
         if operator == "print"
           io.print(*arguments.map(&:value))
@@ -21,22 +22,16 @@ class Code
           sig(arguments, ::Code::Object::String)
           Code.evaluate(arguments.first.value.raw)
         else
-          result = context[operator]
+          result = context[operator] || ruby[operator]
 
-          if result.is_a?(::Code::Object::Function)
+          if result && result.is_a?(::Code::Object::Function)
             result.call(**args.merge(operator: nil))
-          else
+          elsif result
             result
+          else
+            raise ::Code::Error::Undefined.new("#{operator} is not defined")
           end
         end
-      end
-
-      def print(*arguments, **globals)
-      end
-
-      def puts(*arguments, **globals)
-        globals.fetch(:io).puts(*arguments)
-        ::Code::Object::Nothing.new
       end
     end
   end

@@ -10,7 +10,7 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.multi_fetch(:context, :io, :object)
+        globals = args.multi_fetch(*::Code::GLOBALS)
 
         if operator == "to_function"
           sig(arguments)

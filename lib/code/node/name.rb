@@ -9,14 +9,12 @@ class Code
         context = args.fetch(:context)
         arguments = args.fetch(:arguments, [])
         object = args.fetch(:object)
-        io = args.fetch(:io)
+        globals = args.multi_fetch(*::Code::GLOBALS)
 
         object.call(
-          context: context,
           operator: name,
           arguments: arguments,
-          io: io,
-          object: object
+          **globals
         )
       end
 

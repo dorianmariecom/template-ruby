@@ -1,7 +1,15 @@
 require "spec_helper"
 
 RSpec.describe Code do
-  subject { described_class.evaluate(input).to_s }
+  let!(:input) { "" }
+  let!(:context) { "" }
+  let!(:io) { StringIO.new }
+  let!(:timeout) { 0.1 }
+  let!(:ruby) { {} }
+
+  subject do
+    Code.evaluate(input, context, io: io, timeout: timeout, ruby: ruby).to_s
+  end
 
   [
     ["nothing", ""],
@@ -115,6 +123,17 @@ RSpec.describe Code do
 
       it "succeeds" do
         expect(subject).to eq(expected)
+      end
+    end
+  end
+
+  context "with ruby" do
+    context "with a constant" do
+      let!(:input) { "a + a" }
+      let!(:ruby) { { a: 1 } }
+
+      it "can access a" do
+        expect(subject).to eq("2")
       end
     end
   end
