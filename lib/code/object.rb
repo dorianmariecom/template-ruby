@@ -34,21 +34,6 @@ class Code
       end
     end
 
-    def []=(key, value)
-      @attributes ||= {}
-      @attributes[key] = value
-    end
-
-    def [](key)
-      @attributes ||= {}
-      @attributes[key]
-    end
-
-    def key?(key)
-      @attributes ||= {}
-      @attributes.key?(key)
-    end
-
     def truthy?
       true
     end

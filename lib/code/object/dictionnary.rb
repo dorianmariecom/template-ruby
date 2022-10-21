@@ -22,11 +22,21 @@ class Code
           sig(arguments, ::Code::Object::Function)
           each(arguments.first.value, **globals)
         elsif key?(operator)
-          sig(arguments)
-          fetch(operator)
+          result = fetch(operator)
+
+          if result.is_a?(::Code::Object::Function)
+            result.call(**args.merge(operator: nil))
+          else
+            sig(arguments)
+            result
+          end
         else
           super
         end
+      end
+
+      def merge(other)
+        ::Code::Object::Dictionnary.new(raw.merge(other.raw))
       end
 
       def fetch(key)

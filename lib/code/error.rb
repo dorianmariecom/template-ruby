@@ -11,5 +11,8 @@ class Code
 
     class ArgumentError < ::Code::Error
     end
+
+    class IncompatibleContext < ::Code::Error
+    end
   end
 end

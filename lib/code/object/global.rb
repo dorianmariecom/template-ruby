@@ -6,7 +6,6 @@ class Code
         arguments = args.fetch(:arguments, [])
         context = args.fetch(:context)
         io = args.fetch(:io)
-        ruby = args.fetch(:ruby)
         globals = args.multi_fetch(*::Code::GLOBALS)
 
         if operator == "print"
@@ -22,7 +21,7 @@ class Code
           sig(arguments, ::Code::Object::String)
           Code.evaluate(arguments.first.value.raw)
         else
-          result = context[operator] || ruby[operator]
+          result = context[operator]
 
           if result && result.is_a?(::Code::Object::Function)
             result.call(**args.merge(operator: nil))

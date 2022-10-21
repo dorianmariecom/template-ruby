@@ -9,7 +9,7 @@ class Template
       end
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT
-    @ruby = ::Code::Ruby.convert(ruby || {})
+    @ruby = ::Code::Ruby.to_code(ruby || {})
   end
 
   def self.render(
@@ -35,11 +35,13 @@ class Template
         context = ::Code::Object::Dictionnary.new
       end
 
-      ::Template::Node::Template.new(parsed).evaluate(
-        context: context,
-        io: io,
-        ruby: ruby
-      )
+      if !context.is_a?(::Code::Object::Dictionnary)
+        raise ::Code::Template::IncompatibleContext.new("context must be a dictionnary")
+      end
+
+      context = context.merge(ruby)
+
+      ::Template::Node::Template.new(parsed).evaluate(context: context, io: io)
 
       io.is_a?(StringIO) ? io.string : nil
     end

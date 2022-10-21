@@ -1,3 +1,0 @@
-- Global functions from ruby
-- Classes
-- private functions

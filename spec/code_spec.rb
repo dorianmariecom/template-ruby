@@ -136,5 +136,47 @@ RSpec.describe Code do
         expect(subject).to eq("2")
       end
     end
+
+    context "with a function without arguments" do
+      let!(:input) { "a + a" }
+      let!(:ruby) { { a: ->{ "hello" } } }
+
+      it "can call a" do
+        expect(subject).to eq("hellohello")
+      end
+    end
+
+    context "with a function with regular arguments" do
+      let!(:input) { "add(1, 2)" }
+      let!(:ruby) { { add: ->(a, b){ a + b } } }
+
+      it "can call add" do
+        expect(subject).to eq("3")
+      end
+    end
+
+    context "with a function with keyword arguments" do
+      let!(:input) { "add(a: 1, b: 2)" }
+      let!(:ruby) { { add: ->(a:, b:){ a + b } } }
+
+      it "can call add" do
+        expect(subject).to eq("3")
+      end
+    end
+
+    context "with a complex function" do
+      let!(:input) { "add(1, 1, 1, 1, c: 1, d: 1, e: 1)" }
+      let!(:ruby) do
+        {
+          add: ->(a, b = 1, *args, c:, d: 2, **kargs){
+            a + b + args.sum + c + d + kargs.values.sum
+          }
+        }
+      end
+
+      it "can call add" do
+        expect(subject).to eq("7")
+      end
+    end
   end
 end

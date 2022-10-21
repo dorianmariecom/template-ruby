@@ -1,7 +1,11 @@
 require "spec_helper"
+require "prime"
 
 RSpec.describe Template do
-  subject { described_class.render(input, input_context) }
+  let!(:ruby) { {} }
+  let!(:input_context) { "" }
+  let!(:timeout) { 0 }
+  subject { Template.render(input, input_context, ruby: ruby, timeout: timeout) }
 
   [
     ["Hello World", "", "Hello World"],
@@ -25,6 +29,24 @@ RSpec.describe Template do
       it "succeeds" do
         expect(subject).to eq(expected)
       end
+    end
+  end
+
+  context "with a function from ruby" do
+    let!(:ruby) { { prime: ->(n){ n.prime? } } }
+    let!(:input) { "{prime(19201)" }
+
+    it "calls the ruby function" do
+      expect(subject).to eq("false")
+    end
+  end
+
+  context "with a function from ruby in an object" do
+    let!(:ruby) { { Prime: { prime: ->(n){ n.prime? } } } }
+    let!(:input) { "{Prime.prime(19201)" }
+
+    it "calls the ruby function" do
+      expect(subject).to eq("false")
     end
   end
 end

@@ -1,5 +1,5 @@
 class Code
-  GLOBALS = [:io, :context, :object, :ruby]
+  GLOBALS = [:io, :context, :object]
   DEFAULT_TIMEOUT = Template::DEFAULT_TIMEOUT
 
   def initialize(input, io: $stdout, timeout: DEFAULT_TIMEOUT, ruby: {})
@@ -8,7 +8,7 @@ class Code
       Timeout.timeout(timeout) { ::Code::Parser::Code.new.parse(@input) }
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT
-    @ruby = ::Code::Ruby.convert(ruby || {})
+    @ruby = ::Code::Ruby.to_code(ruby || {})
   end
 
   def self.evaluate(input, context = "", io: $stdout, timeout: DEFAULT_TIMEOUT, ruby: {})
@@ -28,7 +28,13 @@ class Code
         context = ::Code::Object::Dictionnary.new
       end
 
-      ::Code::Node::Code.new(parsed).evaluate(context: context, io: io, ruby: ruby)
+      if !context.is_a?(::Code::Object::Dictionnary)
+        raise ::Code::Error::IncompatibleContext.new("context must be a dictionnary")
+      end
+
+      context = context.merge(ruby)
+
+      ::Code::Node::Code.new(parsed).evaluate(context: context, io: io)
     end
   end
 
