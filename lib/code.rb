@@ -5,7 +5,7 @@ class Code
   def initialize(input, io: $stdout, timeout: DEFAULT_TIMEOUT, ruby: {})
     @input = input
     @parsed =
-      Timeout.timeout(timeout) { ::Code::Parser::Code.new.parse(@input) }
+      Timeout.timeout(timeout) { ::Code::Parser.parse(@input) }
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT
     @ruby = ::Code::Ruby.to_code(ruby || {})

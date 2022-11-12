@@ -5,7 +5,7 @@ class Template
     @input = input
     @parsed =
       Timeout.timeout(timeout) do
-        ::Template::Parser::Template.new.parse(@input)
+        ::Template::Parser.parse(@input)
       end
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT

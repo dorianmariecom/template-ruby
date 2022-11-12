@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version = ::Template::Version
   s.summary = "A templating programming language"
   s.description =
-    'Like "Hello {name}" with {name: "Dorian"} gives "Hello Dorian"'
+    'A templating programming language, like "Hello {name}" with {name: "Dorian"} gives "Hello Dorian"'
   s.authors = ["Dorian Marié"]
   s.email = "dorian@dorianmarie.fr"
   s.files = `git ls-files`.split($/)
@@ -15,7 +15,5 @@ Gem::Specification.new do |s|
   s.license = "MIT"
   s.executables = "template"
 
-  s.add_dependency "activesupport", "~> 7"
-  s.add_dependency "parslet", "~> 2"
-  s.add_dependency "zeitwerk", "~> 2.6"
+  s.add_dependency "template-ruby-parser", "~> 0"
 end
