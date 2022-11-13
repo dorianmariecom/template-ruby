@@ -36,8 +36,13 @@ class Code
           sig(arguments) { ::Code::Object::Number }
           modulo(value)
         elsif operator == "-"
-          sig(arguments) { ::Code::Object::Number }
-          minus(value)
+          begin
+            sig(arguments) { ::Code::Object::Number }
+            minus(value)
+          rescue Code::Error::ArgumentError
+            sig(arguments)
+            unary_minus
+          end
         elsif operator == "**"
           sig(arguments) { ::Code::Object::Number }
           power(value)
@@ -135,6 +140,10 @@ class Code
         else
           ::Code::Object::Decimal.new(raw - other.raw)
         end
+      end
+
+      def unary_minus
+        ::Code::Object::Integer.new(-raw)
       end
 
       def power(other)

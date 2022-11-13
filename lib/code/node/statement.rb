@@ -43,6 +43,10 @@ class Code
           @statement = ::Code::Node::List.new(parsed.delete(:list))
         elsif parsed.key?(:while)
           @statement = ::Code::Node::While.new(parsed.delete(:while))
+        elsif parsed.key?(:if_modifier)
+          @statement = ::Code::Node::IfModifier.new(parsed.delete(:if_modifier))
+        elsif parsed.key?(:unary_minus)
+          @statement = ::Code::Node::UnaryMinus.new(parsed.delete(:unary_minus))
         end
 
         super(parsed)
