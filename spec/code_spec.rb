@@ -4,7 +4,7 @@ RSpec.describe Code do
   let!(:input) { "" }
   let!(:context) { "" }
   let!(:io) { StringIO.new }
-  let!(:timeout) { 0.1 }
+  let!(:timeout) { 0 }
   let!(:ruby) { {} }
 
   subject do

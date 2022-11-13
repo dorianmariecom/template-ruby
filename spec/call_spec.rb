@@ -1,7 +1,15 @@
 require "spec_helper"
 
 RSpec.describe Code do
-  subject { described_class.evaluate(input).to_s }
+  let!(:input) { "" }
+  let!(:context) { "" }
+  let!(:io) { StringIO.new }
+  let!(:timeout) { 0 }
+  let!(:ruby) { {} }
+
+  subject do
+    Code.evaluate(input, context, io: io, timeout: timeout, ruby: ruby).to_s
+  end
 
   [
     %w[(1..2).any?(&:even?) true],

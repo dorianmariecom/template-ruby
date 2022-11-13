@@ -5,25 +5,26 @@ class Code
     def call(**args)
       operator = args.fetch(:operator, nil)
       arguments = args.fetch(:arguments, [])
+      value = arguments.first&.value
 
       if operator == "=="
-        sig(arguments, ::Code::Object)
-        equal(arguments.first.value)
+        sig(arguments) { ::Code::Object }
+        equal(value)
       elsif operator == "==="
-        sig(arguments, ::Code::Object)
-        strict_equal(arguments.first.value)
+        sig(arguments) { ::Code::Object }
+        strict_equal(value)
       elsif operator == "!="
-        sig(arguments, ::Code::Object)
-        different(arguments.first.value)
+        sig(arguments) { ::Code::Object }
+        different(value)
       elsif operator == "<=>"
-        sig(arguments, ::Code::Object)
-        compare(arguments.first.value)
+        sig(arguments) { ::Code::Object }
+        compare(value)
       elsif operator == "&&"
-        sig(arguments, ::Code::Object)
-        and_operator(arguments.first.value)
+        sig(arguments) { ::Code::Object }
+        and_operator(value)
       elsif operator == "||"
-        sig(arguments, ::Code::Object)
-        or_operator(arguments.first.value)
+        sig(arguments) { ::Code::Object }
+        or_operator(value)
       elsif operator == "to_string"
         sig(arguments)
         to_string
@@ -73,7 +74,14 @@ class Code
 
     private
 
-    def sig(actual_arguments, *expected_arguments)
+    def sig(actual_arguments, &block)
+      if block
+        expected_arguments = block.call
+        expected_arguments = [expected_arguments] unless expected_arguments.is_a?(Array)
+      else
+        expected_arguments = []
+      end
+
       if actual_arguments.size != expected_arguments.size
         raise(
           ::Code::Error::ArgumentError.new(

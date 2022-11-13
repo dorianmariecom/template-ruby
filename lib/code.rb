@@ -1,4 +1,5 @@
 class Code
+  EMPTY_STRING = ""
   GLOBALS = [:io, :context, :object]
   DEFAULT_TIMEOUT = Template::DEFAULT_TIMEOUT
 
@@ -17,7 +18,7 @@ class Code
 
   def evaluate(context = "")
     Timeout.timeout(timeout) do
-      if context.present?
+      if context != EMPTY_STRING
         context = ::Code.evaluate(
           context,
           timeout: timeout,

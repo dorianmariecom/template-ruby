@@ -37,7 +37,7 @@ input = options.fetch(:input, "")
 context = options.fetch(:context, "")
 
 if options[:parse]
-  pp ::Template::Parser::Template.new.parse(input)
+  pp ::Template::Parser.parse(input)
 else
   Template.render(input, context, io: $stdout, timeout: options[:timeout])
 end

@@ -1,51 +1,26 @@
 class Code
   class Node
     class Call < Node
-      def initialize(call)
-        @left = ::Code::Node::Statement.new(call.fetch(:left))
+      def initialize(parsed)
+        @name = parsed.delete(:name)
 
-        @arguments = call.fetch(:arguments, [])
-        @arguments.map! { |argument| ::Code::Node::CallArgument.new(argument) }
-
-        if call.key?(:right)
-          @right =
-            call
-              .fetch(:right)
-              .map { |right| ::Code::Node::ChainedCall.new(right) }
+        if parsed[:arguments]
+          @arguments = parsed.delete(:arguments).map do |call_argument|
+            ::Code::Node::CallArgument.new(call_argument)
+          end
+        else
+          @arguments = nil
         end
-
-        if call.key?(:block)
-          @block = ::Code::Node::Block.new(call.fetch(:block))
-        end
+        super(parsed)
       end
 
       def evaluate(**args)
-        if @right
-          left = @left.evaluate(**args)
+        object = args.fetch(:object)
 
-          @right.reduce(left) do |acc, element|
-            element.evaluate(**args.merge(object: acc))
-          end
+        if @arguments.nil?
+          object.call(**args, operator: @name)
         else
-          arguments =
-            @arguments.map do |argument|
-              ::Code::Object::Argument.new(
-                argument.evaluate(**args),
-                name: argument.name,
-                splat: argument.splat?,
-                keyword_splat: argument.keyword_splat?,
-                block: argument.block?,
-              )
-            end
-
-          if @block
-            arguments << ::Code::Object::Argument.new(
-              @block.evaluate(**args),
-              block: true,
-            )
-          end
-
-          @left.evaluate(**args.merge(arguments: arguments))
+          raise NotImplementedError
         end
       end
     end

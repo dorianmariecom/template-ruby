@@ -1,39 +1,25 @@
 class Code
   class Node
     class ChainedCall < Node
-      def initialize(chained_call)
-        @name = ::Code::Node::Name.new(chained_call.fetch(:name))
+      def initialize(parsed)
+        calls = parsed.delete(:calls)
 
-        @arguments = chained_call.fetch(:arguments, [])
-        @arguments.map! { |argument| ::Code::Node::CallArgument.new(argument) }
-
-        if chained_call.key?(:block)
-          @block = ::Code::Node::Block.new(chained_call.fetch(:block))
+        @first = ::Code::Node::Statement.new(calls.first.fetch(:left))
+        @second = ::Code::Node::Statement.new(calls.first.fetch(:right))
+        @rest = calls[1..].map do |statement|
+          ::Code::Node::Statement.new(statement)
         end
+
+        super(parsed)
       end
 
       def evaluate(**args)
-        arguments =
-          @arguments.map do |argument|
-            ::Code::Object::Argument.new(
-              argument.evaluate(
-                **args.merge(object: ::Code::Object::Global.new),
-              ),
-              name: argument.name,
-              splat: argument.splat?,
-              keyword_splat: argument.keyword_splat?,
-              block: argument.block?,
-            )
-          end
+        left = @first.evaluate(**args)
+        left = @second.evaluate(**args.merge(object: left))
 
-        if @block
-          arguments << ::Code::Object::Argument.new(
-            @block.evaluate(**args.merge(object: ::Code::Object::Global.new)),
-            block: true,
-          )
+        @rest.reduce(left) do |acc, element|
+          element.evaluate(**args.merge(object: acc))
         end
-
-        @name.evaluate(**args.merge(arguments: arguments))
       end
     end
   end

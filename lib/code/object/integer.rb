@@ -18,55 +18,62 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
+        value = arguments.first&.value
 
         if operator == "even?"
           sig(arguments)
           even?
         elsif operator == "*"
-          sig(arguments, [::Code::Object::Number, ::Code::Object::String])
-          multiplication(arguments.first.value)
+          sig(arguments) { [[::Code::Object::Number, ::Code::Object::String]] }
+          multiplication(value)
         elsif operator == "/"
-          sig(arguments, ::Code::Object::Number)
-          division(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          division(value)
         elsif operator == "+"
-          sig(arguments, ::Code::Object)
-          plus(arguments.first.value)
+          sig(arguments) { ::Code::Object }
+          plus(value)
         elsif operator == "%"
-          sig(arguments, ::Code::Object::Number)
-          modulo(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          modulo(value)
         elsif operator == "-"
-          sig(arguments, ::Code::Object::Number)
-          minus(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          minus(value)
         elsif operator == "**"
-          sig(arguments, ::Code::Object::Number)
-          power(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          power(value)
         elsif operator == "<"
-          sig(arguments, ::Code::Object::Number)
-          inferior(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          inferior(value)
         elsif operator == "<="
-          sig(arguments, ::Code::Object::Number)
-          inferior_or_equal(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          inferior_or_equal(value)
         elsif operator == ">"
-          sig(arguments, ::Code::Object::Number)
-          superior(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          superior(value)
         elsif operator == ">="
-          sig(arguments, ::Code::Object::Number)
-          superior_or_equal(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          superior_or_equal(value)
         elsif operator == "<<"
-          sig(arguments, ::Code::Object::Number)
-          left_shift(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          left_shift(value)
         elsif operator == ">>"
-          sig(arguments, ::Code::Object::Number)
-          right_shift(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          right_shift(value)
         elsif operator == "&"
-          sig(arguments, ::Code::Object::Number)
-          bitwise_and(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          bitwise_and(value)
         elsif operator == "|"
-          sig(arguments, ::Code::Object::Number)
-          bitwise_or(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          bitwise_or(value)
         elsif operator == "^"
-          sig(arguments, ::Code::Object::Number)
-          bitwise_xor(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          bitwise_xor(value)
+        elsif operator == ".."
+          sig(arguments) { ::Code::Object::Number }
+          inclusive_range(value)
+        elsif operator == "..."
+          sig(arguments) { ::Code::Object::Number }
+          exclusive_range(value)
         else
           super
         end
@@ -172,6 +179,14 @@ class Code
 
       def bitwise_xor(other)
         ::Code::Object::Integer.new(raw ^ other.raw.to_i)
+      end
+
+      def inclusive_range(value)
+        ::Code::Object::Range.new(self, value, exclude_end: false)
+      end
+
+      def exclusive_range(value)
+        ::Code::Object::Range.new(self, value, exclude_end: false)
       end
     end
   end

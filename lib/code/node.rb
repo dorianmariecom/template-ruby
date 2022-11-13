@@ -1,14 +1,11 @@
 class Code
   class Node
-    private
+    def initialize(parsed)
+      raise NotImplementedError.new(parsed.inspect) if parsed.any?
+    end
 
-    def simple_call(object, operator = nil, value = nil, **args)
-      args = args.multi_fetch(*::Code::GLOBALS)
-      object.call(
-        operator: operator && ::Code::Object::String.new(operator.to_s),
-        arguments: [value && ::Code::Object::Argument.new(value)].compact,
-        **args
-      )
+    def evaluate(**args)
+      raise NotImplementedError.new(self.class.name)
     end
   end
 end

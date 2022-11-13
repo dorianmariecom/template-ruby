@@ -1,32 +1,29 @@
 class Code
   class Node
     class Operation < Node
-      class Operation
-        attr_reader :operator, :statement
-
-        def initialize(operation)
-          @operator = operation.fetch(:operator).to_s
-          @statement = ::Code::Node::Statement.new(operation.fetch(:statement))
+      def initialize(parsed)
+        @left = ::Code::Node::Statement.new(parsed.delete(:left))
+        @rest = parsed.delete(:right).map do |right|
+          ::Code::Node::Operator.new(right)
         end
-      end
 
-      def initialize(operation)
-        @first = ::Code::Node::Statement.new(operation.fetch(:first))
-        @rest = operation.fetch(:rest)
-        @rest.map! do |operation|
-          ::Code::Node::Operation::Operation.new(operation)
-        end
+        super(parsed)
       end
 
       def evaluate(**args)
-        object = @first.evaluate(**args)
+        left = @left.evaluate(**args)
 
-        @rest.each do |operation|
-          other = operation.statement.evaluate(**args)
-          object = simple_call(object, operation.operator, other, **args)
+        @rest.each do |operator|
+          right = operator.statement.evaluate(**args)
+
+          left = left.call(
+            operator: operator.operator,
+            arguments: [::Code::Object::Argument.new(right)],
+            **args
+          )
         end
 
-        object
+        left
       end
     end
   end
