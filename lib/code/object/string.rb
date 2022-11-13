@@ -10,17 +10,18 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.multi_fetch(*::Code::GLOBALS)
+        globals = multi_fetch(args, *::Code::GLOBALS)
+        value = arguments.first&.value
 
         if operator == "to_function"
           sig(arguments)
           to_function(**globals)
         elsif operator == "+"
-          sig(arguments, ::Code::Object)
-          plus(arguments.first.value)
+          sig(arguments) { ::Code::Object }
+          plus(value)
         elsif operator == "*"
-          sig(arguments, ::Code::Object::Number)
-          multiplication(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          multiplication(value)
         elsif operator == "reverse"
           sig(arguments)
           reverse
@@ -52,13 +53,30 @@ class Code
           [
             {
               function: {
-                arguments: [{ regular: { name: "_" } }],
+                parameters: [{ name: "_" }],
                 body: [
-                  { call: { left: { name: "_" }, right: [{ name: raw }] } },
-                ],
-              },
-            },
-          ],
+                  {
+                    chained_call: {
+                      calls: [
+                        {
+                          left: {
+                            call: {
+                              name: "_"
+                            }
+                          },
+                          right: {
+                            call: {
+                              name: raw
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         ).evaluate(**globals)
       end
 

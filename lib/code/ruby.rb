@@ -31,15 +31,15 @@ class Code
         ::Code::Object::Decimal.new(raw)
       elsif hash?
         ::Code::Object::Dictionnary.new(
-          raw.map do |key, value|
-            [::Code::Ruby.to_code(key), ::Code::Ruby.to_code(value)]
-          end.to_h
+          raw
+            .map do |key, value|
+              [::Code::Ruby.to_code(key), ::Code::Ruby.to_code(value)]
+            end
+            .to_h
         )
       elsif array?
         ::Code::Object::List.new(
-          raw.map do |element|
-            ::Code::Ruby.to_code(key)
-          end
+          raw.map { |element| ::Code::Ruby.to_code(key) }
         )
       elsif proc?
         ::Code::Object::RubyFunction.new(raw)
@@ -63,13 +63,14 @@ class Code
         elsif code_string?
           raw.raw
         elsif code_dictionnary?
-          raw.raw.map do |key, value|
-            [::Code::Ruby.to_code(key), ::Code::Ruby.to_code(value)]
-          end.to_h
+          raw
+            .raw
+            .map do |key, value|
+              [::Code::Ruby.to_code(key), ::Code::Ruby.to_code(value)]
+            end
+            .to_h
         elsif code_list?
-          raw.raw.map do |element|
-            ::Code::Ruby.to_code(element)
-          end
+          raw.raw.map { |element| ::Code::Ruby.to_code(element) }
         else
           raise "Unsupported class #{raw.class} for Code to Ruby conversion"
         end

@@ -1,15 +1,15 @@
 class Code
   class Object
     class Function < ::Code::Object
-      def initialize(arguments:, body:)
-        @arguments = arguments
+      def initialize(parameters:, body:)
+        @parameters = parameters
         @body = body
       end
 
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.multi_fetch(*::Code::GLOBALS)
+        globals = multi_fetch(args, *::Code::GLOBALS)
 
         if operator.nil? || operator == "call"
           call_function(args: arguments, globals: globals)
@@ -28,39 +28,36 @@ class Code
 
       private
 
-      attr_reader :arguments, :body
+      attr_reader :parameters, :body
 
       def call_function(args:, globals:)
-        new_context = globals[:context].deep_dup
+        new_context = deep_dup(globals[:context])
 
-        arguments.each.with_index do |argument, index|
-          if argument.regular?
-            if argument.splat?
-              new_context[argument.name] = ::Code::Object::List.new(
-                args.select(&:regular?).map(&:value),
+        parameters.each.with_index do |parameter, index|
+          if parameter.regular?
+            if parameter.splat?
+              new_context[parameter.name] = ::Code::Object::List.new(
+                args.select(&:regular?).map(&:value)
               )
-            elsif argument.keyword_splat?
-              new_context[argument.name] = ::Code::Object::Dictionnary.new(
-                args.select(&:keyword?).map(&:name_value).to_h,
+            elsif parameter.keyword_splat?
+              new_context[parameter.name] = ::Code::Object::Dictionnary.new(
+                args.select(&:keyword?).map(&:name_value).to_h
               )
             else
               arg = args[index]&.value
-              arg = argument.evaluate(**globals) if arg.nil?
-              new_context[argument.name] = arg
+              arg = parameter.evaluate(**globals) if arg.nil?
+              new_context[parameter.name] = arg
             end
-          elsif argument.keyword?
-            arg = args.detect { |arg| arg.name == argument.name }&.value
-            arg = argument.evaluate(**globals) if arg.nil?
-            new_context[argument.name] = arg
+          elsif parameter.keyword?
+            arg = args.detect { |arg| arg.name == parameter.name }&.value
+            arg = parameter.evaluate(**globals) if arg.nil?
+            new_context[parameter.name] = arg
           else
             raise NotImplementedError
           end
         end
 
-        body.evaluate(
-          **globals,
-          context: new_context,
-        )
+        body.evaluate(**globals, context: new_context)
       end
     end
   end

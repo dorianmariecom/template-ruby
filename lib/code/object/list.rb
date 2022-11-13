@@ -10,32 +10,33 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.multi_fetch(*::Code::GLOBALS)
+        globals = multi_fetch(args, *::Code::GLOBALS)
+        value = arguments.first&.value
 
         if operator == "any?"
-          sig(arguments, ::Code::Object::Function)
-          any?(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          any?(value, **globals)
         elsif operator == "none?"
-          sig(arguments, ::Code::Object::Function)
-          none?(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          none?(value, **globals)
         elsif operator == "detect"
-          sig(arguments, ::Code::Object::Function)
-          detect(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          detect(value, **globals)
         elsif operator == "reduce"
-          sig(arguments, ::Code::Object::Function)
-          reduce(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          reduce(value, **globals)
         elsif operator == "each"
-          sig(arguments, ::Code::Object::Function)
-          each(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          each(value, **globals)
         elsif operator == "select"
-          sig(arguments, ::Code::Object::Function)
-          select(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          select(value, **globals)
         elsif operator == "map"
-          sig(arguments, ::Code::Object::Function)
-          map(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          map(value, **globals)
         elsif operator == "max_by"
-          sig(arguments, ::Code::Object::Function)
-          max_by(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          max_by(value, **globals)
         elsif operator == "max"
           sig(arguments)
           max
@@ -52,8 +53,8 @@ class Code
           sig(arguments)
           last
         elsif operator == "<<"
-          sig(arguments, ::Code::Object)
-          append(arguments.first.value)
+          sig(arguments) { ::Code::Object }
+          append(value)
         else
           super
         end
@@ -67,7 +68,7 @@ class Code
             else
               acc + [element]
             end
-          end,
+          end
         )
       end
 
@@ -90,9 +91,9 @@ class Code
           raw.any? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals,
+              **globals
             ).truthy?
-          end,
+          end
         )
       end
 
@@ -101,9 +102,9 @@ class Code
           raw.none? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals,
+              **globals
             ).truthy?
-          end,
+          end
         )
       end
 
@@ -111,7 +112,7 @@ class Code
         raw.max_by do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            **globals,
+            **globals
           )
         end || ::Code::Object::Nothing.new
       end
@@ -120,7 +121,7 @@ class Code
         raw.detect do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            **globals,
+            **globals
           ).truthy?
         end || ::Code::Object::Nothing.new
       end
@@ -130,9 +131,9 @@ class Code
           argument.call(
             arguments: [
               ::Code::Object::Argument.new(acc),
-              ::Code::Object::Argument.new(element),
+              ::Code::Object::Argument.new(element)
             ],
-            **globals,
+            **globals
           )
         end || ::Code::Object::Nothing.new
       end
@@ -141,7 +142,7 @@ class Code
         raw.each do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            **globals,
+            **globals
           )
         end
         self
@@ -152,9 +153,9 @@ class Code
           raw.select do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals,
+              **globals
             ).truthy?
-          end,
+          end
         )
       end
 
@@ -163,9 +164,9 @@ class Code
           raw.map do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals,
+              **globals
             )
-          end,
+          end
         )
       end
 

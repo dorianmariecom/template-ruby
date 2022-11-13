@@ -1,12 +1,12 @@
 class Code
   class Node
-    class String < Node
+    class Decimal < Node
       def initialize(parsed)
-        @string = parsed
+        @decimal = parsed
       end
 
       def evaluate(**args)
-        ::Code::Object::String.new(@string)
+        ::Code::Object::Decimal.new(@decimal)
       end
     end
   end

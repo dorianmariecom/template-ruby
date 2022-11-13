@@ -19,10 +19,10 @@ class Code
       elsif operator == "<=>"
         sig(arguments) { ::Code::Object }
         compare(value)
-      elsif operator == "&&"
+      elsif operator == "&&" || operator == "and"
         sig(arguments) { ::Code::Object }
         and_operator(value)
-      elsif operator == "||"
+      elsif operator == "||" || operator == "or"
         sig(arguments) { ::Code::Object }
         or_operator(value)
       elsif operator == "to_string"
@@ -30,7 +30,7 @@ class Code
         to_string
       else
         raise(
-          Code::Error::Undefined.new("#{operator} not defined on #{inspect}"),
+          Code::Error::Undefined.new("#{operator} not defined on #{inspect}")
         )
       end
     end
@@ -64,12 +64,12 @@ class Code
       if respond_to?(:raw)
         [self.class, raw].hash
       else
-        raise NotImplementedError
+        raise NotImplementedError.new(self.class.name)
       end
     end
 
     def to_s
-      raise NotImplementedError
+      raise NotImplementedError.new(self.class.name)
     end
 
     private
@@ -77,7 +77,9 @@ class Code
     def sig(actual_arguments, &block)
       if block
         expected_arguments = block.call
-        expected_arguments = [expected_arguments] unless expected_arguments.is_a?(Array)
+        expected_arguments = [
+          expected_arguments
+        ] unless expected_arguments.is_a?(Array)
       else
         expected_arguments = []
       end
@@ -86,8 +88,8 @@ class Code
         raise(
           ::Code::Error::ArgumentError.new(
             "Expected #{expected_arguments.size} arguments, " \
-              "got #{actual_arguments.size} arguments",
-          ),
+              "got #{actual_arguments.size} arguments"
+          )
         )
       end
 
@@ -100,16 +102,16 @@ class Code
              }
             raise(
               ::Code::Error::TypeError.new(
-                "Expected #{expected_argument}, got #{actual_argument.class}",
-              ),
+                "Expected #{expected_argument}, got #{actual_argument.class}"
+              )
             )
           end
         else
           if !actual_argument.is_a?(expected_argument)
             raise(
               ::Code::Error::TypeError.new(
-                "Expected #{expected_argument}, got #{actual_argument.class}",
-              ),
+                "Expected #{expected_argument}, got #{actual_argument.class}"
+              )
             )
           end
         end
@@ -142,6 +144,22 @@ class Code
 
     def to_string
       ::Code::Object::String.new(to_s)
+    end
+
+    def multi_fetch(hash, *keys)
+      keys.map { |key| [key, hash.fetch(key)] }.to_h
+    end
+
+    def deep_dup(object)
+      if object.is_a?(Array)
+        object.map { |element| deep_dup(o) }
+      elsif object.is_a?(Hash)
+        object.map do |key, value|
+          [deep_dup(key), deep_dup(value)]
+        end.to_h
+      else
+        object.dup
+      end
     end
   end
 end

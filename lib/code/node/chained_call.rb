@@ -6,9 +6,10 @@ class Code
 
         @first = ::Code::Node::Statement.new(calls.first.fetch(:left))
         @second = ::Code::Node::Statement.new(calls.first.fetch(:right))
-        @rest = calls[1..].map do |statement|
-          ::Code::Node::Statement.new(statement)
-        end
+        @rest =
+          calls[1..].map do |statement|
+            ::Code::Node::Statement.new(statement.delete(:right))
+          end
 
         super(parsed)
       end

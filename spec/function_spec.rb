@@ -12,8 +12,8 @@ RSpec.describe Code do
     ["add = (*args) => { args.first + args.last } add(1, 2)", "3"],
     [
       "add = (**kargs) => { kargs.values.first + kargs.values.last } add(a: 1, b: 2)",
-      "3",
-    ],
+      "3"
+    ]
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

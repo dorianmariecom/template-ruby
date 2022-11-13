@@ -3,10 +3,7 @@ class Template
 
   def initialize(input, io: StringIO.new, timeout: DEFAULT_TIMEOUT, ruby: {})
     @input = input
-    @parsed =
-      Timeout.timeout(timeout) do
-        ::Template::Parser.parse(@input)
-      end
+    @parsed = Timeout.timeout(timeout) { ::Template::Parser.parse(@input) }
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT
     @ruby = ::Code::Ruby.to_code(ruby || {})
@@ -25,18 +22,15 @@ class Template
   def render(context = "")
     Timeout.timeout(timeout) do
       if context.present?
-        context = ::Code.evaluate(
-          context,
-          timeout: timeout,
-          io: io,
-          ruby: ruby
-        )
+        context = ::Code.evaluate(context, timeout: timeout, io: io, ruby: ruby)
       else
         context = ::Code::Object::Dictionnary.new
       end
 
       if !context.is_a?(::Code::Object::Dictionnary)
-        raise ::Code::Template::IncompatibleContext.new("context must be a dictionnary")
+        raise ::Code::Template::IncompatibleContext.new(
+                "context must be a dictionnary"
+              )
       end
 
       context = context.merge(ruby)

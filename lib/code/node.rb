@@ -1,7 +1,9 @@
 class Code
   class Node
     def initialize(parsed)
-      raise NotImplementedError.new(parsed.inspect) if parsed.any?
+      if parsed.any?
+        raise NotImplementedError.new(self.class.name + ": " + parsed.inspect)
+      end
     end
 
     def evaluate(**args)

@@ -3,9 +3,10 @@ class Code
     class Operation < Node
       def initialize(parsed)
         @left = ::Code::Node::Statement.new(parsed.delete(:left))
-        @rest = parsed.delete(:right).map do |right|
-          ::Code::Node::Operator.new(right)
-        end
+        @rest =
+          parsed
+            .delete(:right)
+            .map { |right| ::Code::Node::Operator.new(right) }
 
         super(parsed)
       end
@@ -16,11 +17,12 @@ class Code
         @rest.each do |operator|
           right = operator.statement.evaluate(**args)
 
-          left = left.call(
-            operator: operator.operator,
-            arguments: [::Code::Object::Argument.new(right)],
-            **args
-          )
+          left =
+            left.call(
+              operator: operator.operator,
+              arguments: [::Code::Object::Argument.new(right)],
+              **args
+            )
         end
 
         left

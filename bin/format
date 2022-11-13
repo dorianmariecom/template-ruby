@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+
+stree write Gemfile lib/**/*.rb spec/**/*.rb bin/code-parser

@@ -10,13 +10,19 @@ class Code
       private
 
       def call_function(args:, globals:)
-        regular_arguments = args.select(&:regular?).map(&:value).map do |argument|
-          ::Code::Ruby.from_code(argument)
-        end
+        regular_arguments =
+          args
+            .select(&:regular?)
+            .map(&:value)
+            .map { |argument| ::Code::Ruby.from_code(argument) }
 
-        keyword_arguments = args.select(&:keyword?).map do |argument|
-          [argument.name.to_sym, ::Code::Ruby.from_code(argument.value)]
-        end.to_h
+        keyword_arguments =
+          args
+            .select(&:keyword?)
+            .map do |argument|
+              [argument.name.to_sym, ::Code::Ruby.from_code(argument.value)]
+            end
+            .to_h
 
         ::Code::Ruby.to_code(raw.call(*regular_arguments, **keyword_arguments))
       end

@@ -5,7 +5,7 @@ RSpec.describe ::Code::Error::TypeError do
     context "creating an integer with a non-number exponent" do
       it "raises" do
         expect { ::Code::Object::Integer.new(1, exponent: "2") }.to raise_error(
-          described_class,
+          described_class
         )
       end
     end
@@ -23,7 +23,7 @@ RSpec.describe ::Code::Error::TypeError do
       '1 > ""',
       '1 >= ""',
       '1 < ""',
-      '1 <= ""',
+      '1 <= ""'
     ].each do |input|
       context input.inspect do
         it "raises" do
@@ -37,7 +37,7 @@ RSpec.describe ::Code::Error::TypeError do
     context "creating an integer with a non-number exponent" do
       it "raises" do
         expect { ::Code::Object::Decimal.new(1, exponent: "2") }.to raise_error(
-          described_class,
+          described_class
         )
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe ::Code::Error::TypeError do
       '1.0 > ""',
       '1.0 >= ""',
       '1.0 < ""',
-      '1.0 <= ""',
+      '1.0 <= ""'
     ].each do |input|
       context input.inspect do
         it "raises" do

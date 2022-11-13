@@ -1,12 +1,11 @@
 class Code
   class Node
-    class String < Node
+    class Nothing < Node
       def initialize(parsed)
-        @string = parsed
       end
 
       def evaluate(**args)
-        ::Code::Object::String.new(@string)
+        ::Code::Object::Nothing.new
       end
     end
   end

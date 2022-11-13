@@ -13,26 +13,27 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.multi_fetch(*::Code::GLOBALS)
+        globals = multi_fetch(args, *::Code::GLOBALS)
+        value = arguments.first&.value
 
         if operator == "any?"
-          sig(arguments, ::Code::Object::Function)
-          any?(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          any?(value, **globals)
         elsif operator == "all?"
-          sig(arguments, ::Code::Object::Function)
-          all?(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          all?(value, **globals)
         elsif operator == "each"
-          sig(arguments, ::Code::Object::Function)
-          each(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          each(value, **globals)
         elsif operator == "select"
-          sig(arguments, ::Code::Object::Function)
-          select(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          select(value, **globals)
         elsif operator == "map"
-          sig(arguments, ::Code::Object::Function)
-          map(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          map(value, **globals)
         elsif operator == "step"
-          sig(arguments, ::Code::Object::Number)
-          step(arguments.first.value)
+          sig(arguments) { ::Code::Object::Number }
+          step(value)
         elsif operator == "to_list"
           sig(arguments)
           to_list
@@ -64,7 +65,7 @@ class Code
               arguments: [::Code::Object::Argument.new(element)],
               **globals
             ).truthy?
-          end,
+          end
         )
       end
 
@@ -75,7 +76,7 @@ class Code
               arguments: [::Code::Object::Argument.new(element)],
               **globals
             ).truthy?
-          end,
+          end
         )
       end
 
@@ -96,7 +97,7 @@ class Code
               arguments: [::Code::Object::Argument.new(element)],
               **globals
             ).truthy?
-          end,
+          end
         )
       end
 
@@ -107,7 +108,7 @@ class Code
               arguments: [::Code::Object::Argument.new(element)],
               **globals
             )
-          end,
+          end
         )
       end
 

@@ -71,8 +71,6 @@ RSpec.describe Code do
     ["a = 1 a * 2", "2"],
     ["a = 1 a += 1 a", "2"],
     ["a = 1 a -= 1 a", "0"],
-    %w[defined?(a) false],
-    ["a = 1 defined?(a)", "true"],
     ["not true", "false"],
     ["not false", "true"],
     ["not not 1", "true"],
@@ -116,14 +114,12 @@ RSpec.describe Code do
     ["1.0 << 1", "2"],
     ["1 << 1.0", "2"],
     ["1.0 << 1.0", "2"],
-    ["eval('1 + 1')", "2"],
+    ["eval('1 + 1')", "2"]
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }
 
-      it "succeeds" do
-        expect(subject).to eq(expected)
-      end
+      it { expect(subject).to eq(expected) }
     end
   end
 
@@ -139,7 +135,7 @@ RSpec.describe Code do
 
     context "with a function without arguments" do
       let!(:input) { "a + a" }
-      let!(:ruby) { { a: ->{ "hello" } } }
+      let!(:ruby) { { a: -> { "hello" } } }
 
       it "can call a" do
         expect(subject).to eq("hellohello")
@@ -148,7 +144,7 @@ RSpec.describe Code do
 
     context "with a function with regular arguments" do
       let!(:input) { "add(1, 2)" }
-      let!(:ruby) { { add: ->(a, b){ a + b } } }
+      let!(:ruby) { { add: ->(a, b) { a + b } } }
 
       it "can call add" do
         expect(subject).to eq("3")
@@ -157,7 +153,7 @@ RSpec.describe Code do
 
     context "with a function with keyword arguments" do
       let!(:input) { "add(a: 1, b: 2)" }
-      let!(:ruby) { { add: ->(a:, b:){ a + b } } }
+      let!(:ruby) { { add: ->(a:, b:) { a + b } } }
 
       it "can call add" do
         expect(subject).to eq("3")
@@ -168,7 +164,7 @@ RSpec.describe Code do
       let!(:input) { "add(1, 1, 1, 1, c: 1, d: 1, e: 1)" }
       let!(:ruby) do
         {
-          add: ->(a, b = 1, *args, c:, d: 2, **kargs){
+          add: ->(a, b = 1, *args, c:, d: 2, **kargs) {
             a + b + args.sum + c + d + kargs.values.sum
           }
         }

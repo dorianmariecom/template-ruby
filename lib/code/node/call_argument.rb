@@ -8,6 +8,10 @@ class Code
           super(parsed)
         end
       end
+
+      def evaluate(**args)
+        ::Code::Object::Argument.new(@argument.evaluate(**args))
+      end
     end
   end
 end

@@ -4,24 +4,30 @@ class Code
       def initialize(parsed)
         @name = parsed.delete(:name)
 
-        if parsed[:arguments]
-          @arguments = parsed.delete(:arguments).map do |call_argument|
-            ::Code::Node::CallArgument.new(call_argument)
-          end
-        else
-          @arguments = nil
+          @arguments =
+            (parsed
+              .delete(:arguments) || [])
+              .map do |call_argument|
+                ::Code::Node::CallArgument.new(call_argument)
+              end
+
+        if parsed.key?(:block)
+          @block = ::Code::Node::CallBlock.new(parsed.delete(:block))
         end
+
         super(parsed)
       end
 
       def evaluate(**args)
         object = args.fetch(:object)
 
-        if @arguments.nil?
-          object.call(**args, operator: @name)
-        else
-          raise NotImplementedError
+        arguments = @arguments.map { |argument| argument.evaluate(**args) }
+
+        if @block
+          arguments << ::Code::Object::Argument.new(@block.evaluate(**args))
         end
+
+        object.call(operator: @name, arguments: arguments, **args)
       end
     end
   end

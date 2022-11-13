@@ -6,7 +6,8 @@ class Code
         arguments = args.fetch(:arguments, [])
         context = args.fetch(:context)
         io = args.fetch(:io)
-        globals = args.multi_fetch(*::Code::GLOBALS)
+        globals = multi_fetch(args, *::Code::GLOBALS)
+        value = arguments.first&.value
 
         if operator == "print"
           io.print(*arguments.map(&:value))
@@ -15,11 +16,11 @@ class Code
           io.puts(*arguments.map(&:value))
           ::Code::Object::Nothing.new
         elsif operator == "context"
-          sig(arguments, ::Code::Object::String)
-          context[arguments.first.value] || ::Code::Object::Nothing.new
-        elsif operator == "eval"
-          sig(arguments, ::Code::Object::String)
-          Code.evaluate(arguments.first.value.raw)
+          sig(arguments) { ::Code::Object::String }
+          context[value] || ::Code::Object::Nothing.new
+        elsif operator == "evaluate"
+          sig(arguments) { ::Code::Object::String }
+          Code.evaluate(value.raw)
         else
           result = context[operator]
 
@@ -31,6 +32,10 @@ class Code
             raise ::Code::Error::Undefined.new("#{operator} is not defined")
           end
         end
+      end
+
+      def to_s
+        "global"
       end
     end
   end

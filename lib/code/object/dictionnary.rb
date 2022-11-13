@@ -10,7 +10,8 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
-        globals = args.multi_fetch(*::Code::GLOBALS)
+        globals = multi_fetch(args, *::Code::GLOBALS)
+        value = arguments.first&.value
 
         if operator == "values"
           sig(arguments)
@@ -19,8 +20,8 @@ class Code
           sig(arguments)
           keys
         elsif operator == "each"
-          sig(arguments, ::Code::Object::Function)
-          each(arguments.first.value, **globals)
+          sig(arguments) { ::Code::Object::Function }
+          each(value, **globals)
         elsif key?(operator)
           result = fetch(operator)
 
@@ -82,9 +83,9 @@ class Code
           argument.call(
             arguments: [
               ::Code::Object::Argument.new(key),
-              ::Code::Object::Argument.new(value),
+              ::Code::Object::Argument.new(value)
             ],
-            **globals,
+            **globals
           )
         end
 
