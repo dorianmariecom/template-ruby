@@ -28,7 +28,7 @@ class Code
       private
 
       def parse_next
-        parse_subclass(::Code::Parser::Function)
+        parse_subclass(::Code::Parser::Class)
       end
     end
   end

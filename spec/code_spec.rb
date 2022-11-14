@@ -4,7 +4,7 @@ RSpec.describe Code do
   let!(:input) { "" }
   let!(:context) { "" }
   let!(:io) { StringIO.new }
-  let!(:timeout) { 0 }
+  let!(:timeout) { 0.1 }
   let!(:ruby) { {} }
 
   subject do
@@ -114,7 +114,7 @@ RSpec.describe Code do
     ["1.0 << 1", "2"],
     ["1 << 1.0", "2"],
     ["1.0 << 1.0", "2"],
-    ["eval('1 + 1')", "2"]
+    ["evaluate('1 + 1')", "2"]
   ].each do |(input, expected)|
     context input.inspect do
       let(:input) { input }

@@ -8,8 +8,7 @@ class Code
 
         comments_before = parse_comments(whitespace: [SPACE])
 
-        if left && (operator = match(IF_KEYWORD)) ||
-             (operator = match(UNLESS_KEYWORD))
+        if left && (operator = match([IF_KEYWORD, UNLESS_KEYWORD, WHILE_KEYWORD, UNTIL_KEYWORD]))
           comments_after = parse_comments
           right = parse_subclass(::Code::Parser::IfModifier)
 

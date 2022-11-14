@@ -73,12 +73,6 @@ class Code
         elsif operator == "^"
           sig(arguments) { ::Code::Object::Number }
           bitwise_xor(value)
-        elsif operator == ".."
-          sig(arguments) { ::Code::Object::Number }
-          inclusive_range(value)
-        elsif operator == "..."
-          sig(arguments) { ::Code::Object::Number }
-          exclusive_range(value)
         else
           super
         end
@@ -188,14 +182,6 @@ class Code
 
       def bitwise_xor(other)
         ::Code::Object::Integer.new(raw ^ other.raw.to_i)
-      end
-
-      def inclusive_range(value)
-        ::Code::Object::Range.new(self, value, exclude_end: false)
-      end
-
-      def exclusive_range(value)
-        ::Code::Object::Range.new(self, value, exclude_end: false)
       end
     end
   end

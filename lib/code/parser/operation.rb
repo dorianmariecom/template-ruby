@@ -18,7 +18,6 @@ class Code
           right = []
 
           while operator = match(operators)
-            p operator
             comments_before = parse_comments
             statement = parse_subclass(subclass)
             comments_after = parse_comments

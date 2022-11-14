@@ -25,6 +25,12 @@ class Code
       elsif operator == "||" || operator == "or"
         sig(arguments) { ::Code::Object }
         or_operator(value)
+      elsif operator == ".."
+        sig(arguments) { ::Code::Object }
+        inclusive_range(value)
+      elsif operator == "..."
+        sig(arguments) { ::Code::Object }
+        exclusive_range(value)
       elsif operator == "to_string"
         sig(arguments)
         to_string
@@ -73,6 +79,22 @@ class Code
     end
 
     private
+
+    def multi_fetch(hash, *keys)
+      keys.map { |key| [key, hash.fetch(key)] }.to_h
+    end
+
+    def deep_dup(object)
+      if object.is_a?(Array)
+        object.map { |element| deep_dup(o) }
+      elsif object.is_a?(Hash)
+        object.map do |key, value|
+          [deep_dup(key), deep_dup(value)]
+        end.to_h
+      else
+        object.dup
+      end
+    end
 
     def sig(actual_arguments, &block)
       if block
@@ -146,20 +168,12 @@ class Code
       ::Code::Object::String.new(to_s)
     end
 
-    def multi_fetch(hash, *keys)
-      keys.map { |key| [key, hash.fetch(key)] }.to_h
+    def inclusive_range(value)
+      ::Code::Object::Range.new(self, value, exclude_end: false)
     end
 
-    def deep_dup(object)
-      if object.is_a?(Array)
-        object.map { |element| deep_dup(o) }
-      elsif object.is_a?(Hash)
-        object.map do |key, value|
-          [deep_dup(key), deep_dup(value)]
-        end.to_h
-      else
-        object.dup
-      end
+    def exclusive_range(value)
+      ::Code::Object::Range.new(self, value, exclude_end: false)
     end
   end
 end

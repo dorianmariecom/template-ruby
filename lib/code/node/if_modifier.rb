@@ -3,6 +3,8 @@ class Code
     class IfModifier < Node
       IF_KEYWORD = ::Code::Parser::IF_KEYWORD
       UNLESS_KEYWORD = ::Code::Parser::UNLESS_KEYWORD
+      WHILE_KEYWORD = ::Code::Parser::WHILE_KEYWORD
+      UNTIL_KEYWORD =  ::Code::Parser::UNTIL_KEYWORD
 
       def initialize(parsed)
         @operator = parsed.delete(:operator)
@@ -12,12 +14,34 @@ class Code
       end
 
       def evaluate(**args)
-        right = @right.evaluate(**args)
+        if @operator == IF_KEYWORD
+          if @right.evaluate(**args).truthy?
+            @left.evaluate(**args)
+          else
+            ::Code::Object::Nothing.new
+          end
+        elsif @operator == UNLESS_KEYWORD
+          if @right.evaluate(**args).falsy?
+            @left.evaluate(**args)
+          else
+            ::Code::Object::Nothing.new
+          end
+        elsif @operator == WHILE_KEYWORD
+          last = ::Code::Object::Nothing.new
 
-        if @operator == IF_KEYWORD && right.truthy?
-          @left.evaluate(**args)
-        elsif @operator == UNLESS_KEYWORD && right.falsy?
-          @left.evaluate(**args)
+          while @right.evaluate(**args).truthy?
+            last = @left.evaluate(**args)
+          end
+
+          last
+        elsif @operator == UNTIL_KEYWORD
+          last = ::Code::Object::Nothing.new
+
+          while @right.evaluate(**args).falsy?
+            last = @left.evaluate(**args)
+          end
+
+          last
         else
           ::Code::Object::Nothing.new
         end

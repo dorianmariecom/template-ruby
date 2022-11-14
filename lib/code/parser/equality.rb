@@ -12,7 +12,7 @@ class Code
             EQUAL + EQUAL,
             EXCLAMATION_POINT + EQUAL
           ],
-          subclass: ::Code::Parser::GreaterThan
+          subclass: ::Code::Parser::Splat
         )
       end
     end
