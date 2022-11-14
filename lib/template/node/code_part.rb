@@ -1,6 +1,6 @@
 class Template
   class Node
-    class CodePart
+    class CodePart < Node
       def initialize(code)
         @code = ::Code::Node::Code.new(code)
       end

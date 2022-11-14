@@ -13,5 +13,5 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/dorianmariefr/template-ruby"
   s.license = "MIT"
 
-  s.add_dependency "code-ruby-parser", "~> 0"
+  s.add_dependency "zeitwerk", "~> 2"
 end

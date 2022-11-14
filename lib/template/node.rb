@@ -1,4 +1,4 @@
 class Template
-  class Node
+  class Node < ::Code::Node
   end
 end

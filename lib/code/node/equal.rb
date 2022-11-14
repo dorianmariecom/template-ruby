@@ -16,17 +16,21 @@ class Code
 
         if @left.is_a?(Hash)
           raise NotImplementedError.new(@left.inspect)
-        elsif @operator == EQUAL
-          context[@left] = right
         else
-          operator = @operator.delete_suffix(EQUAL)
+          left = ::Code::Object::String.new(@left)
 
-          context[@left] = context[@left].call(
-            operator: operator,
-            arguments: [::Code::Object::Argument.new(right)],
-            **args
-          )
-        end
+          if @operator == EQUAL
+            context[left] = right
+          else
+            operator = @operator.delete_suffix(EQUAL)
+
+            context[left] = context[left].call(
+              operator: operator,
+              arguments: [::Code::Object::Argument.new(right)],
+              **args
+            )
+          end
+      end
       end
     end
   end

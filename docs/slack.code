@@ -1,0 +1,17 @@
+Slack.send("Who is leading the syncs?", channel: "#team-template")
+
+Twitter.send("What do you want to do this week?")
+
+Discord.send("Who will be the game master this week?")
+
+Email.send(
+  subject: "What did you do last week?",
+  from: "dorian@thoughtbot.com",
+  reply_to: "rob@thoughtbot.com"
+)
+
+Email.send(
+  subject: "What do you want to do this week?",
+  from: "dorian@thoughtbot.com",
+  reply_to: "rob@thoughtbot.com"
+)

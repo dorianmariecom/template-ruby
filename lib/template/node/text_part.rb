@@ -1,6 +1,6 @@
 class Template
   class Node
-    class TextPart
+    class TextPart < Node
       def initialize(text)
         @text = text
       end

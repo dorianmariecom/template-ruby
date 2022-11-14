@@ -1,0 +1,23 @@
+paris = { latitude: 48.8566, longitude: 2.4022 }
+latitude = fetch(:latitude) { paris.latitude }
+longitude = fetch(:longitude) { paris.longitude }
+duration = fetch(:duration) { 1.hour }
+hour = duration.from_now.hour
+
+response = HTTP.get(
+  "https://api.open-meteo.com/v1/forecast",
+  parameters: {
+    latitude: latitude,
+    longitude: longitude,
+    hourly: :precipitation
+  }
+)
+
+precipitation = response.hourly.precipitation[hour]
+precipitation = (precipitation * 100).to_integer
+
+if precipitation > 0
+  Sms.send(
+    "There will be {precipitation}% of precipitation in the next hour"
+  )
+end

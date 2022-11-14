@@ -1,8 +1,8 @@
 class Code
   class Node
     class Splat < Node
-      AMPERSAND = "&"
-      ASTERISK = "*"
+      AMPERSAND = ::Code::Parser::AMPERSAND
+      ASTERISK = ::Code::Parser::ASTERISK
 
       def initialize(parsed)
         @operator = parsed.delete(:operator)

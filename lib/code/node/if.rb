@@ -3,13 +3,16 @@ class Code
     class If < Node
       IF_KEYWORD = ::Code::Parser::IF_KEYWORD
       UNLESS_KEYWORD = ::Code::Parser::UNLESS_KEYWORD
+      ELSE_KEYWORD = ::Code::Parser::ELSE_KEYWORD
 
       class Other < Node
         attr_reader :operator, :condition, :body
 
         def initialize(parsed)
           @operator = parsed.delete(:operator)
-          @condition = ::Code::Node::Statement.new(parsed.delete(:condition))
+          if parsed.key?(:condition)
+            @condition = ::Code::Node::Statement.new(parsed.delete(:condition))
+          end
           @body = ::Code::Node::Code.new(parsed.delete(:body))
         end
       end
@@ -34,12 +37,15 @@ class Code
           @first_body.evaluate(**args)
         else
           @others.each do |other|
-            condition = other.condition.evaluate(**args)
-
-            if other.operator == IF_KEYWORD && condition.truthy?
+            if other.operator == ELSE_KEYWORD
               return other.body.evaluate(**args)
-            elsif other.operator == UNLESS_KEYWORD && condition.falsy?
-              return other.body.evaluate(**args)
+            else
+              condition = other.condition.evaluate(**args)
+              if other.operator == IF_KEYWORD && condition.truthy?
+                return other.body.evaluate(**args)
+              elsif other.operator == UNLESS_KEYWORD && condition.falsy?
+                return other.body.evaluate(**args)
+              end
             end
           end
           ::Code::Object::Nothing.new

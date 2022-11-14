@@ -27,7 +27,7 @@ class Code
           arguments << ::Code::Object::Argument.new(@block.evaluate(**args))
         end
 
-        object.call(operator: @name, arguments: arguments, **args)
+        object.call(operator: ::Code::Object::String.new(@name), arguments: arguments, **args)
       end
     end
   end

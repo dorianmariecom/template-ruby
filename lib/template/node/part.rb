@@ -1,6 +1,6 @@
 class Template
   class Node
-    class Part
+    class Part < Node
       def initialize(part)
         if part.key?(:text)
           @part = ::Template::Node::TextPart.new(part[:text])

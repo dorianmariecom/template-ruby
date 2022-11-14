@@ -1,9 +1,7 @@
 require "bigdecimal"
 require "stringio"
 require "timeout"
-require "template-ruby-parser"
-require_relative "template"
-require_relative "code"
+require "zeitwerk"
 
 loader = Zeitwerk::Loader.for_gem(warn_on_extra_files: false)
 loader.ignore("#{__dir__}/template-ruby.rb")

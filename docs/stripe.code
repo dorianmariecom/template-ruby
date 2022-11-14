@@ -1,0 +1,7 @@
+event = Stripe::Webhook.event
+
+if event.type == "payment_intent.succeeded"
+  payment_intent = event.data.object
+  amount = Money.format(payment_intent.amount, payment_intent.currency)
+  Sms.send("You got paid {amount}")
+end

@@ -1,0 +1,9 @@
+class ApiClient
+  get = (url) => {
+    fetch(url)
+  }
+end
+
+class Twitter < ApiClient
+  self.base_url = "https://api.twitter.com"
+end

@@ -1,6 +1,6 @@
 class Template
   class Node
-    class Template
+    class Template < Node
       def initialize(parts)
         @parts = parts.map { |part| ::Template::Node::Part.new(part) }
       end

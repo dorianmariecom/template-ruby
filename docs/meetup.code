@@ -1,0 +1,14 @@
+url = fetch(:url) { "https://www.meetup.com/parisrb" }
+response = HTTP.get(url)
+times = response.css(".groupHome-eventsList-upcomingEvents time")
+times = times.map(&:datetime).map do |time|
+  Time.from_epoch(time.to_integer)
+end
+
+times.each do |time|
+  if (1.day.from_now...(1.day.from_now + 1.hour)).include?(time)
+    Sms.send("Event in one day {url}")
+  elsif (2.hours.from_now...(1.hour.from_now)).include(time)
+    Sms.send("Event in two hours {url}")
+  end
+end

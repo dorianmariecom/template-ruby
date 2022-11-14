@@ -1,0 +1,7 @@
+twitter_username = fetch(:twitter_username) { "dorianmariefr" }
+
+Twitter.search("to:{twitter_username}", type: :recent).each do |tweet|
+  next if Storage.exists?(tweet.id)
+  Storage.create!(tweet.id)
+  Sms.send("New mention: {tweet.user.screen_name}: {tweet.text}")
+end
