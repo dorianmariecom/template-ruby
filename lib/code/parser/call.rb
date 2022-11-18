@@ -85,7 +85,7 @@ class Code
             name: name,
             value: value,
             comments_before: comments_before,
-            comments_after: comments_after,
+            comments_after: comments_after
           }.compact
         else
           @cursor = previous_cursor
@@ -95,9 +95,7 @@ class Code
       end
 
       def parse_regular_argument
-        {
-          value: parse_code
-        }
+        { value: parse_code }
       end
 
       def parse_keyword_parameter

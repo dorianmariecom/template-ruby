@@ -4,12 +4,10 @@ class Code
       def initialize(parsed)
         @name = parsed.delete(:name)
 
-          @arguments =
-            (parsed
-              .delete(:arguments) || [])
-              .map do |call_argument|
-                ::Code::Node::CallArgument.new(call_argument)
-              end
+        @arguments =
+          (parsed.delete(:arguments) || []).map do |call_argument|
+            ::Code::Node::CallArgument.new(call_argument)
+          end
 
         if parsed.key?(:block)
           @block = ::Code::Node::CallBlock.new(parsed.delete(:block))
@@ -27,7 +25,11 @@ class Code
           arguments << ::Code::Object::Argument.new(@block.evaluate(**args))
         end
 
-        object.call(operator: ::Code::Object::String.new(@name), arguments: arguments, **args)
+        object.call(
+          operator: ::Code::Object::String.new(@name),
+          arguments: arguments,
+          **args
+        )
       end
     end
   end

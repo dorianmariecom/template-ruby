@@ -2,9 +2,10 @@ class Code
   class Node
     class CallBlock < Node
       def initialize(parsed)
-        @parameters = parsed.delete(:parameters).map do |parameter|
-          ::Code::Node::FunctionParameter.new(parameter)
-        end
+        @parameters =
+          parsed
+            .delete(:parameters)
+            .map { |parameter| ::Code::Node::FunctionParameter.new(parameter) }
 
         @body = ::Code::Node::Code.new(parsed.delete(:body))
 

@@ -5,33 +5,41 @@ require_relative "../lib/template-ruby"
 
 options = { timeout: 0 }
 
-OptionParser.new do |opts|
-  opts.banner = "Usage: template [options]"
+OptionParser
+  .new do |opts|
+    opts.banner = "Usage: template [options]"
 
-  opts.on("-i INPUT", "--input=INPUT", "Input in the template language (String or File)") do |input|
-    if File.exists?(input)
-      input = File.read(input)
+    opts.on(
+      "-i INPUT",
+      "--input=INPUT",
+      "Input in the template language (String or File)"
+    ) do |input|
+      input = File.read(input) if File.exists?(input)
+
+      options[:input] = input
     end
 
-    options[:input] = input
-  end
+    opts.on(
+      "-c CONTEXT",
+      "--context=CONTEXT",
+      "Context in the code language (String or File)"
+    ) do |context|
+      context = File.read(context) if File.exists?(context)
 
-  opts.on("-c CONTEXT", "--context=CONTEXT", "Context in the code language (String or File)") do |context|
-    if File.exists?(context)
-      context = File.read(context)
+      options[:context] = context
     end
 
-    options[:context] = context
-  end
+    opts.on("-p", "--parse", "Get parser results for input") do |parse|
+      options[:parse] = parse
+    end
 
-  opts.on("-p", "--parse", "Get parser results for input") do |parse|
-    options[:parse] = parse
+    opts.on(
+      "-t TIMEOUT",
+      "--timeout=TIMEOUT",
+      "Set timeout in seconds"
+    ) { |timeout| options[:timeout] = timeout.to_f }
   end
-
-  opts.on("-t TIMEOUT", "--timeout=TIMEOUT", "Set timeout in seconds") do |timeout|
-    options[:timeout] = timeout.to_f
-  end
-end.parse!
+  .parse!
 
 input = options.fetch(:input, "")
 context = options.fetch(:context, "")

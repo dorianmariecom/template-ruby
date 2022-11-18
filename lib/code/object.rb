@@ -88,9 +88,7 @@ class Code
       if object.is_a?(Array)
         object.map { |element| deep_dup(o) }
       elsif object.is_a?(Hash)
-        object.map do |key, value|
-          [deep_dup(key), deep_dup(value)]
-        end.to_h
+        object.map { |key, value| [deep_dup(key), deep_dup(value)] }.to_h
       else
         object.dup
       end

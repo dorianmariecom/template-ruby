@@ -5,7 +5,11 @@ class Code
         left = parse_subclass(::Code::Parser::Range)
 
         previous_cursor = cursor
-        return left if !match(WHITESPACE) && !(first_comments = parse_comments)
+        if !match(WHITESPACE) && !(first_comments = parse_comments)
+          puts "EARLY RETURN"
+          binding.irb
+          return left
+        end
         first_comments ||= parse_comments
 
         if match(QUESTION_MARK)

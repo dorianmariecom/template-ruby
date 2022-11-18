@@ -2,15 +2,13 @@ class Code
   class Node
     class List < Node
       def initialize(parsed)
-        @elements = parsed.map do |element|
-          ::Code::Node::Code.new(element)
-        end
+        @elements = parsed.map { |element| ::Code::Node::Code.new(element) }
       end
 
       def evaluate(**args)
-        ::Code::Object::List.new(@elements.map do |element|
-          element.evaluate(**args)
-        end)
+        ::Code::Object::List.new(
+          @elements.map { |element| element.evaluate(**args) }
+        )
       end
     end
   end

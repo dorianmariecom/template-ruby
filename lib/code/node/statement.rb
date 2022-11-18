@@ -38,7 +38,8 @@ class Code
         elsif parsed.key?(:negation)
           @statement = ::Code::Node::Negation.new(parsed.delete(:negation))
         elsif parsed.key?(:dictionnary)
-          @statement = ::Code::Node::Dictionnary.new(parsed.delete(:dictionnary))
+          @statement =
+            ::Code::Node::Dictionnary.new(parsed.delete(:dictionnary))
         elsif parsed.key?(:list)
           @statement = ::Code::Node::List.new(parsed.delete(:list))
         elsif parsed.key?(:while)

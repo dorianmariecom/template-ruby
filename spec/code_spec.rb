@@ -116,7 +116,7 @@ RSpec.describe Code do
     ["1.0 << 1.0", "2"],
     ["evaluate('1 + 1')", "2"]
   ].each do |(input, expected)|
-    context input.inspect do
+    context input do
       let(:input) { input }
 
       it { expect(subject).to eq(expected) }

@@ -19,11 +19,13 @@ class Code
 
       def initialize(parsed)
         @first_operator = parsed.delete(:first_operator)
-        @first_condition = ::Code::Node::Statement.new(parsed.delete(:first_condition))
+        @first_condition =
+          ::Code::Node::Statement.new(parsed.delete(:first_condition))
         @first_body = ::Code::Node::Code.new(parsed.delete(:first_body))
-        @others = (parsed.delete(:others) || []).map do |other|
-          ::Code::Node::If::Other.new(other)
-        end
+        @others =
+          (parsed.delete(:others) || []).map do |other|
+            ::Code::Node::If::Other.new(other)
+          end
 
         super(parsed)
       end

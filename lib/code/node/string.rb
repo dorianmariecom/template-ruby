@@ -5,9 +5,7 @@ class Code
         if parsed.is_a?(::String)
           @string = parsed
         else
-          @string = parsed.map do |part|
-            ::Template::Node::Part.new(part)
-          end
+          @string = parsed.map { |part| ::Template::Node::Part.new(part) }
         end
       end
 
@@ -16,9 +14,7 @@ class Code
           ::Code::Object::String.new(@string)
         else
           ::Code::Object::String.new(
-            @string.map do |part|
-              part.evaluate(**args)
-            end.join
+            @string.map { |part| part.evaluate(**args) }.join
           )
         end
       end

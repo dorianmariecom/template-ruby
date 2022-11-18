@@ -9,10 +9,7 @@ class Code
 
       def evaluate(**args)
         if @name
-          ::Code::Object::Argument.new(
-            @value.evaluate(**args),
-            name: @name,
-          )
+          ::Code::Object::Argument.new(@value.evaluate(**args), name: @name)
         else
           ::Code::Object::Argument.new(@value.evaluate(**args))
         end

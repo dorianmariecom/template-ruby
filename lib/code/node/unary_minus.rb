@@ -9,11 +9,7 @@ class Code
       end
 
       def evaluate(**args)
-        @right.evaluate(**args).call(
-          operator: MINUS,
-          arguments: [],
-          **args
-        )
+        @right.evaluate(**args).call(operator: MINUS, arguments: [], **args)
       end
     end
   end
