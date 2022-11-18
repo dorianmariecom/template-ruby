@@ -31,7 +31,17 @@ class Language
     end
 
     def method_missing(method, *args, **kargs, &block)
-      find_atom!(method.to_sym)
+      method = method.to_s
+
+      if method.to_s.end_with?("?")
+        method = method.delete_suffix("?")
+        atom = find_atom!(method.to_sym).maybe.dup
+      else
+        atom = find_atom!(method.to_sym).dup
+      end
+
+      atom.block = block
+      atom
     end
   end
 end

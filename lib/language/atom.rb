@@ -1,5 +1,7 @@
 class Language
   class Atom
+    attr_accessor :block
+
     class Rule < Atom
       def initialize(name:)
         @name = name
@@ -54,7 +56,7 @@ class Language
         max = @max.nil? ? "" : ", #{@max}"
         parenthesis = min.empty? && max.empty? ? "" : "(#{min}#{max})"
 
-        @parent ? "#{@parent}.repeat#{parenthesis}" : "repeat#{parenthesis}"
+        @parent ? "(#{@parent}).repeat#{parenthesis}" : "repeat#{parenthesis}"
       end
 
       private
@@ -73,7 +75,12 @@ class Language
 
         parser.cursor = clone.cursor
         parser.buffer = clone.buffer
-        parser.output << clone.output
+
+        if block
+          parse.output << Output.new(block.call(clone.output))
+        else
+          parser.output << clone.output
+        end
       end
     end
 
@@ -116,7 +123,7 @@ class Language
       end
 
       def to_s
-        @parent ? "#{@parent}.absent" : "absent"
+        @parent ? "(#{@parent}).absent" : "absent"
       end
     end
 
@@ -151,10 +158,13 @@ class Language
       def parse(parser)
         @parent.parse(parser) if @parent
       rescue Parser::Interuption
+      ensure
+        parser.output = Output.new(block.call(parser.output)) if block
       end
 
-      def to_s(io)
-        @parent ? "#{@parent}.maybe" : "maybe"
+      def to_s
+        has_block = " {}" if block
+        @parent ? "#{@parent}.maybe#{has_block}" : "maybe#{has_block}"
       end
     end
 
@@ -178,9 +188,20 @@ class Language
         @parent.parse(clone)
 
         if clone.output?
-          parser.output = Output.new(@name => clone.output)
+          if block
+            parser.output =
+              Output.new(@name => Output.new(block.call(clone.output)))
+          else
+            parser.output = Output.new(@name => clone.output)
+          end
         else
-          parser.output[@name] = Output.new(clone.buffer)
+          if block
+            parser.output[@name] = Output.new(
+              block.call(Output.new(clone.buffer))
+            )
+          else
+            parser.output[@name] = Output.new(clone.buffer)
+          end
           parser.buffer = ""
         end
 
@@ -221,12 +242,20 @@ class Language
           @left.parse(left_clone)
           parser.cursor = left_clone.cursor
           parser.buffer = left_clone.buffer
-          parser.output.merge(left_clone.output)
+          if block
+            parser.output.merge(Output.new(block.call(left_clone.output)))
+          else
+            parser.output.merge(left_clone.output)
+          end
         rescue Parser::Interuption
           @right.parse(right_clone)
           parser.cursor = right_clone.cursor
           parser.buffer = right_clone.buffer
-          parser.output.merge(right_clone.output)
+          if block
+            parser.output.merge(Output.new(block.call(right_clone.output)))
+          else
+            parser.output.merge(right_clone.output)
+          end
         end
       end
 
@@ -254,7 +283,12 @@ class Language
         @right.parse(right_clone)
         parser.cursor = right_clone.cursor
         parser.buffer = right_clone.buffer
-        parser.output.merge(right_clone.output)
+
+        if block
+          parser.output.merge(Output.new(block.call(right_clone.output)))
+        else
+          parser.output.merge(right_clone.output)
+        end
       end
 
       def to_s

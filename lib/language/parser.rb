@@ -30,7 +30,7 @@ class Language
         raise(RuleNotFound.new("No rule named #{name.inspect} found"))
     end
 
-    def parse(check_end_of_input = true)
+    def parse(check_end_of_input: true)
       @root.parse(self)
 
       if @cursor == @input.size || !check_end_of_input
@@ -42,7 +42,7 @@ class Language
 
     def consume(n)
       if @cursor + n <= @input.size
-        @buffer += @input[@cursor...(@cursor + n)]
+        @buffer += @input[@cursor, n]
         @cursor += n
       else
         raise EndOfInput.new(self)

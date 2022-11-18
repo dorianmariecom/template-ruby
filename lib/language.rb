@@ -9,6 +9,7 @@ class Language
   VERSION = "0.1.0"
 
   attr_reader :rules
+  attr_accessor :block
 
   def initialize
     @rules = []
@@ -38,7 +39,12 @@ class Language
 
       parser.cursor = clone.cursor
       parser.buffer = clone.buffer
-      parser.output = clone.output
+
+      if block
+        parser.output = Output.new(block.call(clone.output))
+      else
+        parser.output = clone.output
+      end
     else
       input = input_or_parser
       Parser.new(root: @root, rules: @rules, input: input).parse
