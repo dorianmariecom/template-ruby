@@ -7,7 +7,7 @@ class Code
     end
 
     def evaluate(**args)
-      raise NotImplementedError.new(self.class.name)
+      raise NotImplementedError.new(self.class.name + "#evaluate")
     end
   end
 end

@@ -6,6 +6,18 @@ class Language
       @raw = raw
     end
 
+    def to_raw
+      if raw.is_a?(Array)
+        raw.map(&:to_raw)
+      elsif raw.is_a?(Hash)
+        raw.map do |key, value|
+          [key, value.to_raw]
+        end.to_h
+      else
+        raw
+      end
+    end
+
     def clone
       Output.new(@raw.clone)
     end
