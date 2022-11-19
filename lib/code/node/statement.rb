@@ -3,7 +3,9 @@ class Code
     class Statement < Node
       def initialize(parsed)
         if parsed.key?(:nothing)
-          @statement = Nothing.new(parsed.delete(:nothing))
+          @statement = Node::Nothing.new(parsed.delete(:nothing))
+        elsif parsed.key?(:boolean)
+          @statement = Node::Boolean.new(parsed.delete(:boolean))
         end
 
         super(parsed)

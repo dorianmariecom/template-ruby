@@ -1,1 +1,1 @@
-Code::Parser::Statement = Language.create { root { Code::Parser::Nothing } }
+Code::Parser::Statement = Language.create { root { Code::Parser::Boolean } }

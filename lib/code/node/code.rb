@@ -3,7 +3,7 @@ class Code
     class Code
       def initialize(parsed)
         @statements = parsed.map do |statement|
-          Statement.new(statement)
+          Node::Statement.new(statement)
         end
       end
 
