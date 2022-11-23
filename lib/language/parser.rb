@@ -3,31 +3,14 @@ class Language
     class RuleNotFound < Exception
     end
 
-    attr_accessor :input, :buffer, :output, :root, :rules, :cursor
+    attr_accessor :input, :buffer, :output, :root, :cursor
 
-    def initialize(
-      root:,
-      rules:,
-      input:,
-      cursor: 0,
-      buffer: "",
-      output: Output.new
-    )
+    def initialize(root:, input:, cursor: 0, buffer: "", output: Output.new)
       @root = root
-      @rules = rules
       @input = input
       @cursor = cursor
       @buffer = buffer
       @output = output
-    end
-
-    def find_rule(name)
-      (@rules + [@root]).find { |rule| rule.name == name }
-    end
-
-    def find_rule!(name)
-      find_rule(name) ||
-        raise(RuleNotFound.new("No rule named #{name.inspect} found"))
     end
 
     def parse(check_end_of_input: true)

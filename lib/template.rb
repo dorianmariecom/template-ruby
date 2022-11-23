@@ -3,7 +3,8 @@ class Template
 
   def initialize(input, io: StringIO.new, timeout: DEFAULT_TIMEOUT, ruby: {})
     @input = input
-    @parsed = Timeout.timeout(timeout) { ::Template::Parser.parse(@input).to_raw }
+    @parsed =
+      Timeout.timeout(timeout) { ::Template::Parser.parse(@input).to_raw }
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT
     @ruby = ::Code::Ruby.to_code(ruby || {})

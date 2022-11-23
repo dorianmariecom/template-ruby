@@ -2,17 +2,13 @@ class Code
   class Node
     class Code
       def initialize(parsed)
-        @statements = parsed.map do |statement|
-          Node::Statement.new(statement)
-        end
+        @statements = parsed.map { |statement| Node::Statement.new(statement) }
       end
 
       def evaluate(**args)
         last = ::Code::Object::Nothing.new
 
-        @statements.each do |statement|
-          last = statement.evaluate(**args)
-        end
+        @statements.each { |statement| last = statement.evaluate(**args) }
 
         last
       end

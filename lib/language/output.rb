@@ -10,9 +10,7 @@ class Language
       if raw.is_a?(Array)
         raw.map(&:to_raw)
       elsif raw.is_a?(Hash)
-        raw.map do |key, value|
-          [key, value.to_raw]
-        end.to_h
+        raw.map { |key, value| [key, value.to_raw] }.to_h
       else
         raw
       end

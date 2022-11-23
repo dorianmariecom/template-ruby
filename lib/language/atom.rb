@@ -65,7 +65,6 @@ class Language
         clone =
           Parser.new(
             root: root,
-            rules: parser.rules,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -93,7 +92,7 @@ class Language
         if parser.next?(@string)
           parser.consume(@string.size)
         else
-          raise Parser::Str::NotFound.new(parser, string: @string)
+          raise Parser::Str::NotFound.new(parser, @string)
         end
       end
 
@@ -111,7 +110,6 @@ class Language
         clone =
           Parser.new(
             root: root,
-            rules: parser.rules,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -136,7 +134,6 @@ class Language
         clone =
           Parser.new(
             root: root,
-            rules: parser.rules,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -169,21 +166,14 @@ class Language
     end
 
     class Aka < Atom
-      def initialize(name:, parent: nil)
+      def initialize(name:, parent:)
         @name = name
         @parent = parent
       end
 
       def parse(parser)
-        return unless @parent
-
         clone =
-          Parser.new(
-            root: root,
-            rules: parser.rules,
-            input: parser.input,
-            cursor: parser.cursor
-          )
+          Parser.new(root: root, input: parser.input, cursor: parser.cursor)
 
         @parent.parse(clone)
 
@@ -223,7 +213,6 @@ class Language
         left_clone =
           Parser.new(
             root: root,
-            rules: parser.rules,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -232,7 +221,6 @@ class Language
         right_clone =
           Parser.new(
             root: root,
-            rules: parser.rules,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -265,7 +253,7 @@ class Language
     end
 
     class And < Atom
-      def initialize(left: nil, right: nil)
+      def initialize(left:, right:)
         @left = left
         @right = right
       end
@@ -275,11 +263,11 @@ class Language
         right_clone =
           Parser.new(
             root: root,
-            rules: parser.rules,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
           )
+        binding.irb unless @right.methods.include?(:parse)
         @right.parse(right_clone)
         parser.cursor = right_clone.cursor
         parser.buffer = right_clone.buffer

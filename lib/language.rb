@@ -1,25 +1,54 @@
 require_relative "./language/parser/interuption"
 require_relative "./language/parser"
 require_relative "./language/atom"
-require_relative "./language/definition"
 require_relative "./language/rule"
 require_relative "./language/output"
 
 class Language
   VERSION = "0.1.0"
 
-  attr_reader :rules
   attr_accessor :block
 
   def initialize
-    @rules = []
-    @root = Rule.new
+    @root = root
   end
 
-  def self.create(&block)
-    instance = new
-    instance.instance_eval(&block)
-    instance
+  def self.parse(input)
+    new.parse(input)
+  end
+
+  def self.absent
+    Atom::Absent.new(parent: new)
+  end
+
+  def self.ignore
+    Atom::Ignore.new(parent: new)
+  end
+
+  def self.maybe(&block)
+    atom = Atom::Maybe.new(parent: new)
+    atom.block = block if block
+    atom
+  end
+
+  def self.repeat(min = 0, max = nil)
+    Atom::Repeat.new(parent: new, min: min, max: max)
+  end
+
+  def self.aka(name)
+    Atom::Aka.new(parent: new, name: name)
+  end
+
+  def self.|(other)
+    Atom::Or.new(left: new, right: other)
+  end
+
+  def self.>>(other)
+    Atom::And.new(left: new, right: other)
+  end
+
+  def self.<<(other)
+    Atom::And.new(left: new, right: other)
   end
 
   def parse(input_or_parser)
@@ -28,7 +57,6 @@ class Language
       clone =
         Parser.new(
           root: @root,
-          rules: @rules,
           input: parser.input,
           cursor: parser.cursor,
           buffer: parser.buffer,
@@ -47,28 +75,8 @@ class Language
       end
     else
       input = input_or_parser
-      Parser.new(root: @root, rules: @rules, input: input).parse
+      Parser.new(root: @root, input: input).parse
     end
-  end
-
-  def root(&block)
-    atom = Definition.new(name: :root, language: self).instance_eval(&block)
-    @root = Rule.new(atom: atom)
-    nil
-  end
-
-  def rule(name, &block)
-    atom = Definition.new(name: name, language: self).instance_eval(&block)
-    @rules << Rule.new(name: name, atom: atom)
-    nil
-  end
-
-  def find_rule(name)
-    (@rules + [@root]).find { |rule| rule.name == name }
-  end
-
-  def find_atom(name)
-    find_rule(name)&.atom
   end
 
   def absent
@@ -101,5 +109,13 @@ class Language
 
   def <<(other)
     Atom::And.new(left: self, right: other)
+  end
+
+  def str(string)
+    Atom::Str.new(string: string)
+  end
+
+  def any
+    Atom::Any.new
   end
 end

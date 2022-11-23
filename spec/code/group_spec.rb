@@ -1,10 +1,9 @@
 require "spec_helper"
 
 RSpec.describe "nothing" do
-  let(:timeout) { 0 }
-  subject { Code.evaluate(input, timeout: timeout).to_s }
+  subject { Code.evaluate(input).to_s }
 
-  [%w[true true], %w[false false]].each do |input, output|
+  [["(true false)", "false"]].each do |input, output|
     context input do
       let(:input) { input }
       it { expect(subject).to eq(output) }

@@ -1,8 +1,22 @@
-Code::Parser::Nothing =
-  Language.create do
-    rule(:nothing_keyword) { str("nothing") }
-    rule(:null_keyword) { str("null") }
-    rule(:nil_keyword) { str("nil") }
+class Code
+  class Parser
+    class Nothing < Language
+      def nothing_keyword
+        str("nothing")
+      end
 
-    root { (nothing_keyword | null_keyword | nil_keyword).aka(:nothing) }
+      def null_keyword
+        str("null")
+      end
+
+      def nil_keyword
+        str("nil")
+      end
+
+      def root
+        (nothing_keyword | null_keyword | nil_keyword).aka(:nothing) |
+          ::Code::Parser::Group
+      end
+    end
   end
+end

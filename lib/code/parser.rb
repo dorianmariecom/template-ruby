@@ -1,14 +1,19 @@
 class Code
   class Parser
+    def initialize(input)
+      @input = input
+    end
+
+    def self.parse(input)
+      new(input).parse
+    end
+
+    def parse
+      ::Code::Parser::Code.parse(input)
+    end
+
+    private
+
+    attr_reader :input
   end
 end
-
-Code::Parser =
-  Language.create do
-    rule(:whitespace) { Code::Parser::Whitespace }
-    rule(:statement) { Code::Parser::Statement }
-
-    root do
-      (whitespace? << statement << whitespace?).repeat(1) | whitespace? { [] }
-    end
-  end

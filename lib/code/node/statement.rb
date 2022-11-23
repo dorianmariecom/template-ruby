@@ -6,6 +6,8 @@ class Code
           @statement = Node::Nothing.new(parsed.delete(:nothing))
         elsif parsed.key?(:boolean)
           @statement = Node::Boolean.new(parsed.delete(:boolean))
+        elsif parsed.key?(:group)
+          @statement = Node::Code.new(parsed.delete(:group))
         end
 
         super(parsed)
