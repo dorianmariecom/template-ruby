@@ -20,29 +20,5 @@ class Language
         @parser.input
       end
     end
-
-    class EndOfInput < Interuption
-    end
-
-    class NotEndOfInput < Interuption
-    end
-
-    class Absent
-      class Present < Interuption
-      end
-    end
-
-    class Str
-      class NotFound < Interuption
-        def initialize(parser, string)
-          @parser = parser
-          @string = string
-        end
-
-        def message
-          "#{@string} not found\n#{super}"
-        end
-      end
-    end
   end
 end

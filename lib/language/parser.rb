@@ -1,8 +1,5 @@
 class Language
   class Parser
-    class RuleNotFound < Exception
-    end
-
     attr_accessor :input, :buffer, :output, :root, :cursor
 
     def initialize(root:, input:, cursor: 0, buffer: "", output: Output.new)

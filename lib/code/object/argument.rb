@@ -1,20 +1,11 @@
 class Code
   class Object
     class Argument
-      attr_reader :value, :name, :splat, :keyword_splat, :block
+      attr_reader :value, :name
 
-      def initialize(
-        value,
-        name: nil,
-        splat: false,
-        keyword_splat: false,
-        block: false
-      )
+      def initialize(value, name: nil)
         @value = value
         @name = name
-        @splat = !!splat
-        @keyword_splat = !!keyword_splat
-        @block = !!block
       end
 
       def regular?

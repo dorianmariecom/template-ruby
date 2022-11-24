@@ -12,7 +12,7 @@ class Code
       def root
         (
           opening_parenthesis << ::Code::Parser::Code << closing_parenthesis.maybe
-        ).aka(:group)
+        ).aka(:group) | ::Code::Parser::Call
       end
     end
   end

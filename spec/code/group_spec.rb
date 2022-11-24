@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "nothing" do
+RSpec.describe "group" do
   subject { Code.evaluate(input).to_s }
 
   [["(true false)", "false"]].each do |input, output|

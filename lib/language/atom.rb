@@ -1,7 +1,5 @@
 class Language
   class Atom
-    attr_accessor :block
-
     class Rule < Atom
       def initialize(name:)
         @name = name
@@ -27,10 +25,11 @@ class Language
     end
 
     class Repeat < Atom
-      def initialize(parent: nil, min: 0, max: nil)
+      def initialize(parent: nil, min: 0, max: nil, block: nil)
         @parent = parent
         @min = min
         @max = max
+        @block = block
       end
 
       def parse(parser)
@@ -45,7 +44,7 @@ class Language
           end
         else
           begin
-            (@min..@max).each { match(parser) }
+            (@min...@max).each { match(parser) }
           rescue Parser::Interuption
           end
         end
@@ -64,7 +63,7 @@ class Language
       def match(parser)
         clone =
           Parser.new(
-            root: root,
+            root: self,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -75,8 +74,8 @@ class Language
         parser.cursor = clone.cursor
         parser.buffer = clone.buffer
 
-        if block
-          parse.output << Output.new(block.call(clone.output))
+        if @block
+          parse.output << Output.new(@block.call(clone.output))
         else
           parser.output << clone.output
         end
@@ -109,7 +108,7 @@ class Language
       def parse(parser)
         clone =
           Parser.new(
-            root: root,
+            root: self,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -133,7 +132,7 @@ class Language
       def parse(parser)
         clone =
           Parser.new(
-            root: root,
+            root: self,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -148,46 +147,48 @@ class Language
     end
 
     class Maybe < Atom
-      def initialize(parent: nil)
+      def initialize(parent:, block: nil)
         @parent = parent
+        @block = block
       end
 
       def parse(parser)
-        @parent.parse(parser) if @parent
+        @parent.parse(parser)
       rescue Parser::Interuption
       ensure
-        parser.output = Output.new(block.call(parser.output)) if block
+        parser.output = Output.new(@block.call(parser.output)) if @block
       end
 
       def to_s
-        has_block = " {}" if block
-        @parent ? "#{@parent}.maybe#{has_block}" : "maybe#{has_block}"
+        block = " {}" if @block
+        @parent ? "#{@parent}.maybe#{block}" : "maybe#{block}"
       end
     end
 
     class Aka < Atom
-      def initialize(name:, parent:)
+      def initialize(name:, parent:, block: nil)
         @name = name
         @parent = parent
+        @block = block
       end
 
       def parse(parser)
         clone =
-          Parser.new(root: root, input: parser.input, cursor: parser.cursor)
+          Parser.new(root: self, input: parser.input, cursor: parser.cursor)
 
         @parent.parse(clone)
 
         if clone.output?
-          if block
+          if @block
             parser.output =
-              Output.new(@name => Output.new(block.call(clone.output)))
+              Output.new(@name => Output.new(@block.call(clone.output)))
           else
             parser.output = Output.new(@name => clone.output)
           end
         else
-          if block
+          if @block
             parser.output[@name] = Output.new(
-              block.call(Output.new(clone.buffer))
+              @block.call(Output.new(clone.buffer))
             )
           else
             parser.output[@name] = Output.new(clone.buffer)
@@ -204,15 +205,16 @@ class Language
     end
 
     class Or < Atom
-      def initialize(left: nil, right: nil)
+      def initialize(left:, right:, block: nil)
         @left = left
         @right = right
+        @block = block
       end
 
       def parse(parser)
         left_clone =
           Parser.new(
-            root: root,
+            root: self,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -220,7 +222,7 @@ class Language
 
         right_clone =
           Parser.new(
-            root: root,
+            root: self,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -230,8 +232,8 @@ class Language
           @left.parse(left_clone)
           parser.cursor = left_clone.cursor
           parser.buffer = left_clone.buffer
-          if block
-            parser.output.merge(Output.new(block.call(left_clone.output)))
+          if @block
+            parser.output.merge(Output.new(@block.call(left_clone.output)))
           else
             parser.output.merge(left_clone.output)
           end
@@ -239,8 +241,8 @@ class Language
           @right.parse(right_clone)
           parser.cursor = right_clone.cursor
           parser.buffer = right_clone.buffer
-          if block
-            parser.output.merge(Output.new(block.call(right_clone.output)))
+          if @block
+            parser.output.merge(Output.new(@block.call(right_clone.output)))
           else
             parser.output.merge(right_clone.output)
           end
@@ -253,16 +255,17 @@ class Language
     end
 
     class And < Atom
-      def initialize(left:, right:)
+      def initialize(left:, right:, block: nil)
         @left = left
         @right = right
+        @block = block
       end
 
       def parse(parser)
         @left.parse(parser)
         right_clone =
           Parser.new(
-            root: root,
+            root: self,
             input: parser.input,
             cursor: parser.cursor,
             buffer: parser.buffer
@@ -272,8 +275,8 @@ class Language
         parser.cursor = right_clone.cursor
         parser.buffer = right_clone.buffer
 
-        if block
-          parser.output.merge(Output.new(block.call(right_clone.output)))
+        if @block
+          parser.output.merge(Output.new(@block.call(right_clone.output)))
         else
           parser.output.merge(right_clone.output)
         end
@@ -338,12 +341,6 @@ class Language
 
     def inspect
       to_s
-    end
-
-    private
-
-    def root
-      Language::Rule.new(atom: self)
     end
   end
 end

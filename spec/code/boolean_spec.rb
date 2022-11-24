@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "nothing" do
+RSpec.describe "boolean" do
   let(:timeout) { 0 }
   subject { Code.evaluate(input, timeout: timeout).to_s }
 

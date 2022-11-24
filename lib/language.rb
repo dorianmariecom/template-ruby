@@ -1,16 +1,9 @@
-require_relative "./language/parser/interuption"
-require_relative "./language/parser"
-require_relative "./language/atom"
-require_relative "./language/rule"
-require_relative "./language/output"
-
 class Language
   VERSION = "0.1.0"
 
-  attr_accessor :block
-
-  def initialize
+  def initialize(block: nil)
     @root = root
+    @block = block
   end
 
   def self.parse(input)
@@ -26,9 +19,7 @@ class Language
   end
 
   def self.maybe(&block)
-    atom = Atom::Maybe.new(parent: new)
-    atom.block = block if block
-    atom
+    Atom::Maybe.new(parent: new, block: block)
   end
 
   def self.repeat(min = 0, max = nil)
@@ -68,8 +59,8 @@ class Language
       parser.cursor = clone.cursor
       parser.buffer = clone.buffer
 
-      if block
-        parser.output = Output.new(block.call(clone.output))
+      if @block
+        parser.output = Output.new(@block.call(clone.output))
       else
         parser.output = clone.output
       end
@@ -117,5 +108,13 @@ class Language
 
   def any
     Atom::Any.new
+  end
+
+  def to_s
+    "<#{self.class.name}>"
+  end
+
+  def inspect
+    to_s
   end
 end

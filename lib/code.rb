@@ -3,7 +3,7 @@ class Code
   GLOBALS = %i[io context object]
   DEFAULT_TIMEOUT = Template::DEFAULT_TIMEOUT
 
-  def initialize(input, io: $stdout, timeout: DEFAULT_TIMEOUT, ruby: {})
+  def initialize(input, io: StringIO.new, timeout: DEFAULT_TIMEOUT, ruby: {})
     @input = input
     @parsed = Timeout.timeout(timeout) { ::Code::Parser.parse(@input).to_raw }
     @io = io
@@ -14,7 +14,7 @@ class Code
   def self.evaluate(
     input,
     context = "",
-    io: $stdout,
+    io: StringIO.new,
     timeout: DEFAULT_TIMEOUT,
     ruby: {}
   )
