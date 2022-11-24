@@ -7,7 +7,7 @@ class Language
       end
 
       def message
-        "#{input}\n#{" " * cursor}^\n#{@atom.inspect}"
+        "\n#{input}\n#{" " * cursor}^\n#{@atom.inspect}"
       end
 
       private

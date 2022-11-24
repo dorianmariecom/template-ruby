@@ -17,6 +17,10 @@ class Code
         ::Code::Parser::Code
       end
 
+      def code_present
+        ::Code::Parser::Code.new.present
+      end
+
       def colon
         str(":")
       end
@@ -58,11 +62,11 @@ class Code
       end
 
       def keyword_argument
-        name.aka(:name) >> whitespace? >> colon >> code.aka(:value)
+        name.aka(:name) << colon << code_present.aka(:value)
       end
 
       def regular_argument
-        code.aka(:value)
+        code_present.aka(:value)
       end
 
       def argument
@@ -70,19 +74,19 @@ class Code
       end
 
       def arguments
-        opening_parenthesis << whitespace? << argument.repeat(0, 1) << (
-          comma << argument
-        ).repeat << whitespace? << closing_parenthesis.maybe
+        opening_parenthesis.ignore << whitespace? << argument.repeat(0, 1) << (
+          comma << whitespace? << argument << whitespace?
+        ).repeat << whitespace? << closing_parenthesis.ignore.maybe
       end
 
       def keyword_parameter
         name.aka(:name) >> whitespace? >> colon.aka(:keyword) >>
-          code.aka(:default)
+          code_present.aka(:default).maybe
       end
 
       def regular_parameter
         name.aka(:name) >> whitespace? >>
-          (equal >> whitespace? >> code.aka(:default))
+          (equal >> whitespace? >> code_present.aka(:default)).maybe
       end
 
       def parameter
@@ -99,12 +103,12 @@ class Code
         (
           do_keyword << whitespace? << parameters.aka(
             :parameters
-          ).maybe << code.aka(:body) << end_keyword
+          ).maybe << code.aka(:body) << end_keyword.maybe
         ) |
           (
             opening_curly_bracket << whitespace? << parameters.aka(
               :parameters
-            ).maybe << code.aka(:body) << closing_curly_bracket
+            ).maybe << code.aka(:body) << closing_curly_bracket.maybe
           )
       end
 

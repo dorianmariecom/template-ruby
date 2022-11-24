@@ -45,7 +45,7 @@ input = options.fetch(:input, "")
 context = options.fetch(:context, "")
 
 if options[:parse]
-  pp ::Code::Parser.parse(input)
+  pp ::Code::Parser.parse(input).to_raw
 else
   print Code.evaluate(
           input,

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "Code::Parser" do
+RSpec.describe "Code::Parser boolean" do
   subject { Code::Parser.parse(input) }
 
   [

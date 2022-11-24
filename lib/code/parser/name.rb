@@ -1,6 +1,22 @@
 class Code
   class Parser
     class Name < Language
+      def space
+        str(" ")
+      end
+
+      def newline
+        str("\n")
+      end
+
+      def comma
+        str(",")
+      end
+
+      def colon
+        str(":")
+      end
+
       def opening_curly_bracket
         str("{")
       end
@@ -26,7 +42,7 @@ class Code
       end
 
       def character
-        opening_curly_bracket.absent << closing_curly_bracket.absent << opening_parenthesis.absent << closing_parenthesis.absent << any
+        colon.absent << comma.absent << space.absent << newline.absent << opening_curly_bracket.absent << closing_curly_bracket.absent << opening_parenthesis.absent << closing_parenthesis.absent << any
       end
 
       def root

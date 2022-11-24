@@ -13,8 +13,12 @@ class Code
         ::Code::Parser::Statement
       end
 
+      def present
+        (whitespace? << statement << whitespace?).repeat(1)
+      end
+
       def root
-        (whitespace? << statement << whitespace?).repeat(1) | whitespace? { [] }
+        present | whitespace?.then { [] }
       end
     end
   end

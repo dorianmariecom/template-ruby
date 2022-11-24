@@ -24,12 +24,27 @@ class Language
       end
     end
 
+    class Then < Atom
+      def initialize(parent:, block:)
+        @parent = parent
+        @block = block
+      end
+
+      def parse(parser)
+        @parent.parse(parser)
+        parser.output = Output.from_raw(@block.call(parser.output.to_raw))
+      end
+
+      def to_s
+        "(#{@parent}).then {}"
+      end
+    end
+
     class Repeat < Atom
-      def initialize(parent: nil, min: 0, max: nil, block: nil)
+      def initialize(parent: nil, min: 0, max: nil)
         @parent = parent
         @min = min
         @max = max
-        @block = block
       end
 
       def parse(parser)
@@ -73,12 +88,7 @@ class Language
 
         parser.cursor = clone.cursor
         parser.buffer = clone.buffer
-
-        if @block
-          parse.output << Output.new(@block.call(clone.output))
-        else
-          parser.output << clone.output
-        end
+        parser.output << clone.output
       end
     end
 
@@ -147,29 +157,24 @@ class Language
     end
 
     class Maybe < Atom
-      def initialize(parent:, block: nil)
+      def initialize(parent:)
         @parent = parent
-        @block = block
       end
 
       def parse(parser)
         @parent.parse(parser)
       rescue Parser::Interuption
-      ensure
-        parser.output = Output.new(@block.call(parser.output)) if @block
       end
 
       def to_s
-        block = " {}" if @block
-        @parent ? "#{@parent}.maybe#{block}" : "maybe#{block}"
+        @parent ? "#{@parent}.maybe" : "maybe"
       end
     end
 
     class Aka < Atom
-      def initialize(name:, parent:, block: nil)
+      def initialize(name:, parent:)
         @name = name
         @parent = parent
-        @block = block
       end
 
       def parse(parser)
@@ -179,20 +184,9 @@ class Language
         @parent.parse(clone)
 
         if clone.output?
-          if @block
-            parser.output =
-              Output.new(@name => Output.new(@block.call(clone.output)))
-          else
-            parser.output = Output.new(@name => clone.output)
-          end
+          parser.output = Output.new(@name => clone.output)
         else
-          if @block
-            parser.output[@name] = Output.new(
-              @block.call(Output.new(clone.buffer))
-            )
-          else
-            parser.output[@name] = Output.new(clone.buffer)
-          end
+          parser.output[@name] = Output.new(clone.buffer)
           parser.buffer = ""
         end
 
@@ -205,10 +199,9 @@ class Language
     end
 
     class Or < Atom
-      def initialize(left:, right:, block: nil)
+      def initialize(left:, right:)
         @left = left
         @right = right
-        @block = block
       end
 
       def parse(parser)
@@ -232,20 +225,12 @@ class Language
           @left.parse(left_clone)
           parser.cursor = left_clone.cursor
           parser.buffer = left_clone.buffer
-          if @block
-            parser.output.merge(Output.new(@block.call(left_clone.output)))
-          else
-            parser.output.merge(left_clone.output)
-          end
+          parser.output.merge(left_clone.output)
         rescue Parser::Interuption
           @right.parse(right_clone)
           parser.cursor = right_clone.cursor
           parser.buffer = right_clone.buffer
-          if @block
-            parser.output.merge(Output.new(@block.call(right_clone.output)))
-          else
-            parser.output.merge(right_clone.output)
-          end
+          parser.output.merge(right_clone.output)
         end
       end
 
@@ -255,10 +240,9 @@ class Language
     end
 
     class And < Atom
-      def initialize(left:, right:, block: nil)
+      def initialize(left:, right:)
         @left = left
         @right = right
-        @block = block
       end
 
       def parse(parser)
@@ -270,16 +254,11 @@ class Language
             cursor: parser.cursor,
             buffer: parser.buffer
           )
-        binding.irb unless @right.methods.include?(:parse)
         @right.parse(right_clone)
         parser.cursor = right_clone.cursor
         parser.buffer = right_clone.buffer
 
-        if @block
-          parser.output.merge(Output.new(@block.call(right_clone.output)))
-        else
-          parser.output.merge(right_clone.output)
-        end
+        parser.output.merge(right_clone.output)
       end
 
       def to_s
@@ -325,6 +304,10 @@ class Language
 
     def <<(other)
       And.new(left: self, right: other)
+    end
+
+    def then(&block)
+      Then.new(parent: self, block: block)
     end
 
     def rule(name)

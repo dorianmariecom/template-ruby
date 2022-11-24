@@ -3,7 +3,6 @@ class Language
 
   def initialize(block: nil)
     @root = root
-    @block = block
   end
 
   def self.parse(input)
@@ -18,8 +17,8 @@ class Language
     Atom::Ignore.new(parent: new)
   end
 
-  def self.maybe(&block)
-    Atom::Maybe.new(parent: new, block: block)
+  def self.maybe
+    Atom::Maybe.new(parent: new)
   end
 
   def self.repeat(min = 0, max = nil)
@@ -42,6 +41,10 @@ class Language
     Atom::And.new(left: new, right: other)
   end
 
+  def self.then(&block)
+    Atom::Then.new(parent: new, block: block)
+  end
+
   def parse(input_or_parser)
     if input_or_parser.is_a?(Parser)
       parser = input_or_parser
@@ -58,48 +61,11 @@ class Language
 
       parser.cursor = clone.cursor
       parser.buffer = clone.buffer
-
-      if @block
-        parser.output = Output.new(@block.call(clone.output))
-      else
-        parser.output = clone.output
-      end
+      parser.output = clone.output
     else
       input = input_or_parser
       Parser.new(root: @root, input: input).parse
     end
-  end
-
-  def absent
-    Atom::Absent.new(parent: self)
-  end
-
-  def ignore
-    Atom::Ignore.new(parent: self)
-  end
-
-  def maybe
-    Atom::Maybe.new(parent: self)
-  end
-
-  def repeat(min = 0, max = nil)
-    Atom::Repeat.new(parent: self, min: min, max: max)
-  end
-
-  def aka(name)
-    Atom::Aka.new(parent: self, name: name)
-  end
-
-  def |(other)
-    Atom::Or.new(left: self, right: other)
-  end
-
-  def >>(other)
-    Atom::And.new(left: self, right: other)
-  end
-
-  def <<(other)
-    Atom::And.new(left: self, right: other)
   end
 
   def str(string)

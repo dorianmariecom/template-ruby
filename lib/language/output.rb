@@ -6,6 +6,16 @@ class Language
       @raw = raw
     end
 
+    def self.from_raw(raw)
+      if raw.is_a?(Array)
+        new(raw.map { |element| from_raw(element) })
+      elsif raw.is_a?(Hash)
+        new(raw.map { |key, value| [key, from_raw(value)] }.to_h)
+      else
+        new(raw)
+      end
+    end
+
     def to_raw
       if raw.is_a?(Array)
         raw.map(&:to_raw)
