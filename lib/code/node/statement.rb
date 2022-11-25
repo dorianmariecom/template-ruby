@@ -30,6 +30,8 @@ class Code
           @statement = Node::Negation.new(parsed.delete(:negation))
         elsif parsed.key?(:power)
           @statement = Node::Power.new(parsed.delete(:power))
+        elsif parsed.key?(:unary_minus)
+          @statement = Node::UnaryMinus.new(parsed.delete(:unary_minus))
         end
 
         super(parsed)

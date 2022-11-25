@@ -32,8 +32,13 @@ class Code
             self
           end
         elsif operator == "-"
-          sig(arguments) { ::Code::Object::Number }
-          minus(value)
+          if value
+            sig(arguments) { ::Code::Object::Number }
+            minus(value)
+          else
+            sig(arguments)
+            unary_minus
+          end
         elsif operator == "/"
           sig(arguments) { ::Code::Object::Number }
           division(value)
@@ -147,6 +152,10 @@ class Code
 
       def bitwise_xor(other)
         ::Code::Object::Integer.new(raw.to_i ^ other.raw.to_i)
+      end
+
+      def unary_minus
+        ::Code::Object::Decimal.new(-raw)
       end
     end
   end

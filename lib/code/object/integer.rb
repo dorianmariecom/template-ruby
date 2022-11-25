@@ -44,10 +44,10 @@ class Code
           sig(arguments) { ::Code::Object::Number }
           modulo(value)
         elsif operator == "-"
-          begin
+          if value
             sig(arguments) { ::Code::Object::Number }
             minus(value)
-          rescue Code::Error::ArgumentError
+          else
             sig(arguments)
             unary_minus
           end
