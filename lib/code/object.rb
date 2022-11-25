@@ -177,7 +177,7 @@ class Code
     end
 
     def exclusive_range(value)
-      ::Code::Object::Range.new(self, value, exclude_end: false)
+      ::Code::Object::Range.new(self, value, exclude_end: true)
     end
 
     def exclamation_point
