@@ -2,7 +2,7 @@ class Code
   class Parser
     class Equal < Language
       def statement
-        ::Code::Parser::Addition
+        ::Code::Parser::Shift
       end
 
       def name
