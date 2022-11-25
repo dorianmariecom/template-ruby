@@ -10,6 +10,8 @@ class Code
           @statement = Node::Code.new(parsed.delete(:group))
         elsif parsed.key?(:call)
           @statement = Node::Call.new(parsed.delete(:call))
+        elsif parsed.key?(:number)
+          @statement = Node::Number.new(parsed.delete(:number))
         end
 
         super(parsed)

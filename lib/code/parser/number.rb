@@ -82,19 +82,20 @@ class Code
       end
 
       def base_16_digit
-        one | two | three | four | five | six | seven | eight | nine | a | b | c | e | f
+        zero | one | two | three | four | five | six | seven | eight | nine |
+          a | b | c | d | e | f
       end
 
       def base_10_digit
-        one | two | three | four | five | six | seven | eight | nine
+        zero | one | two | three | four | five | six | seven | eight | nine
       end
 
       def base_8_digit
-        one | two | three | four | five | six | seven
+        zero | one | two | three | four | five | six | seven
       end
 
       def base_2_digit
-        one | two
+        zero | one
       end
 
       def base_16_whole
@@ -132,8 +133,8 @@ class Code
       def root
         (
           decimal.aka(:decimal) | base_16_number.aka(:base_16) |
-            base_10_whole.aka(:base_10) | base_8_number.aka(:base_8) |
-            base_2_number.aka(:base_2)
+            base_8_number.aka(:base_8) | base_2_number.aka(:base_2) |
+            base_10_whole.aka(:base_10)
         ).aka(:number) | ::Code::Parser::Boolean
       end
     end
