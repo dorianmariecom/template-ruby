@@ -34,6 +34,8 @@ class Code
           @statement = Node::UnaryMinus.new(parsed.delete(:unary_minus))
         elsif parsed.key?(:ternary)
           @statement = Node::Ternary.new(parsed.delete(:ternary))
+        elsif parsed.key?(:rescue)
+          @statement = Node::Rescue.new(parsed.delete(:rescue))
         end
 
         super(parsed)
