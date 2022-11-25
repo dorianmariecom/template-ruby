@@ -46,15 +46,15 @@ class Code
       end
 
       def single_quoted_string
-        single_quote.ignore << (
-          code_part.aka(:code) | single_quoted_text_part.aka(:text)
-        ).repeat << single_quote.ignore.maybe
+        single_quote.ignore <<
+          (code_part.aka(:code) | single_quoted_text_part.aka(:text)).repeat <<
+          single_quote.ignore.maybe
       end
 
       def double_quoted_string
-        double_quote.ignore << (
-          code_part.aka(:code) | double_quoted_text_part.aka(:text)
-        ).repeat << double_quote.ignore.maybe
+        double_quote.ignore <<
+          (code_part.aka(:code) | double_quoted_text_part.aka(:text)).repeat <<
+          double_quote.ignore.maybe
       end
 
       def root

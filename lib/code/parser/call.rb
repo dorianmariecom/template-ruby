@@ -74,19 +74,19 @@ class Code
       end
 
       def arguments
-        opening_parenthesis.ignore << whitespace? << argument.repeat(0, 1) << (
-          comma << whitespace? << argument << whitespace?
-        ).repeat << whitespace? << closing_parenthesis.ignore.maybe
+        opening_parenthesis.ignore << whitespace? << argument.repeat(0, 1) <<
+          (comma << whitespace? << argument << whitespace?).repeat <<
+          whitespace? << closing_parenthesis.ignore.maybe
       end
 
       def keyword_parameter
-        name.aka(:name) >> whitespace? >> colon.aka(:keyword) >>
+        name.aka(:name) << whitespace? << colon.aka(:keyword) <<
           code_present.aka(:default).maybe
       end
 
       def regular_parameter
-        name.aka(:name) >> whitespace? >>
-          (equal >> whitespace? >> code_present.aka(:default)).maybe
+        name.aka(:name) << whitespace? <<
+          (equal << whitespace? << code_present.aka(:default)).maybe
       end
 
       def parameter
@@ -94,29 +94,27 @@ class Code
       end
 
       def parameters
-        pipe << whitespace? << parameter.repeat(0, 1) << (
-          comma << parameter
-        ).repeat << whitespace? << pipe.maybe
+        pipe.ignore << whitespace? << parameter.repeat(0, 1) <<
+          (whitespace? << comma << whitespace? << parameter).repeat <<
+          whitespace? << pipe.ignore.maybe
       end
 
       def block
         (
-          do_keyword << whitespace? << parameters.aka(
-            :parameters
-          ).maybe << code.aka(:body) << end_keyword.maybe
+          do_keyword << whitespace? << parameters.aka(:parameters).maybe <<
+            code.aka(:body) << end_keyword.maybe
         ) |
           (
-            opening_curly_bracket << whitespace? << parameters.aka(
-              :parameters
-            ).maybe << code.aka(:body) << closing_curly_bracket.maybe
+            opening_curly_bracket << whitespace? <<
+              parameters.aka(:parameters).maybe << code.aka(:body) <<
+              closing_curly_bracket.maybe
           )
       end
 
       def root
         (
-          name.aka(:name) << whitespace? << arguments.aka(
-            :arguments
-          ).maybe << whitespace? << block.aka(:block).maybe
+          name.aka(:name) << whitespace? << arguments.aka(:arguments).maybe <<
+            whitespace? << block.aka(:block).maybe
         ).aka(:call)
       end
     end

@@ -36,10 +36,11 @@ class Code
 
       def evaluate(**args)
         arguments = @arguments.map { |argument| argument.evaluate(**args) }
-
         arguments << @block.evaluate(**args) if @block
 
-        args.fetch(:object).call(operator: @name, arguments: arguments, **args)
+        name = ::Code::Object::String.new(@name)
+
+        args.fetch(:object).call(operator: name, arguments: arguments, **args)
       end
     end
   end

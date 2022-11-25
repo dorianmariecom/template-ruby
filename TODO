@@ -1,0 +1,37 @@
+- Function
+- Negation
+- Power
+- UnaryMinus
+- Multiplication
+- Addition
+- Shift
+- BitwiseAnd
+- BitwiseOr
+- GreaterThan
+- AndOperator
+- OrOperator
+- Range
+- Ternary
+- Rescue
+- Equal
+- NotKeyword
+- OrKeyword
+- IfModifier
+- If
+- While
+- Class
+- Splat
+- Equality
+- Statement
+- Code
+
+- Function parameters regular splat *args
+- Function parameters keyword splat **kargs
+- Function parameters block &block
+- Block parameters regular splat *args
+- Block parameters keyword splat **kargs
+- Block parameters block &block
+- Dictionnary regular splat { *args }
+- Dictionnary keyword splat { **kargs }
+- Dictionnary block { &block }
+- Dictionnary expand name { user } and { user: }

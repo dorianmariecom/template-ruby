@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/dorianmariefr/syntax_tree.git
+  revision: f7c9dc36a3d60c90a8d2411f123913b37319dc11
+  specs:
+    syntax_tree (5.0.1)
+      prettier_print (>= 1.1.0)
+
 PATH
   remote: .
   specs:
@@ -10,16 +17,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.5.0)
-    haml (6.0.10)
-      temple (>= 0.8.2)
-      thor
-      tilt
-    prettier (3.2.2)
-      syntax_tree (>= 2.7.1)
-      syntax_tree-haml (>= 1.1.0)
-      syntax_tree-rbs (>= 0.2.0)
     prettier_print (1.1.0)
-    rbs (2.8.0)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)
@@ -33,19 +31,6 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.0)
-    syntax_tree (5.0.1)
-      prettier_print (>= 1.1.0)
-    syntax_tree-haml (2.0.0)
-      haml (>= 5.2, != 6.0.0)
-      prettier_print (>= 1.0.0)
-      syntax_tree (>= 4.0.0)
-    syntax_tree-rbs (0.5.1)
-      prettier_print
-      rbs
-      syntax_tree (>= 2.0.1)
-    temple (0.9.1)
-    thor (1.2.1)
-    tilt (2.0.11)
     zeitwerk (2.6.6)
 
 PLATFORMS
@@ -53,8 +38,8 @@ PLATFORMS
 
 DEPENDENCIES
   code-ruby!
-  prettier
   rspec
+  syntax_tree!
   template-ruby!
 
 BUNDLED WITH

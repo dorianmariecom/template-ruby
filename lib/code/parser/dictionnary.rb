@@ -49,20 +49,17 @@ class Code
         (name.aka(:name) << colon << code.aka(:value)) |
           (statement.aka(:statement) << colon << code.aka(:value)) |
           (
-            statement.aka(
-              :statement
-            ) << whitespace? << equal << greater << code.aka(:value)
+            statement.aka(:statement) << whitespace? << equal << greater <<
+              code.aka(:value)
           )
       end
 
       def root
         (
-          opening_curly_bracket.ignore << whitespace? << key_value.repeat(
-            0,
-            1
-          ) << (
-            whitespace? << comma << whitespace? << key_value
-          ).repeat << whitespace? << closing_curly_bracket.ignore.maybe
+          opening_curly_bracket.ignore << whitespace? <<
+            key_value.repeat(0, 1) <<
+            (whitespace? << comma << whitespace? << key_value).repeat <<
+            whitespace? << closing_curly_bracket.ignore.maybe
         ).aka(:dictionnary) | ::Code::Parser::List
       end
     end

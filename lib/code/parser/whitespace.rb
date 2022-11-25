@@ -30,9 +30,8 @@ class Code
       end
 
       def multi_line_comment
-        slash << asterisk << (
-          (asterisk << slash).absent << any
-        ).repeat << asterisk.maybe << slash.maybe
+        slash << asterisk << ((asterisk << slash).absent << any).repeat <<
+          asterisk.maybe << slash.maybe
       end
 
       def root

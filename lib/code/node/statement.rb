@@ -22,6 +22,10 @@ class Code
           @statement = Node::ChainedCall.new(parsed.delete(:chained_call))
         elsif parsed.key?(:operation)
           @statement = Node::Operation.new(parsed.delete(:operation))
+        elsif parsed.key?(:equal)
+          @statement = Node::Equal.new(parsed.delete(:equal))
+        elsif parsed.key?(:function)
+          @statement = Node::Function.new(parsed.delete(:function))
         end
 
         super(parsed)

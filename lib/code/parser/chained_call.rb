@@ -27,9 +27,10 @@ class Code
 
       def root
         (
-          statement.aka(:first) << (
-            whitespace? << operator << whitespace? << statement
-          ).repeat(0).aka(:others)
+          statement.aka(:first) <<
+            (whitespace? << operator << whitespace? << statement).repeat(0).aka(
+              :others
+            )
         )
           .aka(:chained_call)
           .then do |output|

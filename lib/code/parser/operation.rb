@@ -19,11 +19,11 @@ class Code
 
       def root
         (
-          statement.aka(:first) << (
-            whitespace? << operator.aka(
-              :operator
-            ) << whitespace? << statement.aka(:statement)
-          ).repeat(0).aka(:others)
+          statement.aka(:first) <<
+            (
+              whitespace? << operator.aka(:operator) << whitespace? <<
+                statement.aka(:statement)
+            ).repeat(0).aka(:others)
         )
           .aka(:operation)
           .then do |output|

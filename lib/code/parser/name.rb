@@ -13,6 +13,10 @@ class Code
         str(",")
       end
 
+      def equal
+        str("=")
+      end
+
       def colon
         str(":")
       end
@@ -66,10 +70,10 @@ class Code
       end
 
       def special_character
-        pipe | dot | colon | comma | space | newline | opening_curly_bracket |
-          closing_curly_bracket | opening_parenthesis | closing_parenthesis |
-          opening_square_bracket | closing_square_bracket | single_quote |
-          double_quote
+        equal | pipe | dot | colon | comma | space | newline |
+          opening_curly_bracket | closing_curly_bracket | opening_parenthesis |
+          closing_parenthesis | opening_square_bracket |
+          closing_square_bracket | single_quote | double_quote
       end
 
       def character

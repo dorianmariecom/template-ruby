@@ -2,13 +2,11 @@ class Code
   class Node
     class Operation < Node
       class Operator < Node
+        attr_reader :operator, :statement
+
         def initialize(parsed)
           @operator = parsed.delete(:operator)
           @statement = Node::Statement.new(parsed.delete(:statement))
-        end
-
-        def evaluate(**args)
-          raise NotImplementedError
         end
       end
 
@@ -25,7 +23,15 @@ class Code
       def evaluate(**args)
         first = @first.evaluate(**args)
 
-        raise NotImplementedError
+        @others.reduce(first) do |left, right|
+          statement = right.statement.evaluate(**args)
+
+          left.call(
+            operator: right.operator,
+            arguments: [::Code::Object::Argument.new(statement)],
+            **args
+          )
+        end
       end
     end
   end

@@ -1,10 +1,4 @@
 class Language
-  VERSION = "0.1.0"
-
-  def initialize(block: nil)
-    @root = root
-  end
-
   def self.parse(input)
     new.parse(input)
   end
@@ -50,7 +44,7 @@ class Language
       parser = input_or_parser
       clone =
         Parser.new(
-          root: @root,
+          root: root,
           input: parser.input,
           cursor: parser.cursor,
           buffer: parser.buffer,
@@ -64,7 +58,7 @@ class Language
       parser.output = clone.output
     else
       input = input_or_parser
-      Parser.new(root: @root, input: input).parse
+      Parser.new(root: root, input: input).parse
     end
   end
 
