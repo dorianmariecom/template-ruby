@@ -2,7 +2,7 @@ class Code
   class Parser
     class Statement < Language
       def root
-        ::Code::Parser::Dictionnary
+        ::Code::Parser::ChainedCall
       end
     end
   end

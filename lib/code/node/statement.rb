@@ -18,6 +18,10 @@ class Code
           @statement = Node::List.new(parsed.delete(:list))
         elsif parsed.key?(:dictionnary)
           @statement = Node::Dictionnary.new(parsed.delete(:dictionnary))
+        elsif parsed.key?(:chained_call)
+          @statement = Node::ChainedCall.new(parsed.delete(:chained_call))
+        elsif parsed.key?(:operation)
+          @statement = Node::Operation.new(parsed.delete(:operation))
         end
 
         super(parsed)

@@ -19,14 +19,13 @@ class Code
 
       def initialize(parsed)
         parsed = [] if parsed == ""
-        @key_values = parsed.map do |key_value|
-          Node::Dictionnary::KeyValue.new(key_value)
-        end
+        @key_values =
+          parsed.map { |key_value| Node::Dictionnary::KeyValue.new(key_value) }
       end
 
       def evaluate(**args)
         ::Code::Object::Dictionnary.new(
-          @key_values.map { |key_value| key_value.evaluate(**args) }.to_h,
+          @key_values.map { |key_value| key_value.evaluate(**args) }.to_h
         )
       end
     end

@@ -1,11 +1,11 @@
 require "spec_helper"
 
-RSpec.describe "Code::Parser boolean" do
+RSpec.describe Code::Parser::Boolean do
   subject { Code::Parser.parse(input) }
 
   [
     ["true", [{ boolean: "true" }]],
-    ["false", [{ boolean: "false" }]],
+    ["false", [{ boolean: "false" }]]
   ].each do |input, output|
     context input.inspect do
       let(:input) { input }

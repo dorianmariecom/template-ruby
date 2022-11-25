@@ -16,7 +16,7 @@ RSpec.describe Code::Parser::Call do
     "render(user) do |name| name.upcase end",
     'render { "Dorian" }',
     'render(user) { "Dorian" }',
-    'render(user) do "Dorian" end',
+    'render(user) do "Dorian" end'
   ].each do |input|
     context input do
       let(:input) { input }

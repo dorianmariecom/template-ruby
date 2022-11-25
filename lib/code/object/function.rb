@@ -35,13 +35,13 @@ class Code
 
         parameters.each.with_index do |parameter, index|
           if parameter.regular?
-            if parameter.splat?
+            if parameter.regular_splat?
               new_context[parameter.name] = ::Code::Object::List.new(
-                args.select(&:regular?).map(&:value),
+                args.select(&:regular?).map(&:value)
               )
             elsif parameter.keyword_splat?
               new_context[parameter.name] = ::Code::Object::Dictionnary.new(
-                args.select(&:keyword?).map(&:name_value).to_h,
+                args.select(&:keyword?).map(&:name_value).to_h
               )
             else
               arg = args[index]&.value

@@ -50,7 +50,7 @@ class Code
           (statement.aka(:statement) << colon << code.aka(:value)) |
           (
             statement.aka(
-              :statement,
+              :statement
             ) << whitespace? << equal << greater << code.aka(:value)
           )
       end
@@ -59,7 +59,7 @@ class Code
         (
           opening_curly_bracket.ignore << whitespace? << key_value.repeat(
             0,
-            1,
+            1
           ) << (
             whitespace? << comma << whitespace? << key_value
           ).repeat << whitespace? << closing_curly_bracket.ignore.maybe

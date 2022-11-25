@@ -15,7 +15,7 @@ class Code
         if @exponent
           ::Code::Object::Decimal.new(
             @decimal,
-            exponent: @exponent.evaluate(**args),
+            exponent: @exponent.evaluate(**args)
           )
         else
           ::Code::Object::Decimal.new(@decimal)

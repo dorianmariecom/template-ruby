@@ -23,6 +23,9 @@ class Code
         if operator == "even?"
           sig(arguments)
           even?
+        elsif operator == "odd?"
+          sig(arguments)
+          odd?
         elsif operator == "*"
           sig(arguments) { [[::Code::Object::Number, ::Code::Object::String]] }
           multiplication(value)
@@ -94,6 +97,10 @@ class Code
 
       def even?
         ::Code::Object::Boolean.new(raw.even?)
+      end
+
+      def odd?
+        ::Code::Object::Boolean.new(raw.odd?)
       end
 
       def multiplication(other)

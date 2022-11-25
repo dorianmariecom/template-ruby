@@ -12,7 +12,7 @@ RSpec.describe "number" do
     %w[0b10 2],
     %w[1e1 10],
     %w[1.0e1 10.0],
-    %w[10e1.0 100.0],
+    %w[10e1.0 100.0]
   ].each do |input, output|
     context input do
       let(:input) { input }

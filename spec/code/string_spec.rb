@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "number" do
+RSpec.describe "string" do
   let(:timeout) { 0 }
   subject { Code.evaluate(input, timeout: timeout).to_s }
 
@@ -12,7 +12,7 @@ RSpec.describe "number" do
     ["'Hello \\{name}'", "Hello {name}"],
     ['"Hello \\{name}"', "Hello {name}"],
     ["'Hello {1}'", "Hello 1"],
-    ['"Hello {1}"', "Hello 1"],
+    ['"Hello {1}"', "Hello 1"]
   ].each do |input, output|
     context input do
       let(:input) { input }

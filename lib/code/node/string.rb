@@ -45,7 +45,7 @@ class Code
 
       def evaluate(**args)
         ::Code::Object::String.new(
-          @parts.map { |part| part.evaluate(**args) }.map(&:to_s).join,
+          @parts.map { |part| part.evaluate(**args) }.map(&:to_s).join
         )
       end
     end

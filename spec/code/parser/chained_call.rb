@@ -1,14 +1,13 @@
 require "spec_helper"
 
-RSpec.describe Code::Parser::List do
+RSpec.describe Code::Parser::ChainedCall do
   subject { Code::Parser.parse(input) }
 
   [
-    "[]",
-    "[ ]",
-    "[/* comment */]",
-    "[1, 2, 3]",
-    "['hello', 1, true, [false, nothing]]"
+    "a.b",
+    "user.first_name",
+    "user.admin?",
+    'user.update!(name: "Dorian")'
   ].each do |input|
     context input do
       let(:input) { input }

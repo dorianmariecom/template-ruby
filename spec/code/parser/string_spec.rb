@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Code::Parser::Call do
+RSpec.describe Code::Parser::String do
   subject { Code::Parser.parse(input) }
 
   [
@@ -11,7 +11,7 @@ RSpec.describe Code::Parser::Call do
     "'Hello \\{name}'",
     '"Hello \\{name}"',
     "'Hello {name}'",
-    '"Hello {name}"',
+    '"Hello {name}"'
   ].each do |input|
     context input do
       let(:input) { input }

@@ -8,7 +8,7 @@ class Code
 
       def evaluate(**args)
         ::Code::Object::List.new(
-          @elements.map { |element| element.evaluate(**args) },
+          @elements.map { |element| element.evaluate(**args) }
         )
       end
     end

@@ -1,13 +1,13 @@
 require "spec_helper"
 
-RSpec.describe "Code::Parser group" do
+RSpec.describe Code::Parser::Group do
   subject { Code::Parser.parse(input) }
 
   [
     [
       "(true (nothing))",
-      [{ group: [{ boolean: "true" }, { group: [{ nothing: "nothing" }] }] }],
-    ],
+      [{ group: [{ boolean: "true" }, { group: [{ nothing: "nothing" }] }] }]
+    ]
   ].each do |input, output|
     context input.inspect do
       let(:input) { input }
