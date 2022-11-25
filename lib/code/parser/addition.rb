@@ -2,7 +2,7 @@ class Code
   class Parser
     class Addition < Operation
       def statement
-        ::Code::Parser::Negation
+        ::Code::Parser::Power
       end
 
       def plus

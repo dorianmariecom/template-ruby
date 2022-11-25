@@ -28,6 +28,8 @@ class Code
           @statement = Node::Function.new(parsed.delete(:function))
         elsif parsed.key?(:negation)
           @statement = Node::Negation.new(parsed.delete(:negation))
+        elsif parsed.key?(:power)
+          @statement = Node::Power.new(parsed.delete(:power))
         end
 
         super(parsed)
