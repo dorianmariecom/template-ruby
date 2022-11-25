@@ -26,6 +26,8 @@ class Code
           @statement = Node::Equal.new(parsed.delete(:equal))
         elsif parsed.key?(:function)
           @statement = Node::Function.new(parsed.delete(:function))
+        elsif parsed.key?(:negation)
+          @statement = Node::Negation.new(parsed.delete(:negation))
         end
 
         super(parsed)

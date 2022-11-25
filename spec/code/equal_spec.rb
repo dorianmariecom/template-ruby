@@ -16,7 +16,7 @@ RSpec.describe "function" do
     ["a = 1 a |= 2 a", "3"],
     ["a = 1 a ^= 2 a", "3"],
     ["a = false a ||= true a", "true"],
-    ["a = false a &&= true a", "false"],
+    ["a = false a &&= true a", "false"]
   ].each do |input, output|
     context input do
       let(:input) { input }

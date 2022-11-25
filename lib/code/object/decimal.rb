@@ -18,52 +18,58 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
+        value = arguments.first&.value
 
         if operator == "%"
           sig(arguments) { ::Code::Object::Number }
-          modulo(arguments.first.value)
+          modulo(value)
         elsif operator == "+"
-          sig(arguments) { ::Code::Object }
-          plus(arguments.first.value)
+          if value
+            sig(arguments) { ::Code::Object }
+            plus(value)
+          else
+            sig(arguments)
+            self
+          end
         elsif operator == "-"
           sig(arguments) { ::Code::Object::Number }
-          minus(arguments.first.value)
+          minus(value)
         elsif operator == "/"
           sig(arguments) { ::Code::Object::Number }
-          division(arguments.first.value)
+          division(value)
         elsif operator == "*"
           sig(arguments) { ::Code::Object::Number }
-          multiplication(arguments.first.value)
+          multiplication(value)
         elsif operator == "**"
           sig(arguments) { ::Code::Object::Number }
-          power(arguments.first.value)
+          power(value)
         elsif operator == "<"
           sig(arguments) { ::Code::Object::Number }
-          inferior(arguments.first.value)
+          inferior(value)
         elsif operator == "<="
           sig(arguments) { ::Code::Object::Number }
-          inferior_or_equal(arguments.first.value)
+          inferior_or_equal(value)
         elsif operator == ">"
           sig(arguments) { ::Code::Object::Number }
-          superior(arguments.first.value)
+          superior(value)
         elsif operator == ">="
           sig(arguments) { ::Code::Object::Number }
-          superior_or_equal(arguments.first.value)
+          superior_or_equal(value)
         elsif operator == "<<"
           sig(arguments) { ::Code::Object::Number }
-          left_shift(arguments.first.value)
+          left_shift(value)
         elsif operator == ">>"
           sig(arguments) { ::Code::Object::Number }
-          right_shift(arguments.first.value)
+          right_shift(value)
         elsif operator == "&"
           sig(arguments) { ::Code::Object::Number }
-          bitwise_and(arguments.first.value)
+          bitwise_and(value)
         elsif operator == "|"
           sig(arguments) { ::Code::Object::Number }
-          bitwise_or(arguments.first.value)
+          bitwise_or(value)
         elsif operator == "^"
           sig(arguments) { ::Code::Object::Number }
-          bitwise_xor(arguments.first.value)
+          bitwise_xor(value)
         else
           super
         end

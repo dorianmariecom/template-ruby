@@ -25,6 +25,12 @@ class Code
       elsif operator == "||" || operator == "or"
         sig(arguments) { ::Code::Object }
         or_operator(value)
+      elsif operator == "!"
+        sig(arguments)
+        exclamation_point
+      elsif operator == "+"
+        sig(arguments)
+        self
       elsif operator == ".."
         sig(arguments) { ::Code::Object }
         inclusive_range(value)
@@ -172,6 +178,14 @@ class Code
 
     def exclusive_range(value)
       ::Code::Object::Range.new(self, value, exclude_end: false)
+    end
+
+    def exclamation_point
+      if truthy?
+        ::Code::Object::Boolean.new(false)
+      else
+        ::Code::Object::Boolean.new(true)
+      end
     end
   end
 end

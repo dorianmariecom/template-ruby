@@ -33,8 +33,13 @@ class Code
           sig(arguments) { ::Code::Object::Number }
           division(value)
         elsif operator == "+"
-          sig(arguments) { ::Code::Object }
-          plus(value)
+          if value
+            sig(arguments) { ::Code::Object }
+            plus(value)
+          else
+            sig(arguments)
+            self
+          end
         elsif operator == "%"
           sig(arguments) { ::Code::Object::Number }
           modulo(value)
