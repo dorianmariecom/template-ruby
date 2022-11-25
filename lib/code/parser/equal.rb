@@ -2,7 +2,7 @@ class Code
   class Parser
     class Equal < Language
       def statement
-        ::Code::Parser::Range
+        ::Code::Parser::Ternary
       end
 
       def name

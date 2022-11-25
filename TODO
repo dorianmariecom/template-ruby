@@ -1,7 +1,3 @@
-- GreaterThan
-- AndOperator
-- OrOperator
-- Range
 - Ternary
 - Rescue
   - Equal
