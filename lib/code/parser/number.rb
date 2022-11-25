@@ -1,6 +1,10 @@
 class Code
   class Parser
     class Number < Language
+      def number
+        ::Code::Parser::Number
+      end
+
       def zero
         str("0")
       end
@@ -114,12 +118,20 @@ class Code
         base_2_digit << (underscore.ignore | base_2_digit).repeat
       end
 
+      def exponent
+        (e << number).aka(:exponent)
+      end
+
       def decimal
-        base_10_whole << dot << base_10_whole
+        (base_10_whole << dot << base_10_whole).aka(:decimal) << exponent.maybe
       end
 
       def base_16_number
         zero.ignore << x.ignore << base_16_whole
+      end
+
+      def base_10_number
+        base_10_whole.aka(:whole) << exponent.maybe
       end
 
       def base_8_number
@@ -134,7 +146,7 @@ class Code
         (
           decimal.aka(:decimal) | base_16_number.aka(:base_16) |
             base_8_number.aka(:base_8) | base_2_number.aka(:base_2) |
-            base_10_whole.aka(:base_10)
+            base_10_number.aka(:base_10)
         ).aka(:number) | ::Code::Parser::Boolean
       end
     end
