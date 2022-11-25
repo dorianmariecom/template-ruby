@@ -41,6 +41,14 @@ class Code
         str(")")
       end
 
+      def single_quote
+        str("'")
+      end
+
+      def double_quote
+        str('"')
+      end
+
       def do_keyword
         str("do")
       end
@@ -52,7 +60,7 @@ class Code
       def special_character
         colon | comma | space | newline | opening_curly_bracket |
           closing_curly_bracket | opening_parenthesis | closing_parenthesis |
-          opening_square_bracket | closing_square_bracket
+          opening_square_bracket | closing_square_bracket | single_quote | double_quote
       end
 
       def character

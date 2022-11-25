@@ -16,6 +16,8 @@ class Code
           @statement = Node::String.new(parsed.delete(:string))
         elsif parsed.key?(:list)
           @statement = Node::List.new(parsed.delete(:list))
+        elsif parsed.key?(:dictionnary)
+          @statement = Node::Dictionnary.new(parsed.delete(:dictionnary))
         end
 
         super(parsed)
