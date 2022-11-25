@@ -14,7 +14,7 @@
 - Range
 - OrOperator
 - AndOperator
-- GreaterThan
+- Greater
 - BitwiseOr
 - BitwiseAnd
 - Shift
