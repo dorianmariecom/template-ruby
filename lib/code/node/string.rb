@@ -40,16 +40,12 @@ class Code
       def initialize(parsed)
         parsed = [] if parsed == ""
 
-        @parts = parsed.map do |part|
-          Node::String::Part.new(part)
-        end
+        @parts = parsed.map { |part| Node::String::Part.new(part) }
       end
 
       def evaluate(**args)
         ::Code::Object::String.new(
-          @parts.map do |part|
-            part.evaluate(**args)
-          end.map(&:to_s).join
+          @parts.map { |part| part.evaluate(**args) }.map(&:to_s).join
         )
       end
     end

@@ -5,14 +5,9 @@ RSpec.describe "number" do
   subject { Code.evaluate(input, timeout: timeout).to_s }
 
   [
-    ["''", ""],
-    ['""', ""],
-    ["'Hello Dorian'", "Hello Dorian"],
-    ['"Hello Dorian"', "Hello Dorian"],
-    ["'Hello \\{name}'", "Hello {name}"],
-    ['"Hello \\{name}"', "Hello {name}"],
-    ["'Hello {1}'", "Hello 1"],
-    ['"Hello {1}"', "Hello 1"]
+    ["[]", "[]"],
+    ["[1, 2, 3]", "[1, 2, 3]"],
+    ["[[true]]", "[[true]]"],
   ].each do |input, output|
     context input do
       let(:input) { input }

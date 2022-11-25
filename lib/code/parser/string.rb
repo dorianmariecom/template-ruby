@@ -30,15 +30,19 @@ class Code
       end
 
       def single_quoted_text_part
-        (backslash.ignore << opening_curly_bracket |
-          backslash.ignore << single_quote |
-          single_quote.absent << opening_curly_bracket.absent << any).repeat(1)
+        (
+          backslash.ignore << opening_curly_bracket |
+            backslash.ignore << single_quote |
+            single_quote.absent << opening_curly_bracket.absent << any
+        ).repeat(1)
       end
 
       def double_quoted_text_part
-        (backslash.ignore << opening_curly_bracket |
-          backslash.ignore << double_quote |
-          double_quote.absent << opening_curly_bracket.absent << any).repeat(1)
+        (
+          backslash.ignore << opening_curly_bracket |
+            backslash.ignore << double_quote |
+            double_quote.absent << opening_curly_bracket.absent << any
+        ).repeat(1)
       end
 
       def single_quoted_string

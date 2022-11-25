@@ -47,10 +47,12 @@ context = options.fetch(:context, "")
 if options[:parse]
   pp ::Code::Parser.parse(input).to_raw
 else
-  print Code.evaluate(
-          input,
-          context,
-          io: $stdout,
-          timeout: options[:timeout]
-        ).to_s
+  print(
+    Code.evaluate(
+      input,
+      context,
+      io: $stdout,
+      timeout: options[:timeout]
+    ).to_s
+  )
 end

@@ -14,6 +14,8 @@ class Code
           @statement = Node::Number.new(parsed.delete(:number))
         elsif parsed.key?(:string)
           @statement = Node::String.new(parsed.delete(:string))
+        elsif parsed.key?(:list)
+          @statement = Node::List.new(parsed.delete(:list))
         end
 
         super(parsed)

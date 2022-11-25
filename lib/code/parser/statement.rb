@@ -2,7 +2,7 @@ class Code
   class Parser
     class Statement < Language
       def root
-        ::Code::Parser::String
+        ::Code::Parser::List
       end
     end
   end

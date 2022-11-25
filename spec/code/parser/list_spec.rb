@@ -4,14 +4,11 @@ RSpec.describe Code::Parser::Call do
   subject { Code::Parser.parse(input) }
 
   [
-    "''",
-    '""',
-    "'Hello Dorian'",
-    '"Hello Dorian"',
-    "'Hello \\{name}'",
-    '"Hello \\{name}"',
-    "'Hello {name}'",
-    '"Hello {name}"'
+    "[]",
+    "[ ]",
+    "[/* comment */]",
+    "[1, 2, 3]",
+    "['hello', 1, true, [false, nothing]]",
   ].each do |input|
     context input do
       let(:input) { input }

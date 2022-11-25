@@ -25,6 +25,14 @@ class Code
         str("}")
       end
 
+      def opening_square_bracket
+        str("[")
+      end
+
+      def closing_square_bracket
+        str("]")
+      end
+
       def opening_parenthesis
         str("(")
       end
@@ -41,8 +49,14 @@ class Code
         str("end")
       end
 
+      def special_character
+        colon | comma | space | newline | opening_curly_bracket |
+          closing_curly_bracket | opening_parenthesis | closing_parenthesis |
+          opening_square_bracket | closing_square_bracket
+      end
+
       def character
-        colon.absent << comma.absent << space.absent << newline.absent << opening_curly_bracket.absent << closing_curly_bracket.absent << opening_parenthesis.absent << closing_parenthesis.absent << any
+        special_character.absent << any
       end
 
       def root
