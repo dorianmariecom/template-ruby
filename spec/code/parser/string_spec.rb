@@ -11,7 +11,7 @@ RSpec.describe Code::Parser::Call do
     "'Hello \\{name}'",
     '"Hello \\{name}"',
     "'Hello {name}'",
-    '"Hello {name}"'
+    '"Hello {name}"',
   ].each do |input|
     context input do
       let(:input) { input }

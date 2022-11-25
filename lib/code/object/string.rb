@@ -61,22 +61,22 @@ class Code
                         {
                           left: {
                             call: {
-                              name: "_"
-                            }
+                              name: "_",
+                            },
                           },
                           right: {
                             call: {
-                              name: raw
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
+                              name: raw,
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
         ).evaluate(**globals)
       end
 

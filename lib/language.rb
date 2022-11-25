@@ -54,7 +54,7 @@ class Language
           input: parser.input,
           cursor: parser.cursor,
           buffer: parser.buffer,
-          output: parser.output
+          output: parser.output,
         )
 
       clone.parse(check_end_of_input: false)

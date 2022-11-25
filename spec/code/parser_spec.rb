@@ -11,8 +11,8 @@ RSpec.describe "Code::Parser" do
     ["  nothing  ", [{ nothing: "nothing" }]],
     [
       "nothing null nil",
-      [{ nothing: "nothing" }, { nothing: "null" }, { nothing: "nil" }]
-    ]
+      [{ nothing: "nothing" }, { nothing: "null" }, { nothing: "nil" }],
+    ],
   ].each do |input, output|
     context input.inspect do
       let(:input) { input }

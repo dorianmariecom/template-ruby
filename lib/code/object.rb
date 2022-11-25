@@ -36,7 +36,7 @@ class Code
         to_string
       else
         raise(
-          Code::Error::Undefined.new("#{operator} not defined on #{inspect}")
+          Code::Error::Undefined.new("#{operator} not defined on #{inspect}"),
         )
       end
     end
@@ -98,7 +98,7 @@ class Code
       if block
         expected_arguments = block.call
         expected_arguments = [
-          expected_arguments
+          expected_arguments,
         ] unless expected_arguments.is_a?(Array)
       else
         expected_arguments = []
@@ -108,8 +108,8 @@ class Code
         raise(
           ::Code::Error::ArgumentError.new(
             "Expected #{expected_arguments.size} arguments, " \
-              "got #{actual_arguments.size} arguments"
-          )
+              "got #{actual_arguments.size} arguments",
+          ),
         )
       end
 
@@ -122,16 +122,16 @@ class Code
              }
             raise(
               ::Code::Error::TypeError.new(
-                "Expected #{expected_argument}, got #{actual_argument.class}"
-              )
+                "Expected #{expected_argument}, got #{actual_argument.class}",
+              ),
             )
           end
         else
           if !actual_argument.is_a?(expected_argument)
             raise(
               ::Code::Error::TypeError.new(
-                "Expected #{expected_argument}, got #{actual_argument.class}"
-              )
+                "Expected #{expected_argument}, got #{actual_argument.class}",
+              ),
             )
           end
         end

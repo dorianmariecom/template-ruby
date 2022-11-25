@@ -63,9 +63,9 @@ class Code
           raw.any? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -74,9 +74,9 @@ class Code
           raw.all? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -84,7 +84,7 @@ class Code
         raw.each do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            **globals
+            **globals,
           )
         end
         self
@@ -95,9 +95,9 @@ class Code
           raw.select do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -106,9 +106,9 @@ class Code
           raw.map do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             )
-          end
+          end,
         )
       end
 

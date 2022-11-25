@@ -3,16 +3,12 @@ class Code
     class List < Node
       def initialize(parsed)
         parsed = [] if parsed == ""
-        @elements = parsed.map do |element|
-          Node::Code.new(element)
-        end
+        @elements = parsed.map { |element| Node::Code.new(element) }
       end
 
       def evaluate(**args)
         ::Code::Object::List.new(
-          @elements.map do |element|
-            element.evaluate(**args)
-          end
+          @elements.map { |element| element.evaluate(**args) },
         )
       end
     end

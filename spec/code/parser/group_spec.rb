@@ -6,8 +6,8 @@ RSpec.describe "Code::Parser group" do
   [
     [
       "(true (nothing))",
-      [{ group: [{ boolean: "true" }, { group: [{ nothing: "nothing" }] }] }]
-    ]
+      [{ group: [{ boolean: "true" }, { group: [{ nothing: "nothing" }] }] }],
+    ],
   ].each do |input, output|
     context input.inspect do
       let(:input) { input }

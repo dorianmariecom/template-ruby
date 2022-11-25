@@ -12,7 +12,7 @@ RSpec.describe "number" do
     ["'Hello \\{name}'", "Hello {name}"],
     ['"Hello \\{name}"', "Hello {name}"],
     ["'Hello {1}'", "Hello 1"],
-    ['"Hello {1}"', "Hello 1"]
+    ['"Hello {1}"', "Hello 1"],
   ].each do |input, output|
     context input do
       let(:input) { input }

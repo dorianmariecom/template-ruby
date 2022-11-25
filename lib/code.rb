@@ -31,7 +31,7 @@ class Code
 
       if !context.is_a?(::Code::Object::Dictionnary)
         raise ::Code::Error::IncompatibleContext.new(
-                "context must be a dictionnary"
+                "context must be a dictionnary",
               )
       end
 

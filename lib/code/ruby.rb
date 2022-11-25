@@ -35,11 +35,11 @@ class Code
             .map do |key, value|
               [::Code::Ruby.to_code(key), ::Code::Ruby.to_code(value)]
             end
-            .to_h
+            .to_h,
         )
       elsif array?
         ::Code::Object::List.new(
-          raw.map { |element| ::Code::Ruby.to_code(key) }
+          raw.map { |element| ::Code::Ruby.to_code(key) },
         )
       elsif proc?
         ::Code::Object::RubyFunction.new(raw)

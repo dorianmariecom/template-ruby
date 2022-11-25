@@ -102,12 +102,12 @@ class Code
       def block
         (
           do_keyword << whitespace? << parameters.aka(
-            :parameters
+            :parameters,
           ).maybe << code.aka(:body) << end_keyword.maybe
         ) |
           (
             opening_curly_bracket << whitespace? << parameters.aka(
-              :parameters
+              :parameters,
             ).maybe << code.aka(:body) << closing_curly_bracket.maybe
           )
       end
@@ -115,7 +115,7 @@ class Code
       def root
         (
           name.aka(:name) << whitespace? << arguments.aka(
-            :arguments
+            :arguments,
           ).maybe << whitespace? << block.aka(:block).maybe
         ).aka(:call)
       end

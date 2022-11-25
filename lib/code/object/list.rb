@@ -68,7 +68,7 @@ class Code
             else
               acc + [element]
             end
-          end
+          end,
         )
       end
 
@@ -91,9 +91,9 @@ class Code
           raw.any? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -102,9 +102,9 @@ class Code
           raw.none? do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -112,7 +112,7 @@ class Code
         raw.max_by do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            **globals
+            **globals,
           )
         end || ::Code::Object::Nothing.new
       end
@@ -121,7 +121,7 @@ class Code
         raw.detect do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            **globals
+            **globals,
           ).truthy?
         end || ::Code::Object::Nothing.new
       end
@@ -131,9 +131,9 @@ class Code
           argument.call(
             arguments: [
               ::Code::Object::Argument.new(acc),
-              ::Code::Object::Argument.new(element)
+              ::Code::Object::Argument.new(element),
             ],
-            **globals
+            **globals,
           )
         end || ::Code::Object::Nothing.new
       end
@@ -142,7 +142,7 @@ class Code
         raw.each do |element|
           argument.call(
             arguments: [::Code::Object::Argument.new(element)],
-            **globals
+            **globals,
           )
         end
         self
@@ -153,9 +153,9 @@ class Code
           raw.select do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             ).truthy?
-          end
+          end,
         )
       end
 
@@ -164,9 +164,9 @@ class Code
           raw.map do |element|
             argument.call(
               arguments: [::Code::Object::Argument.new(element)],
-              **globals
+              **globals,
             )
-          end
+          end,
         )
       end
 

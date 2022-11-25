@@ -4,4 +4,4 @@ gemspec name: "template-ruby"
 gemspec name: "code-ruby"
 
 gem "rspec"
-gem "syntax_tree"
+gem "prettier"

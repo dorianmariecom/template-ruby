@@ -7,7 +7,7 @@ RSpec.describe "nothing" do
     ["nothing", ""],
     ["null", ""],
     ["nil", ""],
-    ["nothing null", ""]
+    ["nothing null", ""],
   ].each do |input, output|
     context input do
       let(:input) { input }

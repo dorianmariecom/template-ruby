@@ -81,7 +81,7 @@ class Language
             root: self,
             input: parser.input,
             cursor: parser.cursor,
-            buffer: parser.buffer
+            buffer: parser.buffer,
           )
 
         @parent.parse(clone)
@@ -121,7 +121,7 @@ class Language
             root: self,
             input: parser.input,
             cursor: parser.cursor,
-            buffer: parser.buffer
+            buffer: parser.buffer,
           )
         @parent.parse(clone) if @parent
       rescue Parser::Interuption
@@ -145,7 +145,7 @@ class Language
             root: self,
             input: parser.input,
             cursor: parser.cursor,
-            buffer: parser.buffer
+            buffer: parser.buffer,
           )
         @parent.parse(clone) if @parent
         parser.cursor = clone.cursor
@@ -210,7 +210,7 @@ class Language
             root: self,
             input: parser.input,
             cursor: parser.cursor,
-            buffer: parser.buffer
+            buffer: parser.buffer,
           )
 
         right_clone =
@@ -218,7 +218,7 @@ class Language
             root: self,
             input: parser.input,
             cursor: parser.cursor,
-            buffer: parser.buffer
+            buffer: parser.buffer,
           )
 
         begin
@@ -252,7 +252,7 @@ class Language
             root: self,
             input: parser.input,
             cursor: parser.cursor,
-            buffer: parser.buffer
+            buffer: parser.buffer,
           )
         @right.parse(right_clone)
         parser.cursor = right_clone.cursor
