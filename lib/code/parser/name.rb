@@ -61,6 +61,10 @@ class Code
         str("|")
       end
 
+      def ampersand
+        str("&")
+      end
+
       def do_keyword
         str("do")
       end
@@ -70,7 +74,7 @@ class Code
       end
 
       def special_character
-        equal | pipe | dot | colon | comma | space | newline |
+        ampersand | equal | pipe | dot | colon | comma | space | newline |
           opening_curly_bracket | closing_curly_bracket | opening_parenthesis |
           closing_parenthesis | opening_square_bracket |
           closing_square_bracket | single_quote | double_quote

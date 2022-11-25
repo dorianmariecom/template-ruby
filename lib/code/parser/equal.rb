@@ -2,7 +2,7 @@ class Code
   class Parser
     class Equal < Language
       def statement
-        ::Code::Parser::Greater
+        ::Code::Parser::OrOperator
       end
 
       def name

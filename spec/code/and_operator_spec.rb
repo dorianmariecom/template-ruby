@@ -1,15 +1,10 @@
 require "spec_helper"
 
-RSpec.describe "greater" do
+RSpec.describe "and operator" do
   let(:timeout) { 0 }
   subject { Code.evaluate(input, timeout: timeout).to_s }
 
-  [
-    ["1 > 2", "false"],
-    ["1 < 2", "true"],
-    ["1 <= 1", "true"],
-    ["1 >= 1", "true"]
-  ].each do |input, output|
+  [["true && false", "false"], ["true && true", "true"]].each do |input, output|
     context input do
       let(:input) { input }
       it { expect(subject).to eq(output) }
