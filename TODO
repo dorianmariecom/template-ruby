@@ -1,5 +1,3 @@
-- Rescue
-  - Equal
 - NotKeyword
 - OrKeyword
 - IfModifier
@@ -8,8 +6,8 @@
 - Class
 - Splat
 - Equality
-- Statement
-- Code
+  - Statement
+  - Code
 
 - Function parameters regular splat *args
 - Function parameters keyword splat **kargs
@@ -21,3 +19,9 @@
 - Dictionnary keyword splat { **kargs }
 - Dictionnary block { &block }
 - Dictionnary expand name { user } and { user: }
+- Rescue with exception name, rescue Code::Undefined
+- Rescue with exception catched, rescue => e
+- begin end
+- begin rescue end
+- begin rescue ensure end
+- begin rescue else end

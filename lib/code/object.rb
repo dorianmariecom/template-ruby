@@ -25,7 +25,7 @@ class Code
       elsif operator == "||" || operator == "or"
         sig(arguments) { ::Code::Object }
         or_operator(value)
-      elsif operator == "!"
+      elsif operator == "!" || operator == "not"
         sig(arguments)
         exclamation_point
       elsif operator == "+"

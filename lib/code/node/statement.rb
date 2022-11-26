@@ -36,6 +36,8 @@ class Code
           @statement = Node::Ternary.new(parsed.delete(:ternary))
         elsif parsed.key?(:rescue)
           @statement = Node::Rescue.new(parsed.delete(:rescue))
+        elsif parsed.key?(:not)
+          @statement = Node::Not.new(parsed.delete(:not))
         end
 
         super(parsed)

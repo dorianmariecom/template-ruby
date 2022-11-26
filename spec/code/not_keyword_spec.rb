@@ -1,10 +1,10 @@
 require "spec_helper"
 
-RSpec.describe "rescue" do
+RSpec.describe "not keyword" do
   let(:timeout) { 0 }
   subject { Code.evaluate(input, timeout: timeout).to_s }
 
-  [["a rescue 'oops'", "oops"]].each do |input, output|
+  [["not true", "false"], ["not not false", "false"]].each do |input, output|
     context input do
       let(:input) { input }
       it { expect(subject).to eq(output) }
