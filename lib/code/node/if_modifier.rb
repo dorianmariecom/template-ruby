@@ -29,17 +29,13 @@ class Code
         elsif @operator == WHILE_KEYWORD
           last = ::Code::Object::Nothing.new
 
-          while @right.evaluate(**args).truthy?
-            last = @left.evaluate(**args)
-          end
+          last = @left.evaluate(**args) while @right.evaluate(**args).truthy?
 
           last
         elsif @operator == UNTIL_KEYWORD
           last = ::Code::Object::Nothing.new
 
-          while @right.evaluate(**args).falsy?
-            last = @left.evaluate(**args)
-          end
+          last = @left.evaluate(**args) while @right.evaluate(**args).falsy?
 
           last
         else

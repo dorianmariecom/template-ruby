@@ -73,6 +73,14 @@ class Code
         str("end")
       end
 
+      def elsif_keyword
+        str("elsif")
+      end
+
+      def else_keyword
+        str("else")
+      end
+
       def special_character
         ampersand | equal | pipe | dot | colon | comma | space | newline |
           opening_curly_bracket | closing_curly_bracket | opening_parenthesis |
@@ -85,7 +93,8 @@ class Code
       end
 
       def root
-        do_keyword.absent << end_keyword.absent << character.repeat(1)
+        do_keyword.absent << end_keyword.absent << elsif_keyword.absent <<
+          else_keyword.absent << character.repeat(1)
       end
     end
   end

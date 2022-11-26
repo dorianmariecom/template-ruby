@@ -10,7 +10,7 @@ RSpec.describe "if modifier" do
     ["1 unless true", ""],
     ["1 unless false", "1"],
     ["a = 0 a += 1 while a < 10 a", "10"],
-    ["a = 0 a += 1 until a > 10 a", "11"],
+    ["a = 0 a += 1 until a > 10 a", "11"]
   ].each do |input, output|
     context input do
       let(:input) { input }
