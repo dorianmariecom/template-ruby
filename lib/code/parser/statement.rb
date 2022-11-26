@@ -2,7 +2,7 @@ class Code
   class Parser
     class Statement < Language
       def root
-        ::Code::Parser::NotKeyword
+        ::Code::Parser::OrKeyword
       end
     end
   end
