@@ -14,9 +14,9 @@ class Code
       end
 
       def root
-        (
-          not_keyword.aka(:operator) << whitespace << not_class.aka(:right)
-        ).aka(:not) | ::Code::Parser::Equal
+        (not_keyword.aka(:operator) << whitespace << not_class.aka(:right)).aka(
+          :not
+        ) | ::Code::Parser::Equal
       end
     end
   end

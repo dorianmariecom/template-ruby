@@ -34,6 +34,10 @@ class Code
           asterisk.maybe << slash.maybe
       end
 
+      def without_newline
+        (space | multi_line_comment).repeat(1)
+      end
+
       def root
         (
           space | newline | hash_comment | double_slash_comment |

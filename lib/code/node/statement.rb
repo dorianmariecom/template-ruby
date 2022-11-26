@@ -38,6 +38,8 @@ class Code
           @statement = Node::Rescue.new(parsed.delete(:rescue))
         elsif parsed.key?(:not)
           @statement = Node::Not.new(parsed.delete(:not))
+        elsif parsed.key?(:if_modifier)
+          @statement = Node::IfModifier.new(parsed.delete(:if_modifier))
         end
 
         super(parsed)

@@ -1,13 +1,16 @@
 require "spec_helper"
 
-RSpec.describe "or keyword" do
+RSpec.describe "if modifier" do
   let(:timeout) { 0 }
   subject { Code.evaluate(input, timeout: timeout).to_s }
 
   [
-    ["true or false", "true"],
-    ["true and false", "false"],
-    ["random = 1 random", "1"]
+    ["1 if true", "1"],
+    ["1 if false", ""],
+    ["1 unless true", ""],
+    ["1 unless false", "1"],
+    ["a = 0 a += 1 while a < 10 a", "10"],
+    ["a = 0 a += 1 until a > 10 a", "11"],
   ].each do |input, output|
     context input do
       let(:input) { input }
