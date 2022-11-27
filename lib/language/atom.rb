@@ -162,8 +162,19 @@ class Language
       end
 
       def parse(parser)
-        @parent.parse(parser)
+        clone =
+          Parser.new(
+            root: self,
+            input: parser.input,
+            cursor: parser.cursor,
+            buffer: parser.buffer
+          )
+
+        @parent.parse(clone)
       rescue Parser::Interuption
+      else
+        parser.cursor = clone.cursor
+        parser.output = clone.output
       end
 
       def to_s
