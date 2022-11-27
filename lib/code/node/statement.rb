@@ -42,6 +42,8 @@ class Code
           @statement = Node::IfModifier.new(parsed.delete(:if_modifier))
         elsif parsed.key?(:if)
           @statement = Node::If.new(parsed.delete(:if))
+        elsif parsed.key?(:while)
+          @statement = Node::While.new(parsed.delete(:while))
         end
 
         super(parsed)
