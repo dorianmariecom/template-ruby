@@ -23,15 +23,11 @@ class Code
             (
               whitespace? << operator.aka(:operator) << whitespace? <<
                 statement.aka(:statement)
-            ).repeat(0).aka(:others)
+            ).repeat(1).aka(:others).maybe
         )
           .aka(:operation)
           .then do |output|
-            if output[:operation][:others].empty?
-              output[:operation][:first]
-            else
-              output
-            end
+            output[:operation][:others] ? output : output[:operation][:first]
           end
       end
     end

@@ -34,7 +34,7 @@ class Code
           opening_square_bracket.ignore << whitespace? <<
             element.repeat(0, 1) <<
             (whitespace? << comma << whitespace? << element).repeat <<
-            whitespace? << closing_square_bracket.ignore.maybe
+            (whitespace? << closing_square_bracket.ignore).maybe
         ).aka(:list) | ::Code::Parser::String
       end
     end

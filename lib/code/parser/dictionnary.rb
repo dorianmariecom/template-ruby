@@ -59,7 +59,7 @@ class Code
           opening_curly_bracket.ignore << whitespace? <<
             key_value.repeat(0, 1) <<
             (whitespace? << comma << whitespace? << key_value).repeat <<
-            whitespace? << closing_curly_bracket.ignore.maybe
+            (whitespace? << closing_curly_bracket.ignore).maybe
         ).aka(:dictionnary) | ::Code::Parser::List
       end
     end

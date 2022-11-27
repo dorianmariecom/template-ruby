@@ -1,6 +1,10 @@
 class Code
   class Parser
     class Group < Language
+      def code
+        ::Code::Parser::Code
+      end
+
       def opening_parenthesis
         str("(")
       end
@@ -11,8 +15,7 @@ class Code
 
       def root
         (
-          opening_parenthesis << ::Code::Parser::Code <<
-            closing_parenthesis.maybe
+          opening_parenthesis << code << closing_parenthesis.maybe
         ).aka(:group) | ::Code::Parser::Call
       end
     end

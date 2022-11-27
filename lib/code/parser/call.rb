@@ -113,8 +113,8 @@ class Code
 
       def root
         (
-          name.aka(:name) << whitespace? << arguments.aka(:arguments).maybe <<
-            whitespace? << block.aka(:block).maybe
+          name.aka(:name) << (whitespace? << arguments.aka(:arguments)).maybe <<
+            (whitespace? << block.aka(:block)).maybe
         ).aka(:call)
       end
     end

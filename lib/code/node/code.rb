@@ -8,9 +8,10 @@ class Code
       def evaluate(**args)
         last = ::Code::Object::Nothing.new
 
-        args[:object] = ::Code::Object::Global.new
-
-        @statements.each { |statement| last = statement.evaluate(**args) }
+        @statements.each do |statement|
+          last =
+            statement.evaluate(**args.merge(object: ::Code::Object::Global.new))
+        end
 
         last
       end

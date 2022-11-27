@@ -10,15 +10,11 @@ class Code
       end
 
       def whitespace
-        ::Code::Parser::Whitespace
+        ::Code::Parser::Whitespace.new.without_newline
       end
 
       def whitespace?
         whitespace.maybe
-      end
-
-      def whitespace_without_newline?
-        ::Code::Parser::Whitespace.new.without_newline.maybe
       end
 
       def if_keyword
@@ -45,8 +41,8 @@ class Code
         (
           statement.aka(:left) <<
             (
-              whitespace_without_newline? << operator.aka(:operator) <<
-                whitespace? << if_modifier.aka(:right)
+              whitespace? << operator.aka(:operator) << whitespace? <<
+                if_modifier.aka(:right)
             ).maybe
         )
           .aka(:if_modifier)

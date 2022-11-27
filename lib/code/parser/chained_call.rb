@@ -28,16 +28,17 @@ class Code
       def root
         (
           statement.aka(:first) <<
-            (whitespace? << operator << whitespace? << statement).repeat(0).aka(
-              :others
-            )
+            (whitespace? << operator << whitespace? << statement)
+              .repeat(1)
+              .aka(:others)
+              .maybe
         )
           .aka(:chained_call)
           .then do |output|
-            if output[:chained_call][:others].empty?
-              output[:chained_call][:first]
-            else
+            if output[:chained_call][:others]
               output
+            else
+              output[:chained_call][:first]
             end
           end
       end

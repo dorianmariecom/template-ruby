@@ -9,6 +9,10 @@ class Code
         ::Code::Parser::Name
       end
 
+      def equal_class
+        ::Code::Parser::Equal
+      end
+
       def whitespace
         ::Code::Parser::Whitespace
       end
@@ -74,7 +78,7 @@ class Code
       def root
         (
           name.aka(:left) << whitespace? << operator.aka(:operator) <<
-            whitespace? << ::Code::Parser::Equal.aka(:right)
+            whitespace? << equal_class.aka(:right)
         ).aka(:equal) | statement
       end
     end

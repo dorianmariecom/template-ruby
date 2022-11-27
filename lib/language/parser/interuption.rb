@@ -7,7 +7,21 @@ class Language
       end
 
       def message
-        "\n#{input}\n#{" " * cursor}^\n#{@atom.inspect}"
+        "\n#{line}#{" " * column_index}^\n"
+      end
+
+      def line
+        l = input.lines[line_index]
+        l += "\n" if l[-1] != "\n"
+        l
+      end
+
+      def line_index
+        input[...cursor].count("\n")
+      end
+
+      def column_index
+        cursor - input.lines[...line_index].map(&:size).sum
       end
 
       private
