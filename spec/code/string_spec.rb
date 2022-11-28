@@ -7,9 +7,9 @@ RSpec.describe "string" do
   [
     ["''", ""],
     ['""', ""],
-    [":hello", "hello"],
-    [":admin?", "admin?"],
-    [":update!", "update!"],
+    %w[:hello hello],
+    %w[:admin? admin?],
+    %w[:update! update!],
     ["'Hello Dorian'", "Hello Dorian"],
     ['"Hello Dorian"', "Hello Dorian"],
     ["'Hello \\{name}'", "Hello {name}"],

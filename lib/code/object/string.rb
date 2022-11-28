@@ -13,7 +13,7 @@ class Code
         globals = multi_fetch(args, *::Code::GLOBALS)
         value = arguments.first&.value
 
-        if operator == "to_function"
+        if operator == "&" || operator == "to_function"
           sig(arguments)
           to_function(**globals)
         elsif operator == "+"
@@ -57,20 +57,12 @@ class Code
                 body: [
                   {
                     chained_call: {
-                      calls: [
-                        {
-                          left: {
-                            call: {
-                              name: "_"
-                            }
-                          },
-                          right: {
-                            call: {
-                              name: raw
-                            }
-                          }
+                      first: {
+                        call: {
+                          name: "_"
                         }
-                      ]
+                      },
+                      others: [{ call: { name: raw } }]
                     }
                   }
                 ]

@@ -44,6 +44,8 @@ class Code
           @statement = Node::If.new(parsed.delete(:if))
         elsif parsed.key?(:while)
           @statement = Node::While.new(parsed.delete(:while))
+        elsif parsed.key?(:splat)
+          @statement = Node::Splat.new(parsed.delete(:splat))
         end
 
         super(parsed)

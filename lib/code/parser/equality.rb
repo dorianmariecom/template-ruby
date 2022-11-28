@@ -2,7 +2,7 @@ class Code
   class Parser
     class Equality < Operation
       def statement
-        ::Code::Parser::While
+        ::Code::Parser::Splat
       end
 
       def equal
