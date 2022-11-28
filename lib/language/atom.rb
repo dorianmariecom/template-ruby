@@ -58,8 +58,10 @@ class Language
           rescue Parser::Interuption
           end
         else
+          @min.times { match(parser) }
+
           begin
-            (@min...@max).each { match(parser) }
+            (@max - @min).times { match(parser) }
           rescue Parser::Interuption
           end
         end
