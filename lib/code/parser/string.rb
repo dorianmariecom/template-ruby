@@ -5,6 +5,10 @@ class Code
         ::Code::Parser::Code
       end
 
+      def name
+        ::Code::Parser::Name
+      end
+
       def single_quote
         str("'")
       end
@@ -23,6 +27,10 @@ class Code
 
       def closing_curly_bracket
         str("}")
+      end
+
+      def colon
+        str(":")
       end
 
       def code_part
@@ -57,8 +65,12 @@ class Code
           double_quote.ignore.maybe
       end
 
+      def symbol
+        (colon.ignore << name).aka(:text).repeat(1, 1)
+      end
+
       def root
-        (single_quoted_string | double_quoted_string).aka(:string) |
+        (single_quoted_string | double_quoted_string | symbol).aka(:string) |
           ::Code::Parser::Number
       end
     end
