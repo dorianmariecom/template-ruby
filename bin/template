@@ -3,7 +3,7 @@
 require "optparse"
 require_relative "../lib/template-ruby"
 
-options = { timeout: 0 }
+options = { timeout: 0, profile: false, profiler: "text" }
 
 OptionParser
   .new do |opts|
@@ -38,14 +38,48 @@ OptionParser
       "--timeout=TIMEOUT",
       "Set timeout in seconds"
     ) { |timeout| options[:timeout] = timeout.to_f }
+
+    opts.on(
+      "--profile",
+      "Profile Ruby code"
+    ) do |timeout|
+      require "ruby-prof"
+      options[:profile] = true
+    end
+
+    opts.on(
+      "--profiler TYPE",
+      "Profiler output type (text (default) or html)"
+    ) do |profiler|
+      require "ruby-prof"
+      options[:profile] = true
+      options[:profiler] = profiler
+    end
   end
   .parse!
 
 input = options.fetch(:input, "")
 context = options.fetch(:context, "")
 
+if options[:profile]
+  RubyProf.start
+end
+
 if options[:parse]
-  pp ::Template::Parser.parse(input)
+  pp ::Template::Parser.parse(input).to_raw
 else
   Template.render(input, context, io: $stdout, timeout: options[:timeout])
+end
+
+if options[:profile]
+  result = RubyProf.stop
+  if options[:profiler] == "text"
+    printer = RubyProf::FlatPrinter.new(result)
+    printer.print($stdout)
+  elsif options[:profiler] == "html"
+    printer = RubyProf::GraphHtmlPrinter.new(result)
+    printer.print($stdout)
+  else
+    abort "#{options[:profiler]} not recognized"
+  end
 end

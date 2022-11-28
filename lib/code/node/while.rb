@@ -23,9 +23,7 @@ class Code
         elsif @operator == UNTIL_KEYWORD
           last = ::Code::Object::Nothing.new
 
-          while @statement.evaluate(**args).falsy?
-            last = @body.evaluate(**args)
-          end
+          last = @body.evaluate(**args) while @statement.evaluate(**args).falsy?
 
           last
         else

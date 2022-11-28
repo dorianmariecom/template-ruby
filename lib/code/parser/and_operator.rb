@@ -2,7 +2,7 @@ class Code
   class Parser
     class AndOperator < Operation
       def statement
-        ::Code::Parser::Greater
+        ::Code::Parser::EqualityLower
       end
 
       def ampersand

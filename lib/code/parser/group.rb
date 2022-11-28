@@ -14,9 +14,8 @@ class Code
       end
 
       def root
-        (
-          opening_parenthesis << code << closing_parenthesis.maybe
-        ).aka(:group) | ::Code::Parser::Call
+        (opening_parenthesis << code << closing_parenthesis.maybe).aka(:group) |
+          ::Code::Parser::Call
       end
     end
   end

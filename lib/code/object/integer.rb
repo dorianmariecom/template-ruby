@@ -18,6 +18,7 @@ class Code
       def call(**args)
         operator = args.fetch(:operator, nil)
         arguments = args.fetch(:arguments, [])
+        globals = multi_fetch(args, *::Code::GLOBALS)
         value = arguments.first&.value
 
         if operator == "even?"
@@ -26,6 +27,9 @@ class Code
         elsif operator == "odd?"
           sig(arguments)
           odd?
+        elsif operator == "times"
+          sig(arguments) { ::Code::Object::Function }
+          times(value, **globals)
         elsif operator == "*"
           sig(arguments) { [[::Code::Object::Number, ::Code::Object::String]] }
           multiplication(value)
@@ -88,6 +92,10 @@ class Code
 
       def succ
         ::Code::Object::Integer.new(raw + 1)
+      end
+
+      def +(other)
+        ::Code::Object::Integer.new(raw + other.raw)
       end
 
       def to_s
@@ -194,6 +202,19 @@ class Code
 
       def bitwise_xor(other)
         ::Code::Object::Integer.new(raw ^ other.raw.to_i)
+      end
+
+      def times(argument, **globals)
+        raw.times do |element|
+          argument.call(
+            arguments: [
+              ::Code::Object::Argument.new(::Code::Object::Integer.new(element))
+            ],
+            **globals
+          )
+        end
+
+        self
       end
     end
   end

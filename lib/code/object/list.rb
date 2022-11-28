@@ -76,6 +76,11 @@ class Code
         ::Code::Object::List.new(raw.deep_dup)
       end
 
+      def <<(other)
+        raw << other
+        self
+      end
+
       def to_s
         "[#{raw.map(&:inspect).join(", ")}]"
       end
@@ -159,7 +164,7 @@ class Code
         )
       end
 
-      def map(argument, context:, io:)
+      def map(argument, **globals)
         ::Code::Object::List.new(
           raw.map do |element|
             argument.call(

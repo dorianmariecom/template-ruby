@@ -22,7 +22,7 @@ class Template
 
   def render(context = "")
     Timeout.timeout(timeout) do
-      if context.present?
+      if context != ""
         context = ::Code.evaluate(context, timeout: timeout, io: io, ruby: ruby)
       else
         context = ::Code::Object::Dictionnary.new

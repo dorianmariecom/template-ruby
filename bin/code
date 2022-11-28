@@ -3,7 +3,7 @@
 require "optparse"
 require_relative "../lib/template-ruby"
 
-options = { timeout: 0 }
+options = { timeout: 0, profile: false }
 
 OptionParser
   .new do |opts|
@@ -38,11 +38,23 @@ OptionParser
       "--timeout=TIMEOUT",
       "Set timeout in seconds"
     ) { |timeout| options[:timeout] = timeout.to_f }
+
+    opts.on(
+      "--profile",
+      "Profile Ruby code"
+    ) do |timeout|
+      require "ruby-prof"
+      options[:profile] = true
+    end
   end
   .parse!
 
 input = options.fetch(:input, "")
 context = options.fetch(:context, "")
+
+if options[:profile]
+  RubyProf.start
+end
 
 if options[:parse]
   pp ::Code::Parser.parse(input).to_raw
@@ -55,4 +67,10 @@ else
       timeout: options[:timeout]
     ).to_s
   )
+end
+
+if options[:profile]
+  result = RubyProf.stop
+  printer = RubyProf::FlatPrinter.new(result)
+  printer.print($stdout)
 end
