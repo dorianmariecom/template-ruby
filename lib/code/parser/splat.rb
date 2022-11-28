@@ -2,7 +2,7 @@ class Code
   class Parser
     class Splat < Language
       def statement
-        ::Code::Parser::While
+        ::Code::Parser::Class
       end
 
       def splat

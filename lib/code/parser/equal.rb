@@ -65,6 +65,10 @@ class Code
         str("^")
       end
 
+      def dot
+        str(".")
+      end
+
       def operator
         equal.ignore | (plus << equal.ignore) | (minus << equal.ignore) |
           (asterisk << equal.ignore) | (slash << equal.ignore) |
@@ -75,9 +79,13 @@ class Code
           (ampersand << ampersand << equal.ignore)
       end
 
+      def names
+        name << (dot << name).repeat
+      end
+
       def root
         (
-          name.aka(:left) << whitespace? << operator.aka(:operator) <<
+          names.aka(:left) << whitespace? << operator.aka(:operator) <<
             whitespace? << equal_class.aka(:right)
         ).aka(:equal) | statement
       end

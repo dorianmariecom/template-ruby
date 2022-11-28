@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+rspec
+
+for f in docs/**/*.template
+do
+  echo $f
+  bin/template -i $f -p > /dev/null
+done
+
+for f in docs/*.code
+do
+  echo $f
+  bin/code -i $f -p > /dev/null
+done
