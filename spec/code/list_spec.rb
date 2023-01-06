@@ -7,6 +7,8 @@ RSpec.describe "list" do
   [
     ["[]", "[]"],
     ["[1, 2, 3]", "[1, 2, 3]"],
+    ["[1, 2, 3].include?(2)", "true"],
+    ["[1, 2, 3].include?(4)", "false"],
     ["[[true]]", "[[true]]"]
   ].each do |input, output|
     context input do

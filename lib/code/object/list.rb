@@ -55,6 +55,9 @@ class Code
         elsif operator == "<<"
           sig(arguments) { ::Code::Object }
           append(value)
+        elsif operator == "include?"
+          sig(arguments) { ::Code::Object }
+          include?(value)
         else
           super
         end
@@ -178,6 +181,10 @@ class Code
       def append(other)
         raw << other
         self
+      end
+
+      def include?(other)
+        ::Code::Object::Boolean.new(raw.include?(other))
       end
 
       def first
