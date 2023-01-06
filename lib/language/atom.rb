@@ -194,7 +194,6 @@ class Language
         clone =
           Parser.new(root: self, input: parser.input, cursor: parser.cursor)
 
-        require "colorize"
         @parent.parse(clone)
 
         if clone.output?
