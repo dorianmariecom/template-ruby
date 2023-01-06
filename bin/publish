@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+rm *.gem
+git pull
+git push
+
+for file in *.gemspec
+do
+  gem build $file
+done
+
+for file in *.gem
+do
+  gem push $file
+done
+
+rm *.gem
