@@ -39,7 +39,7 @@ class Code
         )
       elsif array?
         ::Code::Object::List.new(
-          raw.map { |element| ::Code::Ruby.to_code(key) }
+          raw.map { |element| ::Code::Ruby.to_code(element) }
         )
       elsif proc?
         ::Code::Object::RubyFunction.new(raw)
@@ -66,11 +66,11 @@ class Code
           raw
             .raw
             .map do |key, value|
-              [::Code::Ruby.to_code(key), ::Code::Ruby.to_code(value)]
+              [::Code::Ruby.from_code(key), ::Code::Ruby.from_code(value)]
             end
             .to_h
         elsif code_list?
-          raw.raw.map { |element| ::Code::Ruby.to_code(element) }
+          raw.raw.map { |element| ::Code::Ruby.from_code(element) }
         else
           raise "Unsupported class #{raw.class} for Code to Ruby conversion"
         end
