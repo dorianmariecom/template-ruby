@@ -2,7 +2,7 @@
 
 set -e
 
-rm *.gem
+rm -f *.gem
 git pull
 git push
 
