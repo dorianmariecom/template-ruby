@@ -15,6 +15,8 @@ class Code
     def to_code
       if code?
         raw
+      elsif nil?
+        ::Code::Object::Nothing.new
       elsif true?
         ::Code::Object::Boolean.new(raw)
       elsif false?
@@ -50,7 +52,9 @@ class Code
 
     def from_code
       if code?
-        if code_boolean?
+        if code_nothing?
+          raw.raw
+        elsif code_boolean?
           raw.raw
         elsif code_decimal?
           raw.raw
@@ -85,6 +89,10 @@ class Code
 
     def code?
       raw.is_a?(::Code::Object)
+    end
+
+    def nil?
+      raw.is_a?(::NilClass)
     end
 
     def true?
@@ -125,6 +133,10 @@ class Code
 
     def proc?
       raw.is_a?(::Proc)
+    end
+
+    def code_nothing?
+      raw.is_a?(::Code::Object::Nothing)
     end
 
     def code_boolean?
