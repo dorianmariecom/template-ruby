@@ -92,9 +92,15 @@ class Code
         special_character.absent << any
       end
 
+      def separator
+        special_character
+      end
+
       def root
-        do_keyword.absent << end_keyword.absent << elsif_keyword.absent <<
-          else_keyword.absent << character.repeat(1)
+        (do_keyword << separator).absent <<
+          (else_keyword << separator).absent <<
+          (elsif_keyword << separator).absent <<
+          (end_keyword << separator).absent << character.repeat(1)
       end
     end
   end

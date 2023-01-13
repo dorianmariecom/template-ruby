@@ -8,9 +8,9 @@ GIT
 PATH
   remote: .
   specs:
-    code-ruby (0.4.0)
+    code-ruby (0.5.4)
       zeitwerk (~> 2)
-    template-ruby (0.4.0)
+    template-ruby (0.5.4)
       zeitwerk (~> 2)
 
 GEM
@@ -36,6 +36,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-22
 
 DEPENDENCIES
   code-ruby!
