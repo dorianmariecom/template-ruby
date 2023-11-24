@@ -10,6 +10,15 @@ OptionParser
     opts.banner = "Usage: template [options]"
 
     opts.on(
+      "-v",
+      "--version",
+      "Version of template"
+    ) do |input|
+      puts Template::Version
+      exit
+    end
+
+    opts.on(
       "-i INPUT",
       "--input=INPUT",
       "Input in the template language (String or File)"
