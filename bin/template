@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require_relative "../lib/template-ruby"
+
+options = { timeout: 0, profile: false, profiler: "text" }
+
+OptionParser
+  .new do |opts|
+    opts.banner = "Usage: template [options]"
+
+    opts.on(
+      "-i INPUT",
+      "--input=INPUT",
+      "Input in the template language (String or File)"
+    ) do |input|
+      input = File.read(input) if File.exist?(input)
+
+      options[:input] = input
+    end
+
+    opts.on(
+      "-c CONTEXT",
+      "--context=CONTEXT",
+      "Context in the code language (String or File)"
+    ) do |context|
+      context = File.read(context) if File.exist?(context)
+
+      options[:context] = context
+    end
+
+    opts.on("-p", "--parse", "Get parser results for input") do |parse|
+      options[:parse] = parse
+    end
+
+    opts.on(
+      "-t TIMEOUT",
+      "--timeout=TIMEOUT",
+      "Set timeout in seconds"
+    ) { |timeout| options[:timeout] = timeout.to_f }
+
+    opts.on(
+      "--profile",
+      "Profile Ruby code"
+    ) do |timeout|
+      require "ruby-prof"
+      options[:profile] = true
+    end
+
+    opts.on(
+      "--profiler TYPE",
+      "Profiler output type (text (default) or html)"
+    ) do |profiler|
+      require "ruby-prof"
+      options[:profile] = true
+      options[:profiler] = profiler
+    end
+  end
+  .parse!
+
+input = options.fetch(:input, "")
+context = options.fetch(:context, "")
+
+if options[:profile]
+  RubyProf.start
+end
+
+if options[:parse]
+  pp ::Template::Parser.parse(input).to_raw
+else
+  Template.evaluate(input, context, io: $stdout, timeout: options[:timeout])
+end
+
+if options[:profile]
+  result = RubyProf.stop
+  if options[:profiler] == "text"
+    printer = RubyProf::FlatPrinter.new(result)
+    printer.print($stdout)
+  elsif options[:profiler] == "html"
+    printer = RubyProf::GraphHtmlPrinter.new(result)
+    printer.print($stdout)
+  else
+    abort "#{options[:profiler]} not recognized"
+  end
+end
