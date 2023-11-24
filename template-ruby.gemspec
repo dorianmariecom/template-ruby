@@ -16,6 +16,6 @@ Gem::Specification.new do |s|
   s.executables = "template"
 
   s.add_dependency "zeitwerk", "~> 2"
-  s.add_dependency "code-ruby", "~> 0.6"
+  s.add_dependency "code-ruby", "~> 0"
   s.add_dependency "language-ruby", "~> 0"
 end

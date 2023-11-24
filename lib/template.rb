@@ -3,7 +3,7 @@ class Template
   GLOBALS = %i[io context object].freeze
   DEFAULT_TIMEOUT = 0
 
-  def initialize(input, io: StringIO.new, timeout: DEFAULT_TIMEOUT, ruby: {})
+  def initialize(input, io: ::StringIO.new, timeout: DEFAULT_TIMEOUT, ruby: {})
     @input = input
     @parsed = Timeout.timeout(timeout) { ::Template::Parser.parse(@input).to_raw }
     @io = io
@@ -14,7 +14,7 @@ class Template
   def self.evaluate(
     input,
     context = "",
-    io: StringIO.new,
+    io: ::StringIO.new,
     timeout: DEFAULT_TIMEOUT,
     ruby: {}
   )
@@ -25,9 +25,9 @@ class Template
     Timeout.timeout(timeout) do
       context =
         if context == EMPTY_STRING
-          Object::Context.new
+          ::Code::Object::Context.new
         else
-          Code.evaluate(context, timeout:, io:, ruby:).code_to_context
+          ::Code.evaluate(context, timeout:, io:, ruby:).code_to_context
         end
 
       raise(Error::IncompatibleContext) unless context.is_a?(::Code::Object::Context)
@@ -36,7 +36,7 @@ class Template
 
       ::Template::Node::Template.new(parsed).evaluate(context:, io:)
 
-      io.is_a?(StringIO) ? io.string : nil
+      io.is_a?(::StringIO) ? io.string : nil
     end
   end
 
