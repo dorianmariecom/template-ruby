@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Code do
   [
-    ["Hello {name}", "{name: :Dorian}", "Hello Dorian"],
+    ["Hello {name}", "{name: :Dorian}", "Hello Dorian"]
   ].each do |input, context, expected|
     it "#{input} (#{context}) == #{expected}" do
       expect(Template.evaluate(input, context)).to eq(expected)

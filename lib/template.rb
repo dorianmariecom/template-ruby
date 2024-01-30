@@ -5,10 +5,14 @@ class Template
 
   def initialize(input, io: ::StringIO.new, timeout: DEFAULT_TIMEOUT, ruby: {})
     @input = input
-    @parsed = Timeout.timeout(timeout) { ::Template::Parser.parse(@input).to_raw }
+    @parsed =
+      Timeout.timeout(timeout) { ::Template::Parser.parse(@input).to_raw }
     @io = io
     @timeout = timeout || DEFAULT_TIMEOUT
-    @ruby = Timeout.timeout(timeout) { ::Code::Ruby.to_code(ruby || {}).code_to_context }
+    @ruby =
+      Timeout.timeout(timeout) do
+        ::Code::Ruby.to_code(ruby || {}).code_to_context
+      end
   end
 
   def self.evaluate(
@@ -30,7 +34,9 @@ class Template
           ::Code.evaluate(context, timeout:, io:, ruby:).code_to_context
         end
 
-      raise(Error::IncompatibleContext) unless context.is_a?(::Code::Object::Context)
+      unless context.is_a?(::Code::Object::Context)
+        raise(Error::IncompatibleContext)
+      end
 
       context = context.merge(ruby)
 
