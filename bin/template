@@ -9,11 +9,7 @@ OptionParser
   .new do |opts|
     opts.banner = "Usage: template [options]"
 
-    opts.on(
-      "-v",
-      "--version",
-      "Version of template"
-    ) do |input|
+    opts.on("-v", "--version", "Version of template") do |input|
       puts Template::Version
       exit
     end
@@ -48,10 +44,7 @@ OptionParser
       "Set timeout in seconds"
     ) { |timeout| options[:timeout] = timeout.to_f }
 
-    opts.on(
-      "--profile",
-      "Profile Ruby code"
-    ) do |timeout|
+    opts.on("--profile", "Profile Ruby code") do |timeout|
       require "ruby-prof"
       options[:profile] = true
     end
@@ -70,9 +63,7 @@ OptionParser
 input = options.fetch(:input, "")
 context = options.fetch(:context, "")
 
-if options[:profile]
-  RubyProf.start
-end
+RubyProf.start if options[:profile]
 
 if options[:parse]
   pp ::Template::Parser.parse(input).to_raw
