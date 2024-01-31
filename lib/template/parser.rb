@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Template
   class Parser
     def initialize(input)

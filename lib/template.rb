@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Template
   EMPTY_STRING = ""
   GLOBALS = %i[io context object].freeze

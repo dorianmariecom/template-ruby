@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require "optparse"
 require_relative "../lib/template-ruby"
@@ -9,7 +10,7 @@ OptionParser
   .new do |opts|
     opts.banner = "Usage: template [options]"
 
-    opts.on("-v", "--version", "Version of template") do |input|
+    opts.on("-v", "--version", "Version of template") do |_input|
       puts Template::Version
       exit
     end
@@ -44,7 +45,7 @@ OptionParser
       "Set timeout in seconds"
     ) { |timeout| options[:timeout] = timeout.to_f }
 
-    opts.on("--profile", "Profile Ruby code") do |timeout|
+    opts.on("--profile", "Profile Ruby code") do |_timeout|
       require "ruby-prof"
       options[:profile] = true
     end

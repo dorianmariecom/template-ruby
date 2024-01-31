@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+require "English"
 require_relative "lib/template/version"
 
 Gem::Specification.new do |s|
@@ -8,14 +11,13 @@ Gem::Specification.new do |s|
     'A templating programming language, like "Hello {name}" with {name: "Dorian"} gives "Hello Dorian"'
   s.authors = ["Dorian Marié"]
   s.email = "dorian@dorianmarie.fr"
-  s.files = `git ls-files`.split($/)
-  s.test_files = s.files.grep(%r{^(test|spec|features)/})
+  s.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   s.require_paths = ["lib"]
   s.homepage = "https://github.com/dorianmariefr/template-ruby"
   s.license = "MIT"
   s.executables = "template"
 
-  s.add_dependency "zeitwerk", "~> 2"
   s.add_dependency "code-ruby", "~> 0"
   s.add_dependency "language-ruby", "~> 0"
+  s.add_dependency "zeitwerk", "~> 2"
 end

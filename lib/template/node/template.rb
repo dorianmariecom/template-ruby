@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Template
   class Node
     class Template < Node

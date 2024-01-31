@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Template
   class Node
     class Part < Node
@@ -7,7 +9,7 @@ class Template
         elsif part.key?(:code)
           @part = ::Template::Node::CodePart.new(part[:code])
         else
-          raise NotImplementedError.new(part.inspect)
+          raise NotImplementedError, part.inspect
         end
       end
 
