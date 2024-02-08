@@ -2,4 +2,4 @@
 
 require_relative "../template"
 
-Template::Version = Gem::Version.new("0.6.4")
+Template::Version = Gem::Version.new("0.6.5")

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    template-ruby (0.6.4)
+    template-ruby (0.6.5)
       code-ruby (~> 0)
       language-ruby (~> 0)
       zeitwerk (~> 2)
