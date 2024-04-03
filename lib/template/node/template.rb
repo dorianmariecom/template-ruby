@@ -8,9 +8,9 @@ class Template
       end
 
       def evaluate(**args)
-        io = args.fetch(:io)
-
-        @parts.each { |part| io.print(part.evaluate(**args)) }
+        output = args.fetch(:output)
+        @parts.each { |part| output.print(part.evaluate(**args)) }
+        ::Code::Object::Nothing.new
       end
     end
   end

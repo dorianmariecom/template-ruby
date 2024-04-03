@@ -1,54 +1,49 @@
 # frozen_string_literal: true
 
 class Template
-  EMPTY_STRING = ""
-  GLOBALS = %i[io context object].freeze
+  GLOBALS = %i[output error context object].freeze
   DEFAULT_TIMEOUT = 0
 
-  def initialize(input, io: ::StringIO.new, timeout: DEFAULT_TIMEOUT, ruby: {})
+  def initialize(
+    input,
+    output: StringIO.new,
+    error: StringIO.new,
+    timeout: DEFAULT_TIMEOUT
+  )
     @input = input
-    @parsed =
-      Timeout.timeout(timeout) { ::Template::Parser.parse(@input).to_raw }
-    @io = io
+    @output = output
+    @error = error
     @timeout = timeout || DEFAULT_TIMEOUT
-    @ruby =
-      Timeout.timeout(timeout) do
-        ::Code::Ruby.to_code(ruby || {}).code_to_context
-      end
+    @context = ::Code::Object::Context.new
+  end
+
+  def self.parse(input, timeout: DEFAULT_TIMEOUT)
+    Timeout.timeout(timeout) { Parser.parse(input).to_raw }
   end
 
   def self.evaluate(
     input,
-    context = "",
-    io: ::StringIO.new,
-    timeout: DEFAULT_TIMEOUT,
-    ruby: {}
+    output: StringIO.new,
+    error: StringIO.new,
+    timeout: DEFAULT_TIMEOUT
   )
-    new(input, io:, timeout:, ruby:).evaluate(context)
+    new(input, output:, error:, timeout:).evaluate
   end
 
-  def evaluate(context = "")
+  def evaluate
     Timeout.timeout(timeout) do
-      context =
-        if context == EMPTY_STRING
-          ::Code::Object::Context.new
-        else
-          ::Code.evaluate(context, timeout:, io:, ruby:).code_to_context
-        end
+      parsed = Template.parse(input)
+      Node::Template.new(parsed).evaluate(context:, output:, error:)
 
-      unless context.is_a?(::Code::Object::Context)
-        raise(Error::IncompatibleContext)
+      if output.is_a?(StringIO)
+        output.string
+      else
+        ""
       end
-
-      context = context.merge(ruby)
-
-      ::Template::Node::Template.new(parsed).evaluate(context:, io:)
-
-      io.is_a?(::StringIO) ? io.string : nil
     end
   end
 
   private
 
-  attr_reader :input, :parsed, :timeout, :io, :ruby
+  attr_reader :input, :timeout, :output, :error, :context
 end

@@ -4,76 +4,95 @@
 require "optparse"
 require_relative "../lib/template-ruby"
 
-options = { timeout: 0, profile: false, profiler: "text" }
+options = {
+  timeout: 0,
+  profile: false,
+  profiler: "text",
+  input: "",
+  parse: false
+}
 
-OptionParser
-  .new do |opts|
-    opts.banner = "Usage: template [options]"
+argv =
+  OptionParser
+    .new do |opts|
+      opts.banner = "Usage: template INPUT\n\n"
 
-    opts.on("-v", "--version", "Version of template") do |_input|
-      puts Template::Version
-      exit
+      opts.on("-v", "--version", "Version of Template") do |_input|
+        puts Code::Version
+        exit
+      end
+
+      opts.on(
+        "-i INPUT",
+        "--input INPUT",
+        "Input in the Template language (String or File)"
+      ) do |input|
+        input = File.read(input) if File.exist?(input)
+
+        options[:input] = input
+      end
+
+      opts.on("-p", "--parse", "Parser tree for input") do |parse|
+        options[:parse] = parse
+      end
+
+      opts.on(
+        "-t TIMEOUT",
+        "--timeout TIMEOUT",
+        "Set timeout in seconds"
+      ) { |timeout| options[:timeout] = timeout.to_f }
+
+      opts.on(
+        "-z TIME_ZONE",
+        "--time-zone TIME_ZONE",
+        "Set time zone"
+      ) { |time_zone| Time.zone = time_zone }
+
+      opts.on("--profile", "Profile Ruby code") do |_timeout|
+        require "ruby-prof"
+        options[:profile] = true
+      end
+
+      opts.on(
+        "--profiler TYPE",
+        "Profiler output type (text (default) or html)"
+      ) do |profiler|
+        require "ruby-prof"
+        options[:profile] = true
+        options[:profiler] = profiler
+      end
     end
+    .parse!
 
-    opts.on(
-      "-i INPUT",
-      "--input=INPUT",
-      "Input in the template language (String or File)"
-    ) do |input|
-      input = File.read(input) if File.exist?(input)
+options[:input] = argv.join(" ") if options[:input].empty?
 
-      options[:input] = input
-    end
+abort <<~HELP if options[:input].empty?
+  Usage: template INPUT
 
-    opts.on(
-      "-c CONTEXT",
-      "--context=CONTEXT",
-      "Context in the code language (String or File)"
-    ) do |context|
-      context = File.read(context) if File.exist?(context)
-
-      options[:context] = context
-    end
-
-    opts.on("-p", "--parse", "Get parser results for input") do |parse|
-      options[:parse] = parse
-    end
-
-    opts.on(
-      "-t TIMEOUT",
-      "--timeout=TIMEOUT",
-      "Set timeout in seconds"
-    ) { |timeout| options[:timeout] = timeout.to_f }
-
-    opts.on("--profile", "Profile Ruby code") do |_timeout|
-      require "ruby-prof"
-      options[:profile] = true
-    end
-
-    opts.on(
-      "--profiler TYPE",
-      "Profiler output type (text (default) or html)"
-    ) do |profiler|
-      require "ruby-prof"
-      options[:profile] = true
-      options[:profiler] = profiler
-    end
-  end
-  .parse!
-
-input = options.fetch(:input, "")
-context = options.fetch(:context, "")
+    -v, --version                    Version of Template
+    -i, --input INPUT                Input in the Template language (String or File)
+    -p, --parse                      Parser tree for input
+    -t, --timeout TIMEOUT            Set timeout in seconds
+        --profile                    Profile Ruby code
+        --profiler TYPE              Profiler output type (text (default) or html)
+HELP
 
 RubyProf.start if options[:profile]
 
 if options[:parse]
-  pp ::Template::Parser.parse(input).to_raw
+  pp Template::Parser.parse(options[:input]).to_raw
 else
-  Template.evaluate(input, context, io: $stdout, timeout: options[:timeout])
+  print Template.evaluate(
+          options[:input],
+          output: $stdout,
+          error: $stderr,
+          timeout: options[:timeout]
+        )
 end
 
 if options[:profile]
   result = RubyProf.stop
+
   if options[:profiler] == "text"
     printer = RubyProf::FlatPrinter.new(result)
     printer.print($stdout)
