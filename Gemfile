@@ -8,3 +8,4 @@ ruby "3.3.0"
 
 gem "rspec"
 gem "ruby-prof"
+gem "rubocop-rails-omakase"

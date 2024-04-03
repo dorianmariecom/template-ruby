@@ -35,11 +35,7 @@ class Template
       parsed = Template.parse(input)
       Node::Template.new(parsed).evaluate(context:, output:, error:)
 
-      if output.is_a?(StringIO)
-        output.string
-      else
-        ""
-      end
+      output.is_a?(StringIO) ? output.string : ""
     end
   end
 

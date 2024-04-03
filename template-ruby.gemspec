@@ -20,4 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency "code-ruby", "~> 0"
   s.add_dependency "language-ruby", "~> 0"
   s.add_dependency "zeitwerk", "~> 2"
+
+  s.required_ruby_version = ">= 3.3.0"
 end
