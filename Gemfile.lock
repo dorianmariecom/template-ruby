@@ -22,7 +22,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bigdecimal (3.1.7)
-    code-ruby (0.14.3)
+    code-ruby (0.14.5)
       activesupport (~> 7)
       bigdecimal (~> 3)
       did-you-mean (~> 0)
@@ -38,7 +38,7 @@ GEM
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     json (2.7.1)
-    language-ruby (0.8.1)
+    language-ruby (0.8.3)
       zeitwerk (~> 2)
     language_server-protocol (3.17.0.3)
     levenshtein (0.2.2)
@@ -105,6 +105,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   rspec
