@@ -102,11 +102,12 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
-    zeitwerk (2.6.15)
+    zeitwerk (2.6.16)
 
 PLATFORMS
   arm64-darwin-22
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   rspec
