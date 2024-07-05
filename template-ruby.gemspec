@@ -16,10 +16,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/dorianmariecom/template-ruby"
   s.license = "MIT"
   s.executables = "template"
-
-  s.add_dependency "code-ruby", "~> 0"
-  s.add_dependency "language-ruby", "~> 0"
-  s.add_dependency "zeitwerk", "~> 2"
-
-  s.required_ruby_version = ">= 3.3.0"
+  s.add_dependency "code-ruby"
+  s.add_dependency "language-ruby"
+  s.add_dependency "zeitwerk"
 end

@@ -2,9 +2,9 @@ PATH
   remote: .
   specs:
     template-ruby (0.6.9)
-      code-ruby (~> 0)
-      language-ruby (~> 0)
-      zeitwerk (~> 2)
+      code-ruby
+      language-ruby
+      zeitwerk
 
 GEM
   remote: https://rubygems.org/
