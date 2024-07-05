@@ -22,13 +22,13 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bigdecimal (3.1.8)
-    code-ruby (0.14.9)
-      activesupport (~> 7)
-      bigdecimal (~> 3)
-      did-you-mean (~> 0)
-      json (~> 2)
-      language-ruby (~> 0)
-      zeitwerk (~> 2)
+    code-ruby (0.15.0)
+      activesupport
+      bigdecimal
+      did-you-mean
+      json
+      language-ruby
+      zeitwerk
     concurrent-ruby (1.3.3)
     connection_pool (2.4.1)
     did-you-mean (0.1.1)
@@ -38,8 +38,8 @@ GEM
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     json (2.7.2)
-    language-ruby (0.8.4)
-      zeitwerk (~> 2)
+    language-ruby (0.9.0)
+      zeitwerk
     language_server-protocol (3.17.0.3)
     levenshtein (0.2.2)
     minitest (5.24.1)
