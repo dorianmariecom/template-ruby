@@ -1,6 +1,8 @@
 .DS_Store
 /.bundle
 /.env
+/.env.prod
+/.env.staging
 /.env.*.local
 /app/assets/builds
 /config/*.key
