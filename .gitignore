@@ -1,4 +1,5 @@
 .DS_Store
+*.gem
 /.bundle
 /.env
 /.env.prod
