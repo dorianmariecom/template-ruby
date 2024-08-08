@@ -22,7 +22,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bigdecimal (3.1.8)
-    code-ruby (0.15.9)
+    code-ruby (0.15.13)
       activesupport
       bigdecimal
       did-you-mean
@@ -45,7 +45,7 @@ GEM
     minitest (5.24.1)
     mutex_m (0.2.0)
     parallel (1.25.1)
-    parser (3.3.4.0)
+    parser (3.3.4.1)
       ast (~> 2.4.1)
       racc
     racc (1.8.1)
