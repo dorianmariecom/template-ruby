@@ -23,7 +23,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bigdecimal (3.1.8)
-    code-ruby (0.15.13)
+    code-ruby (0.15.14)
       activesupport
       bigdecimal
       did-you-mean
