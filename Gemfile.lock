@@ -44,8 +44,8 @@ GEM
     language_server-protocol (3.17.0.3)
     levenshtein (0.2.2)
     logger (1.6.0)
-    minitest (5.25.0)
-    parallel (1.26.2)
+    minitest (5.25.1)
+    parallel (1.26.3)
     parser (3.3.4.2)
       ast (~> 2.4.1)
       racc
