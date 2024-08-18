@@ -6,9 +6,8 @@ require_relative "lib/template/version"
 Gem::Specification.new do |s|
   s.name = "template-ruby"
   s.version = ::Template::Version
-  s.summary = "A templating programming language"
-  s.description =
-    'A templating programming language, like "Hello {name}" with {name: "Dorian"} gives "Hello Dorian"'
+  s.summary = "templating language"
+  s.description = s.summary
   s.authors = ["Dorian Marié"]
   s.email = "dorian@dorianmarie.fr"
   s.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
