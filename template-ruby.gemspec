@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.add_dependency "code-ruby"
   s.add_dependency "language-ruby"
   s.add_dependency "zeitwerk"
+  s.add_dependency "dorian-arguments"
 end
