@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "English"
-require_relative "lib/template/version"
-
 Gem::Specification.new do |s|
   s.name = "template-ruby"
-  s.version = ::Template::Version
+  s.version = File.read("VERSION").strip
   s.summary = "templating language"
   s.description = s.summary
   s.authors = ["Dorian Marié"]

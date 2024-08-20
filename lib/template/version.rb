@@ -2,4 +2,5 @@
 
 require_relative "../template"
 
-Template::Version = Gem::Version.new("0.7.2")
+Template::Version =
+  Gem::Version.new(File.read(File.expand_path("../../../VERSION", __FILE__)))
