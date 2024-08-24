@@ -24,7 +24,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bigdecimal (3.1.8)
-    code-ruby (0.15.16)
+    code-ruby (1.0.0)
       activesupport
       bigdecimal
       did-you-mean
@@ -37,16 +37,16 @@ GEM
     did-you-mean (0.1.1)
       levenshtein (>= 0.2.0)
     diff-lcs (1.5.1)
-    dorian-arguments (0.4.1)
+    dorian-arguments (1.0.0)
       activesupport
       bigdecimal
       dorian-to_struct
-    dorian-to_struct (0.6.0)
+    dorian-to_struct (1.0.1)
     drb (2.2.1)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     json (2.7.2)
-    language-ruby (0.9.3)
+    language-ruby (1.0.1)
       dorian-arguments
       zeitwerk
     language_server-protocol (3.17.0.3)
