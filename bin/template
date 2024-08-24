@@ -1,105 +1,71 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "optparse"
 require_relative "../lib/template-ruby"
+require "dorian/arguments"
 
-options = {
-  timeout: 0,
-  profile: false,
-  profiler: "text",
-  input: "",
-  parse: false
-}
+parsed =
+  Dorian::Arguments.parse(
+    input: {
+      type: :string,
+      alias: :i
+    },
+    parse: {
+      type: :boolean,
+      alias: :p
+    },
+    profile: :boolean,
+    profiler: :string,
+    timeout: {
+      type: :integer,
+      alias: :t
+    },
+    version: {
+      type: :boolean,
+      alias: :v
+    },
+    help: {
+      type: :boolean,
+      alias: :h
+    }
+  )
 
-argv =
-  OptionParser
-    .new do |opts|
-      opts.banner = "Usage: template INPUT\n\n"
+abort Template::Version.to_s if parsed.options.version
+abort parsed.help if parsed.options.help
 
-      opts.on("-v", "--version", "Version of Template") do |_input|
-        puts Code::Version
-        exit
-      end
+input = parsed.options.input.to_s
+input = File.read(input) if File.exist?(input)
+input += parsed.arguments.join(" ")
+input += parsed.files.map { |file| File.read(file) }.join
 
-      opts.on(
-        "-i INPUT",
-        "--input INPUT",
-        "Input in the Template language (String or File)"
-      ) do |input|
-        input = File.read(input) if File.exist?(input)
+abort parsed.help if input.empty?
 
-        options[:input] = input
-      end
+profile = parsed.options.profile || !parsed.options.profiler.empty?
+require "ruby-prof" if profile
 
-      opts.on("-p", "--parse", "Parser tree for input") do |parse|
-        options[:parse] = parse
-      end
+RubyProf.start if profile
 
-      opts.on(
-        "-t TIMEOUT",
-        "--timeout TIMEOUT",
-        "Set timeout in seconds"
-      ) { |timeout| options[:timeout] = timeout.to_f }
-
-      opts.on(
-        "-z TIME_ZONE",
-        "--time-zone TIME_ZONE",
-        "Set time zone"
-      ) { |time_zone| Time.zone = time_zone }
-
-      opts.on("--profile", "Profile Ruby code") do |_timeout|
-        require "ruby-prof"
-        options[:profile] = true
-      end
-
-      opts.on(
-        "--profiler TYPE",
-        "Profiler output type (text (default) or html)"
-      ) do |profiler|
-        require "ruby-prof"
-        options[:profile] = true
-        options[:profiler] = profiler
-      end
-    end
-    .parse!
-
-options[:input] = argv.join(" ") if options[:input].empty?
-
-abort <<~HELP if options[:input].empty?
-  Usage: template INPUT
-
-    -v, --version                    Version of Template
-    -i, --input INPUT                Input in the Template language (String or File)
-    -p, --parse                      Parser tree for input
-    -t, --timeout TIMEOUT            Set timeout in seconds
-        --profile                    Profile Ruby code
-        --profiler TYPE              Profiler output type (text (default) or html)
-HELP
-
-RubyProf.start if options[:profile]
-
-if options[:parse]
-  pp Template::Parser.parse(options[:input]).to_raw
+if parsed.options.parse
+  pp Template::Parser.parse(input).to_raw
 else
-  print Template.evaluate(
-          options[:input],
-          output: $stdout,
-          error: $stderr,
-          timeout: options[:timeout]
-        )
+  print(
+    Template.evaluate(
+      input,
+      output: $stdout,
+      error: $stderr,
+      timeout: parsed.options.timeout
+    )
+  )
 end
 
-if options[:profile]
+if profile
   result = RubyProf.stop
 
-  if options[:profiler] == "text"
-    printer = RubyProf::FlatPrinter.new(result)
-    printer.print($stdout)
-  elsif options[:profiler] == "html"
+  if parsed.options.profiler == "html"
     printer = RubyProf::GraphHtmlPrinter.new(result)
     printer.print($stdout)
   else
-    abort "#{options[:profiler]} not recognized"
+    printer = RubyProf::FlatPrinter.new(result)
+    printer.print($stdout)
   end
 end
