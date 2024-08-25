@@ -2,7 +2,6 @@
   "license": "MIT",
   "engines": {
     "node": "22.5.1",
-    "yarn": "1.22.22",
     "npm": "10.8.2"
   }
 }
