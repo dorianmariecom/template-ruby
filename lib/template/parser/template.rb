@@ -16,7 +16,7 @@ class Template
       end
 
       def backslash
-        str("\\")
+        str('\\')
       end
 
       def code_part

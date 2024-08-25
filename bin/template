@@ -61,11 +61,11 @@ end
 if profile
   result = RubyProf.stop
 
-  if parsed.options.profiler == "html"
-    printer = RubyProf::GraphHtmlPrinter.new(result)
-    printer.print($stdout)
-  else
-    printer = RubyProf::FlatPrinter.new(result)
-    printer.print($stdout)
-  end
+  printer =
+    if parsed.options.profiler == "html"
+      RubyProf::GraphHtmlPrinter.new(result)
+    else
+      RubyProf::FlatPrinter.new(result)
+    end
+  printer.print($stdout)
 end

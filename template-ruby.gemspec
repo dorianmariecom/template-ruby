@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.license = "MIT"
   s.executables = "template"
   s.add_dependency "code-ruby"
+  s.add_dependency "dorian-arguments"
   s.add_dependency "language-ruby"
   s.add_dependency "zeitwerk"
-  s.add_dependency "dorian-arguments"
 end

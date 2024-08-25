@@ -3,9 +3,13 @@ AllCops:
   Exclude:
     - node_modules/**/*
     - vendor/**/*
-Layout/SpaceInsideArrayLiteralBrackets:
-  Enabled: false
-Performance/UnfreezeString:
-  Enabled: false
-inherit_gem:
-  rubocop-rails-omakase: rubocop.yml
+    - "*/node_modules/**/*"
+    - "*/vendor/**/*"
+require:
+  - rubocop-gemfile
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec_rails
+  - rubocop-factory_bot
+  - rubocop-rake
