@@ -1,15 +1,88 @@
 ---
 AllCops:
   Exclude:
-    - node_modules/**/*
-    - vendor/**/*
     - "*/node_modules/**/*"
     - "*/vendor/**/*"
+    - node_modules/**/*
+    - vendor/**/*
+  NewCops: enable
+Layout/ClosingHeredocIndentation:
+  Enabled: false
+Layout/FirstArgumentIndentation:
+  Enabled: false
+Layout/HashAlignment:
+  Enabled: false
+Layout/HeredocIndentation:
+  Enabled: false
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: false
+Layout/LineLength:
+  Enabled: false
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+Layout/MultilineOperationIndentation:
+  Enabled: false
+Lint/EmptyClass:
+  Enabled: false
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Performance/UnfreezeString:
+  Enabled: false
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/ExampleWording:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NoExpectationExample:
+  Enabled: false
+RSpec/PendingWithoutReason:
+  Enabled: false
+Rails/DynamicFindBy:
+  Enabled: false
+Rails/HelperInstanceVariable:
+  Enabled: false
+Rails/ThreeStateBooleanColumn:
+  Enabled: false
+Rails/TimeZone:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/EmptyMethod:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
+Style/MultilineBlockChain:
+  Enabled: false
+Style/QuotedSymbols:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/StringLiteralsInInterpolation:
+  Enabled: false
 require:
-  - rubocop-gemfile
-  - rubocop-rspec
-  - rubocop-rails
-  - rubocop-performance
-  - rubocop-rspec_rails
   - rubocop-factory_bot
+  - rubocop-performance
+  - rubocop-rails
   - rubocop-rake
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-capybara

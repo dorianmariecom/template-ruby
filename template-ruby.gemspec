@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_dependency "dorian-arguments"
   s.add_dependency "language-ruby"
   s.add_dependency "zeitwerk"
+  s.metadata["rubygems_mfa_required"] = "true"
 end
