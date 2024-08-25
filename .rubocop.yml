@@ -1,8 +1,11 @@
-inherit_gem:
-  rubocop-rails-omakase: rubocop.yml
-
+---
+AllCops:
+  Exclude:
+    - node_modules/**/*
+    - vendor/**/*
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
-
 Performance/UnfreezeString:
   Enabled: false
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
