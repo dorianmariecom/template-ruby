@@ -78,6 +78,8 @@ Rails/HelperInstanceVariable:
   Enabled: false
 Rails/NegateInclude:
   Enabled: false
+Rails/Present:
+  Enabled: false
 Rails/ThreeStateBooleanColumn:
   Enabled: false
 Rails/TimeZone:
