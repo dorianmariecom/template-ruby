@@ -80,6 +80,10 @@ Rails/ThreeStateBooleanColumn:
   Enabled: false
 Rails/TimeZone:
   Enabled: false
+Security/Eval:
+  Enabled: false
+Style/CaseEquality:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/DoubleNegation:
@@ -104,5 +108,3 @@ require:
   - rubocop-rspec
   - rubocop-rspec_rails
   - rubocop-capybara
-Style/CaseEquality:
-  Enabled: false
