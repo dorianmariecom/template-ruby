@@ -96,3 +96,5 @@ require:
   - rubocop-rspec
   - rubocop-rspec_rails
   - rubocop-capybara
+Lint/MissingSuper:
+  Enabled: false
