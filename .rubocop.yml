@@ -24,9 +24,13 @@ Layout/MultilineOperationIndentation:
   Enabled: false
 Lint/EmptyClass:
   Enabled: false
+Lint/MissingSuper:
+  Enabled: false
 Lint/PercentStringArray:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+Lint/SuppressedException:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
@@ -48,9 +52,13 @@ Naming/FileName:
   Enabled: false
 Naming/MethodParameterName:
   Enabled: false
+Naming/VariableNumber:
+  Enabled: false
 Performance/UnfreezeString:
   Enabled: false
 RSpec/AnyInstance:
+  Enabled: false
+RSpec/ContextWording:
   Enabled: false
 RSpec/DescribeClass:
   Enabled: false
@@ -96,5 +104,5 @@ require:
   - rubocop-rspec
   - rubocop-rspec_rails
   - rubocop-capybara
-Lint/MissingSuper:
+Style/CaseEquality:
   Enabled: false
