@@ -2,12 +2,12 @@
 
 require "spec_helper"
 
-RSpec.describe Code do
+RSpec.describe Template do
   [
     ["{name = :Dorian nothing}Hello {name}", "Hello Dorian"]
   ].each do |input, expected|
     it "#{input} == #{expected}" do
-      expect(Template.evaluate(input)).to eq(expected)
+      expect(described_class.evaluate(input)).to eq(expected)
     end
   end
 end
