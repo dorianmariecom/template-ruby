@@ -24,6 +24,8 @@ Layout/MultilineOperationIndentation:
   Enabled: false
 Lint/EmptyClass:
   Enabled: false
+Lint/PercentStringArray:
+  Enabled: false
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
 Metrics/AbcSize:
@@ -42,9 +44,15 @@ Metrics/ParameterLists:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
+Naming/FileName:
+  Enabled: false
+Naming/MethodParameterName:
+  Enabled: false
 Performance/UnfreezeString:
   Enabled: false
 RSpec/AnyInstance:
+  Enabled: false
+RSpec/DescribeClass:
   Enabled: false
 RSpec/ExampleLength:
   Enabled: false
@@ -65,6 +73,8 @@ Rails/ThreeStateBooleanColumn:
 Rails/TimeZone:
   Enabled: false
 Style/Documentation:
+  Enabled: false
+Style/DoubleNegation:
   Enabled: false
 Style/EmptyMethod:
   Enabled: false

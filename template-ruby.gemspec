@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.add_dependency "language-ruby"
   s.add_dependency "zeitwerk"
   s.metadata["rubygems_mfa_required"] = "true"
+  s.required_ruby_version = "3.3.4"
 end
