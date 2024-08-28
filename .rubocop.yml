@@ -76,6 +76,8 @@ Rails/DynamicFindBy:
   Enabled: false
 Rails/HelperInstanceVariable:
   Enabled: false
+Rails/NegateInclude:
+  Enabled: false
 Rails/ThreeStateBooleanColumn:
   Enabled: false
 Rails/TimeZone:
