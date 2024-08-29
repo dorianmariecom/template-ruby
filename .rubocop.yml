@@ -76,6 +76,8 @@ RSpec/NoExpectationExample:
   Enabled: false
 RSpec/PendingWithoutReason:
   Enabled: false
+Rails/Delegate:
+  Enabled: false
 Rails/DynamicFindBy:
   Enabled: false
 Rails/HelperInstanceVariable:
@@ -83,6 +85,8 @@ Rails/HelperInstanceVariable:
 Rails/NegateInclude:
   Enabled: false
 Rails/Output:
+  Enabled: false
+Rails/Presence:
   Enabled: false
 Rails/Present:
   Enabled: false
