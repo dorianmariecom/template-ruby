@@ -32,6 +32,8 @@ Lint/ShadowingOuterLocalVariable:
   Enabled: false
 Lint/SuppressedException:
   Enabled: false
+Lint/UnusedBlockArgument:
+  Enabled: false
 Lint/UselessAssignment:
   Enabled: false
 Metrics/AbcSize:
