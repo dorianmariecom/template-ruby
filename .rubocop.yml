@@ -108,6 +108,8 @@ Style/IfUnlessModifier:
   Enabled: false
 Style/MultilineBlockChain:
   Enabled: false
+Style/NestedTernaryOperator:
+  Enabled: false
 Style/QuotedSymbols:
   Enabled: false
 Style/StringLiterals:
