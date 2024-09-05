@@ -6,6 +6,7 @@ AllCops:
     - node_modules/**/*
     - vendor/**/*
   NewCops: enable
+  TargetRubyVersion: 3.3
 Layout/ClosingHeredocIndentation:
   Enabled: false
 Layout/FirstArgumentIndentation:
