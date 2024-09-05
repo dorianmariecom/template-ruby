@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
-ruby "3.3.4"
+ruby "3.3.5"
 
 gem "rspec"
 gem "ruby-prof"
