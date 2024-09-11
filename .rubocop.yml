@@ -59,6 +59,8 @@ Naming/MethodParameterName:
   Enabled: false
 Naming/VariableNumber:
   Enabled: false
+Performance/Sum:
+  Enabled: false
 Performance/UnfreezeString:
   Enabled: false
 RSpec/AnyInstance:
