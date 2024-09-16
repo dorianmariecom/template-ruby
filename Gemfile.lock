@@ -44,7 +44,7 @@ GEM
     did-you-mean (0.1.1)
       levenshtein (>= 0.2.0)
     diff-lcs (1.5.1)
-    dorian (2.5.1)
+    dorian (2.6.0)
       csv
       dorian-arguments
       dorian-eval
@@ -189,7 +189,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler-audit
-  dorian (~> 2.5)
+  dorian
   rspec
   rubocop-capybara
   rubocop-factory_bot
