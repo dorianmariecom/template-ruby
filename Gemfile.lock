@@ -80,13 +80,13 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    hexapdf (0.47.0)
+    hexapdf (1.0.0)
       cmdparse (~> 3.0, >= 3.0.3)
       geom2d (~> 0.4, >= 0.4.1)
       openssl (>= 2.2.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    json (2.7.2)
+    json (2.7.4)
     language-ruby (1.1.2)
       dorian-arguments
       zeitwerk
@@ -144,14 +144,14 @@ GEM
     rubocop-performance (1.22.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rails (2.26.2)
+    rubocop-rails (2.27.0)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.52.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rake (0.6.0)
       rubocop (~> 1.0)
-    rubocop-rspec (3.1.0)
+    rubocop-rspec (3.2.0)
       rubocop (~> 1.61)
     rubocop-rspec_rails (2.30.0)
       rubocop (~> 1.61)
