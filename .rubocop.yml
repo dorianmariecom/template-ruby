@@ -1,12 +1,11 @@
 ---
 AllCops:
   Exclude:
-  - "*/node_modules/**/*"
-  - "*/vendor/**/*"
-  - node_modules/**/*
-  - vendor/**/*
+  - "**/node_modules/**/*"
+  - "**/vendor/**/*"
+  - "**/db/schema.rb"
   NewCops: enable
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4
 Layout/ClosingHeredocIndentation:
   Enabled: false
 Layout/FirstArgumentIndentation:
@@ -22,6 +21,8 @@ Layout/LineLength:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 Layout/MultilineOperationIndentation:
+  Enabled: false
+Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 Lint/EmptyClass:
   Enabled: false
@@ -119,11 +120,11 @@ Style/StringLiterals:
   Enabled: false
 Style/StringLiteralsInInterpolation:
   Enabled: false
-require:
+plugins:
 - rubocop-factory_bot
 - rubocop-performance
 - rubocop-rails
 - rubocop-rake
 - rubocop-rspec
-- rubocop-rspec_rails
 - rubocop-capybara
+- rubocop-rspec_rails
