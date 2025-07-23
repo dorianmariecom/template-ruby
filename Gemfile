@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
-ruby "3.4.2"
+ruby "3.4.5"
 
 gem "bundler-audit"
 gem "dorian"
