@@ -5,7 +5,7 @@ AllCops:
   - "**/vendor/**/*"
   - "**/db/schema.rb"
   NewCops: enable
-  TargetRubyVersion: 3.4
+  TargetRubyVersion: 3.0
 Layout/ClosingHeredocIndentation:
   Enabled: false
 Layout/FirstArgumentIndentation:
