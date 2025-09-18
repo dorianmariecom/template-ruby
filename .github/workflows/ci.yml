@@ -4,7 +4,7 @@ jobs:
     name: Bundler Audit
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
@@ -13,14 +13,14 @@ jobs:
     name: npm Audit
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: actions/setup-node@v4
     - run: npm audit
   rspec:
     name: Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
@@ -29,7 +29,7 @@ jobs:
     name: Rubocop
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
