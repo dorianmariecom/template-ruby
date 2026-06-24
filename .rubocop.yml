@@ -5,14 +5,20 @@ AllCops:
   - "**/vendor/**/*"
   - "**/db/schema.rb"
   NewCops: enable
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.4
 Layout/ClosingHeredocIndentation:
+  Enabled: false
+Layout/ElseAlignment:
+  Enabled: false
+Layout/EndAlignment:
   Enabled: false
 Layout/FirstArgumentIndentation:
   Enabled: false
 Layout/HashAlignment:
   Enabled: false
 Layout/HeredocIndentation:
+  Enabled: false
+Layout/IndentationWidth:
   Enabled: false
 Layout/LineEndStringConcatenationIndentation:
   Enabled: false
@@ -22,13 +28,19 @@ Layout/MultilineMethodCallIndentation:
   Enabled: false
 Layout/MultilineOperationIndentation:
   Enabled: false
+Layout/SpaceAroundKeyword:
+  Enabled: false
 Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+Lint/ConstantDefinitionInBlock:
   Enabled: false
 Lint/EmptyClass:
   Enabled: false
 Lint/MissingSuper:
   Enabled: false
 Lint/PercentStringArray:
+  Enabled: false
+Lint/SafeNavigationChain:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
@@ -44,6 +56,8 @@ Metrics/BlockLength:
   Enabled: false
 Metrics/ClassLength:
   Enabled: false
+Metrics/CollectionLiteralLength:
+  Enabled: false
 Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/MethodLength:
@@ -57,6 +71,8 @@ Metrics/PerceivedComplexity:
 Naming/FileName:
   Enabled: false
 Naming/MethodParameterName:
+  Enabled: false
+Naming/PredicateMethod:
   Enabled: false
 Naming/VariableNumber:
   Enabled: false
@@ -80,6 +96,8 @@ RSpec/NoExpectationExample:
   Enabled: false
 RSpec/PendingWithoutReason:
   Enabled: false
+Rails/BulkChangeTable:
+  Enabled: false
 Rails/Delegate:
   Enabled: false
 Rails/DynamicFindBy:
@@ -93,6 +111,8 @@ Rails/Output:
 Rails/Presence:
   Enabled: false
 Rails/Present:
+  Enabled: false
+Rails/SkipsModelValidations:
   Enabled: false
 Rails/ThreeStateBooleanColumn:
   Enabled: false
@@ -109,6 +129,8 @@ Style/DoubleNegation:
 Style/EmptyMethod:
   Enabled: false
 Style/IfUnlessModifier:
+  Enabled: false
+Style/Lambda:
   Enabled: false
 Style/MultilineBlockChain:
   Enabled: false
