@@ -143,7 +143,6 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   Enabled: false
 plugins:
-- rubocop-factory_bot
 - rubocop-performance
 - rubocop-rails
 - rubocop-rake

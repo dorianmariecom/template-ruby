@@ -4,7 +4,10 @@ require "spec_helper"
 
 RSpec.describe Template do
   [
-    ["{name = :Dorian nothing}Hello {name}", "Hello Dorian"]
+    ["{name = :Dorian nothing}Hello {name}", "Hello Dorian"],
+    ['{"}"}', "}"],
+    ["\\{name}", "{name}"],
+    ["", ""]
   ].each do |input, expected|
     it "#{input} == #{expected}" do
       expect(described_class.evaluate(input)).to eq(expected)

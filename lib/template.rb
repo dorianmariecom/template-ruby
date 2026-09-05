@@ -15,6 +15,7 @@ class Template
     @error = error
     @timeout = timeout || DEFAULT_TIMEOUT
     @context = ::Code::Object::Context.new
+    @object = ::Code::Object::Global.new
   end
 
   def self.parse(input, timeout: DEFAULT_TIMEOUT)
@@ -33,7 +34,17 @@ class Template
   def evaluate
     Timeout.timeout(timeout) do
       parsed = Template.parse(input)
-      Node::Template.new(parsed).evaluate(context:, output:, error:)
+      Node::Template.new(parsed).evaluate(
+        context:,
+        error:,
+        global_control_flow_root: true,
+        input: StringIO.new,
+        object:,
+        output:,
+        previous_object: object,
+        source: input,
+        timeout:
+      )
 
       output.is_a?(StringIO) ? output.string : ""
     end
@@ -41,5 +52,5 @@ class Template
 
   private
 
-  attr_reader :input, :timeout, :output, :error, :context
+  attr_reader :input, :timeout, :output, :error, :context, :object
 end
