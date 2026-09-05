@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    template-ruby (2.0.1)
+    template-ruby (2.0.2)
       code-ruby (>= 5.0.10, < 6)
       dorian-arguments (>= 2.0.1, < 3)
       language-ruby (>= 2.0.2, < 3)
